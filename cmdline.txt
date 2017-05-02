@@ -1,0 +1,1 @@
+bin/jsduck --warnings=-global --template template --output output/ext6_mine extjs/packages/core/src/ extjs/classic/classic/src/
