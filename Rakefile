@@ -1,11 +1,13 @@
 require 'rubygems'
 require 'rake'
+require 'time'
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 require 'jsduck/util/md5'
 
 def os_is_windows?
+  # cygwin supports symlinks, but symlinks it makes are not usable by windows.
   RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
 end
 
@@ -45,6 +47,14 @@ end
 # Using a hackish way to access yui-compressor
 def yui_compress(fname)
   system "java -jar $(dirname $(which sencha))/bin/yuicompressor.jar -o #{fname} #{fname}"
+end
+
+def symlink_supported?
+  File.symlink nil, nil
+rescue NotImplementedError
+  return false
+rescue
+  return true
 end
 
 # Reads in all CSS files referenced between BEGIN CSS and END CSS markers.
@@ -159,6 +169,10 @@ class JsDuckRunner
     @options += options
   end
 
+  def get_options
+    return @options
+  end
+
   def add_comments(db_name, version)
     add_options("--comments-url", "http://localhost:3000/auth")
     add_options("--comments-domain", db_name+"/"+version)
@@ -183,11 +197,55 @@ class JsDuckRunner
     ]
   end
 
-  def add_debug
+  def add_ext6(toolkit)
+    if toolkit == "core"
+      tkpath = "packages/" + toolkit
+    else
+      tkpath = toolkit + "/" + toolkit
+    end
+
+    @options += [
+      "--title", "Sencha Docs - Ext JS 6 " + toolkit,
+      "--footer", "Ext JS 6/" + toolkit + " Docs - Generated with <a href='https://github.com/senchalabs/jsduck'>JSDuck</a> {VERSION}." +
+                  " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
+      "--ignore-global",
+      "--warnings", "-all",
+      "--output", "#{OUT_DIR}/ext6_" + toolkit,
+      "#{EXT_BUILD}/" + tkpath + "/src",
+    ]
+  end
+
+  def add_debug6(toolkit)
     add_options(
       "--extjs-path", "extjs/ext-all-debug.js",
       "--template", "template"
     )
+
+    tpldir = "template/extjs"
+    #symlinktarget = EXT_BUILD + "/build"
+    #if (symlinktarget[0] != "/")
+    #  symlinktarget="../" + symlinktarget
+    #end
+
+    #if File.exists?(tpldir)
+    #  if symlink_supported? and File.symlink?(tpldir)
+    #    if File.readlink(tpldir) != symlinktarget
+    #      puts("Rake: removing old (wrong) symlink.")
+    #      File.delete(tpldir)
+    #    end
+    #  else
+    #    puts("Rake: removing old template/extjs directory")
+    #    File.rename(tpldir, tpldir + Time.now.strftime("%Y%m%d%H%M%S"))
+    #  end
+    #end
+
+    #if !File.exists?(tpldir)
+    #  if symlink_supported?
+    #    File.symlink(symlinktarget, tpldir)
+    #  else
+    #    raise("Rake: symlinking not supported. Refusing to copy the whole ExtJS built sources to '" + tpldir + "'.")
+    #  end
+    #end
     add_options("--template-links") unless os_is_windows?
   end
 
@@ -195,15 +253,6 @@ class JsDuckRunner
     # Pass multiple arguments to system, so we'll take advantage of the built-in escaping
     system(*["ruby", "bin/jsduck"].concat(@options))
   end
-end
-
-# Download ExtJS into template/extjs
-task :get_extjs do
-  system "curl -o template/extjs.zip http://cdn.sencha.com/ext-4.1.1a-gpl.zip"
-  system "unzip template/extjs.zip -d template/"
-  system "rm -rf template/extjs"
-  system "mv template/ext-4.1.1a template/extjs"
-  system "rm template/extjs.zip"
 end
 
 # Auto-generate sdk-vars.rb config file
@@ -229,6 +278,7 @@ task :configure => [:get_extjs, :config_file]
 
 # Run compass to generate CSS files
 task :sass do
+  #system "compass compile --quiet template/resources/sass"
   system "compass compile --quiet template/resources/sass"
 end
 
@@ -309,48 +359,51 @@ task :ext4 => :sass do
   system("ln -s #{EXT_BUILD} #{OUT_DIR}/extjs-build")
 end
 
-desc "Run JSDuck on Ext JS from SDK repo (for internal use at Sencha)"
-task :sdk => :sass do
-  runner = JsDuckRunner.new
-  runner.add_options(
-    "--output", OUT_DIR,
-    "--config", "#{SDK_DIR}/extjs/docs/config.json",
-    "--examples-base-url", "extjs-build/examples/",
-    # "--import", "4.1.3:../docs.sencha.com/exports/extjs-4.1.3",
-    # "--import", "4.2",
-    "--seo"
-  )
-  runner.add_debug
-  runner.add_comments('ext-js', '4')
-  runner.add_search('Ext JS', '4.2.0')
-  runner.run
-
-  system("ln -s #{EXT_BUILD} #{OUT_DIR}/extjs-build")
+desc "Run JSDuck on official Ext JS 6 build"
+task :ext6 => [ :sass, :ext6_core, :ext6_classic, :ext6_modern ] do
+  puts "Seems we made it!"
 end
 
-desc "Run JSDuck on Sencha Touch 2 repo (for internal use at Sencha)"
-task :touch2 => :sass do
+desc "Run JSDuck on official Ext JS 6/core build"
+task :ext6_core do
+  toolkit = "core"
+  puts "Building docs for ExtJS 6 - " + toolkit
   runner = JsDuckRunner.new
-  runner.add_options(
-    "--output", OUT_DIR,
-    "--config", "#{SDK_DIR}/touch/docs/config.json",
-    "--examples-base-url", "touch-build/examples/production/",
-    # "--import", "1.1.0:../docs.sencha.com/exports/touch-1.1.0",
-    # "--import", "1.1.1:../docs.sencha.com/exports/touch-1.1.1",
-    # "--import", "2.0.0:../docs.sencha.com/exports/touch-2.0.0",
-    # "--import", "2.0.1:../docs.sencha.com/exports/touch-2.0.1",
-    # "--import", "2.1.0:../docs.sencha.com/exports/touch-2.1.0",
-    # "--import", "2.1.1:../docs.sencha.com/exports/touch-2.1.1",
-    # "--import", "2.2.0:../docs.sencha.com/exports/touch-2.2.0",
-    # "--import", "2.2.1",
-    "--seo"
-  )
-
-  runner.add_debug
-  runner.add_comments('touch', '2')
+  runner.add_ext6(toolkit)
+  runner.add_debug6(toolkit)
+  #puts runner.get_options().join(' ')
   runner.run
 
-  system("ln -s #{TOUCH_BUILD} #{OUT_DIR}/touch-build")
+  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
+  puts "Done building docs for ExtJS 6 - " + toolkit
+end
+
+desc "Run JSDuck on official Ext JS 6/classic build"
+task :ext6_classic do
+  toolkit = "classic"
+  puts "Building docs for ExtJS 6 - " + toolkit
+  runner = JsDuckRunner.new
+  runner.add_ext6(toolkit)
+  runner.add_debug6(toolkit)
+  #puts runner.get_options().join(' ')
+  runner.run
+
+  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
+  puts "Done building docs for ExtJS 6 - " + toolkit
+end
+
+desc "Run JSDuck on official Ext JS 6/modern build"
+task :ext6_modern do
+  toolkit = "modern"
+  puts "Building docs for ExtJS 6 - " + toolkit
+  runner = JsDuckRunner.new
+  runner.add_ext6(toolkit)
+  runner.add_debug6(toolkit)
+  #puts runner.get_options().join(' ')
+  runner.run
+
+  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
+  puts "Done building docs for ExtJS 6 - " + toolkit
 end
 
 task :default => :spec
