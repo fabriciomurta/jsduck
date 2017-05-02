@@ -4,3 +4,10 @@ template/resources/css
 template/resources/sass/.sass-cache
 template-min/
 sdk-vars.rb
+
+*.zip
+extjs
+output/
+
+.sass-cache/
+.vscode/
