@@ -78,12 +78,12 @@ module JsDuck
       #
       def parse_at_tag
         match(/@/)
-        name = look(/\w+/)
+        name = look(/(\w|-)+/)
 
         if !name
           # ignore
         elsif tag = TagRegistry.get_by_pattern(name)
-          match(/\w+/)
+          match(/(\w|-)+/)
           hw # Skip the whitespace right after the tag.
 
           tags = tag.parse_doc(self, @position)
@@ -103,6 +103,7 @@ module JsDuck
           skip_white
         else
           warn(:tag, "Unsupported tag: @#{name}", [name.to_sym])
+          raise("Treating unsupported tags as error. Raising exception.")
           @multiline_tag[:doc] += "@"
         end
       end
