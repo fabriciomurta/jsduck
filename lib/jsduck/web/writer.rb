@@ -29,7 +29,8 @@ module JsDuck
 
         write_template_files
 
-        write_icons
+        # This overlaps with resources/images/icons.png
+        #write_icons
 
         write_html_files
 
