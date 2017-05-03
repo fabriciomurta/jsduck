@@ -58,6 +58,8 @@ module JsDuck
         "boolean" => "Boolean",
         "number" => "Number",
         "string" => "String",
+        "HTMLElement" => "HTMLElement",
+        "Event" => "Event",
         "null" => "null",
         "undefined" => "undefined",
         "void" => "void",
