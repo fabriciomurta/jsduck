@@ -63,6 +63,7 @@ module JsDuck
         "null" => "null",
         "undefined" => "undefined",
         "void" => "void",
+        "Window" => "Window"
       }
     end
 
