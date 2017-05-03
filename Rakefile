@@ -118,13 +118,14 @@ def compress
   # Now do everything that follows in template-min/ dir
   dir = "template-min"
 
-  # Create JSB3 file for Docs app
-  system("sencha", "create", "jsb", "-a", "http://localhost/docs/", "-p", "#{dir}/app.jsb3")
+  # Requires a working (and old) installation of Sencha CMD
+  # Create JSB3 file for Docs app (no longer works)
+  #system("sencha", "create", "jsb", "-a", "http://localhost/docs/", "-p", "#{dir}/app.jsb3")
   # Concatenate files listed in JSB3 file
-  system("sencha", "build", "-p", "#{dir}/app.jsb3", "-d", dir)
+  #system("sencha", "build", "-p", "#{dir}/app.jsb3", "-d", dir)
 
   # Remove intermediate build files
-  system("rm", "#{dir}/app.jsb3")
+  #system("rm", "#{dir}/app.jsb3")
   system("rm", "#{dir}/all-classes.js")
   # Replace app.js with app-all.js
   system("mv", "#{dir}/app-all.js", "#{dir}/app.js")
@@ -157,7 +158,6 @@ def compress
   system "mkdir -p #{dir}/extjs/resources/themes/images"
   system "cp -r template/extjs/resources/themes/images/default #{dir}/extjs/resources/themes/images"
 end
-
 
 class JsDuckRunner
   def initialize
@@ -331,8 +331,13 @@ task :bump, :new_version do |t, args|
   end
 end
 
+desc "Compresses the template to output smaller code"
+task :compress => :sass do
+  compress
+end
+
 desc "Build JSDuck gem"
-task :gem => :sass do
+task :gem => :compress do
   compress
   system "gem build jsduck.gemspec"
 end
