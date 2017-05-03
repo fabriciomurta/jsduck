@@ -4,5 +4,8 @@ bin/jsduck --warnings=-global --template template --output output/ext6_mine extj
 # ExtJS4.1.1 (full, with CSS)
 bin/jsduck --warnings=-global --template template --output output/extjs411 extjs4 --exclude=extjs4/examples/,extjs4/build,extjs4/build
 
-# ExtJS4.1.1 for static ExtJS oss 4.1.1 template
+# ExtJS4.1.1 for static ExtJS GPL 4.1.1 template
 bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/extjs411 extjs4/src extjs4/resources/themes
+
+# ExtJS6.2.1 classic for static ExtJS GPL 4.1.1 template
+bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/e621docs_e411shell extjs/classic/classic extjs/classic/ux extjs/classic/theme-base extjs/packages

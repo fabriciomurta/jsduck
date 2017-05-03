@@ -1,3 +1,8 @@
 # This will create docs for ExtJS 4.1.1 using this template.
 # (same documented extjs version than documentation shell's extjs)
 bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/extjs411 extjs4/src extjs4/resources/themes
+
+# This will create docs for ExtJS 6.2.1, classic toolkit, using this template.
+# (documented ExtJS version will be 6.2.1, documentation shell's ExtJS version
+# will still be 4.1.1!)
+bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/e621docs_e411shell extjs/classic/classic extjs/classic/ux extjs/classic/theme-base extjs/packages
