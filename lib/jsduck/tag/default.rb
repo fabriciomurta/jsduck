@@ -12,6 +12,7 @@ module JsDuck::Tag
   # HTML.
   class Default < Tag
     def initialize
+      @pattern = "default"
       @tagname = :default
       @html_position = POS_DEFAULT
     end
