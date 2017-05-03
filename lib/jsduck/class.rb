@@ -27,6 +27,18 @@ module JsDuck
 
       @members_index = MembersIndex.new(self)
 
+      # List of classes that are known not to exist and shouldn't be cared
+      # about
+      @ignored_classes = [
+        "Ext.scroll.TableScroller",
+        "Ext.scroll.LockingScroller",
+        "Ext.overrides.dom.Element",
+        # this is a scss-only "class" with no documentation at all
+        # http://docs.sencha.com/extjs/6.2.1/classic/src/SpreadsheetModel.scss.html#Ext.grid.selection.SelectionExtender
+        # somehow the new ExtJS docs parser loads it.
+        "Ext.grid.selection.SelectionExtender"
+      ]
+
       @relations = nil
     end
 
@@ -115,7 +127,10 @@ module JsDuck
         # simplest thing and ignore it.
         Class.new({:name => classname}, false)
       else
-        Logger.warn(:extend, "Class #{classname} not found", @doc[:files][0])
+        if (!@ignored_classes.any? { |name| name == classname })
+          Logger.warn(:extend, "Class #{classname} not found", @doc[:files][0])
+        end
+
         # Create placeholder class
         Class.new({:name => classname}, false)
       end
