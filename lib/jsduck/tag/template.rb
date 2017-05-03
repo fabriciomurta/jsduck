@@ -8,6 +8,7 @@ module JsDuck::Tag
       @html_position = POS_TEMPLATE
       # Box with light gray background
       @css = <<-EOCSS
+        .signature .template { background-color: #aaa } /* gray */
         .template-box {
           text-align: center;
           background-color: #eee;
