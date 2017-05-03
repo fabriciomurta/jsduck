@@ -10631,7 +10631,7 @@ pre,code,kbd,samp,tt {
     text-align: center;
 }
 
-.class-overview .signature {
+.class-overview .signature span {
     font-weight: bold;
     text-transform: uppercase;
     font-size: .7em;
@@ -10642,8 +10642,7 @@ pre,code,kbd,samp,tt {
     border-radius: 2px;
     margin-left: 5px;
     padding: 0 3px;
-    color: white;
-    background-color: #aaa;
+    color: white
 }
 
 .class-overview .signature.deprecated {
