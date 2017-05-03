@@ -1,6 +1,7 @@
 require 'jsduck/js/rkelly_adapter'
 require 'jsduck/js/associator'
 require 'rkelly'
+#require 'iconv' unless String.method_defined?(:encode)
 
 module JsDuck
   module Js
@@ -19,6 +20,10 @@ module JsDuck
       # into Esprima AST, and associate comments with syntax nodes.
       def parse
         parser = RKelly::Parser.new
+
+        utf8_clean_input = @input
+        utf8_clean_input.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+
         ast = parser.parse(@input)
         unless ast
           raise syntax_error(parser)
