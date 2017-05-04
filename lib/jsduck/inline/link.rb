@@ -63,7 +63,15 @@ module JsDuck
         end
 
         if !@relations[cls]
-          Logger.warn(:link, "#{full_link} links to non-existing class", @doc_context)
+          # Check if it is a link provided in the "{@link <url> <text>}" format
+          (tag, link, placeholder) = full_link[1..-2].split(" ")
+          
+          if (placeholder != nil)
+            text="<a href=\"" + link + "\">" + placeholder + "</a>"
+          else
+            Logger.warn(:link, "#{full_link} links to non-existing class", @doc_context)
+          end
+
           return text
         elsif member
           ms = @renderer.find_members(cls, {:name => member, :tagname => type, :static => static})
