@@ -5,7 +5,7 @@ module JsDuck::Tag
   class Prop < MemberTag
     def initialize
       @pattern = "prop"
-      @tagname = :property
+      @tagname = :prop
       @repeatable = true
       @member_type = {
         :title => "Properties (alt)",
