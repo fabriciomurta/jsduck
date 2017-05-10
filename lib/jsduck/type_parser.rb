@@ -60,6 +60,7 @@ module JsDuck
         "string" => "String",
         "HTMLElement" => "HTMLElement",
         "Event" => "Event",
+        "Ext.util.Position" => "Ext.util.Position", # not available in latest ExtJS docs either
         "null" => "null",
         "undefined" => "undefined",
         "void" => "void",
