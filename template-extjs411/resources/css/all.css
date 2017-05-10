@@ -10672,6 +10672,10 @@ pre,code,kbd,samp,tt {
     background-color: #9B86FC;
 }
 
+.class-overview .signature.readonly {
+    background-color: #9B86FC;
+}
+
 .class-overview .new-keyword {
     margin-left: 0;
     margin-right: 3px;
