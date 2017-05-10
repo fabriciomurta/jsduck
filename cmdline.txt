@@ -9,3 +9,16 @@ bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ex
 
 # ExtJS6.2.1 classic for static ExtJS GPL 4.1.1 template
 bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/e621docs_e411shell extjs/classic/classic extjs/classic/ux extjs/classic/theme-base extjs/packages
+
+# Same as above, including other missing packages (8 directories total)
+# directories
+# extjs/packages/core/src
+# extjs/packages/core/overrides
+# extjs/packages/charts/src/
+# extjs/packages/charts/overrides
+# extjs/packages/charts/classic/src
+# extjs/packages/charts/classic/overrides
+# extjs/classic/classic/src
+# extjs/classic/classic/overrides
+
+bin/jsduck --warnings=-global --template template-extjs411 --extjs-path extjs/ext-all-debug-w-comments.js --output output/e621_classic extjs/{packages/{core,charts,charts/classic},classic/classic}/{src,overrides}
