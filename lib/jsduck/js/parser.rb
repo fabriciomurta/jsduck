@@ -21,8 +21,7 @@ module JsDuck
       def parse
         parser = RKelly::Parser.new
 
-        utf8_clean_input = @input
-        utf8_clean_input.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+        @input.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
 
         ast = parser.parse(@input)
         unless ast
