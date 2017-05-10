@@ -32,11 +32,15 @@ module JsDuck
       @ignored_classes = [
         "Ext.scroll.TableScroller",
         "Ext.scroll.LockingScroller",
-        "Ext.overrides.dom.Element",
         # this is a scss-only "class" with no documentation at all
         # http://docs.sencha.com/extjs/6.2.1/classic/src/SpreadsheetModel.scss.html#Ext.grid.selection.SelectionExtender
         # somehow the new ExtJS docs parser loads it.
-        "Ext.grid.selection.SelectionExtender"
+        "Ext.grid.selection.SelectionExtender",
+
+        # The following also did not link in latest 6.2.1 docs
+        "Ext.draw.overrides.hittest.All", # http://docs.sencha.com/extjs/6.2.1/classic/Ext.draw.plugin.SpriteEvents.html
+        "Ext.chart.modifier.Callout", # http://docs.sencha.com/extjs/6.2.1/classic/Ext.chart.sprite.Label.html
+        "Ext.overrides.dom.Element", #http://docs.sencha.com/extjs/6.2.1/classic/Ext.form.Labelable.html
       ]
 
       @relations = nil
@@ -129,6 +133,7 @@ module JsDuck
       else
         if (!@ignored_classes.any? { |name| name == classname })
           Logger.warn(:extend, "Class #{classname} not found", @doc[:files][0])
+          raise("Raising exception upon class not found occurrence.")
         end
 
         # Create placeholder class
