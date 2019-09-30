@@ -197,25 +197,43 @@ class JsDuckRunner
     ]
   end
 
-  def add_ext6(toolkit)
-    if toolkit == "core"
+  def add_ext(toolkit, versn)
+    if toolkit != "modern" && toolkit != "classic"
       tkpath = "packages/" + toolkit
     else
       tkpath = toolkit + "/" + toolkit
     end
 
+    ext_build = EXT_6
+    if versn == 7
+      ext_build = EXT_7
+    end
+
     @options += [
-      "--title", "Sencha Docs - Ext JS 6 " + toolkit,
-      "--footer", "Ext JS 6/" + toolkit + " Docs - Generated with <a href='https://github.com/senchalabs/jsduck'>JSDuck</a> {VERSION}." +
+      "--title", "Sencha Docs - Ext JS #{versn} " + toolkit,
+      "--footer", "Ext JS #{versn}/" + toolkit + " Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
       "--warnings", "-all",
-      "--output", "#{OUT_DIR}/ext6_" + toolkit,
-      "#{EXT_BUILD}/" + tkpath + "/src",
+      "--output", "#{OUT_DIR}/ext#{versn}_" + toolkit,
+      ext_build + "/" + tkpath + "/src",
     ]
   end
 
-  def add_debug6(toolkit)
+  def add_enjs()
+    @options += [
+      "--title", "Sencha Docs - Ext.NET 5 " + toolkit,
+      "--footer", "Ext.NET Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
+                  " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
+      "--ignore-global",
+      "--warnings", "-all",
+      "--output", "#{OUT_DIR}/extnet_" + toolkit,
+      "#{EXT_NET}",
+    ]
+  end
+
+  # this is currently not version-bound, actually
+  def add_ejsdebug(toolkit)
     add_options(
       "--extjs-path", "extjs/ext-all-debug.js",
       "--template", "template"
@@ -251,20 +269,33 @@ class JsDuckRunner
 
   def run
     # Pass multiple arguments to system, so we'll take advantage of the built-in escaping
-    system(*["ruby", "bin/jsduck"].concat(@options))
+    cmdrun = system(*["ruby", "bin/jsduck"].concat(@options))
+
+    if (cmdrun == nil)
+      puts "JSDuck executable cannot be located/executed."
+      exit 1
+    elsif (cmdrun == false)
+      retstat = $?
+      puts "JSDuck execution returned non-success status code #{retstat}."
+      exit 1
+    end
+    puts "JSDuck execution finished successfully."
   end
 end
 
 # Download ExtJS into template/extjs
 task :get_extjs do
+  if Dir.exists?("template/extjs")
+    puts "template/extjs directory already exist. remove it beforehand."
+    exit(1)
+  end
+
   # Found in radiusdesk sourceforge project's SVN history:
   # revision: https://sourceforge.net/p/radiusdesk/code/238/
   # url: https://sourceforge.net/p/radiusdesk/code/238/tree/extjs/ext-4.1.1a-gpl.zip?format=raw
-
   system "curl -o template/extjs.zip 'https://sourceforge.net/p/radiusdesk/code/238/tree/extjs/ext-4.1.1a-gpl.zip?format=raw'"
+
   system "unzip template/extjs.zip -d template/"
-  # FIXME: do a less-insecure removal of folder. Or warn/fail if folder exists.
-  #system "rm -rf template/extjs"
   system "mv template/ext-4.1.1a template/extjs"
   system "rm template/extjs.zip"
 end
@@ -378,51 +409,50 @@ task :ext4 => :sass do
   system("ln -s #{EXT_BUILD} #{OUT_DIR}/extjs-build")
 end
 
+def do_extjs(toolkit, versn)
+  puts "Building docs for ExtJS #{versn} - " + toolkit
+  runner = JsDuckRunner.new
+  runner.add_ext(toolkit, versn)
+  runner.add_ejsdebug(toolkit)
+  #puts runner.get_options().join(' ')
+  runner.run
+
+  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
+  puts "Done building docs for ExtJS #{versn} - " + toolkit
+end
+
+def do_ejsver(versn)
+  do_extjs("core", versn)
+  do_extjs("classic", versn)
+  do_extjs("modern", versn)
+  puts "All Ext JS parts built."
+end
+
 desc "Run JSDuck on official Ext JS 6 build"
-task :ext6 => [ :sass, :ext6_core, :ext6_classic, :ext6_modern ] do
-  puts "Seems we made it!"
+task :ext6 => [ :sass ] do
+  do_ejsver(6)
 end
 
-desc "Run JSDuck on official Ext JS 6/core build"
-task :ext6_core do
-  toolkit = "core"
-  puts "Building docs for ExtJS 6 - " + toolkit
+desc "Run JSDuck on official Ext JS 7 build"
+task :ext7 => [ :sass ] do
+  do_ejsver(7)
+end
+
+desc "Run JSDuck on Ext.NET JavaScript sources"
+task :extnet do
+  puts "Building docs for Ext.NET 5 "
   runner = JsDuckRunner.new
-  runner.add_ext6(toolkit)
-  runner.add_debug6(toolkit)
+  versn = 5
+  runner.add_ext("charts", versn)
+  runner.add_ext("ux", versn)
+  runner.add_ext("classic", versn)
+
+  runner.add_ejsdebug(toolkit)
   #puts runner.get_options().join(' ')
   runner.run
 
   #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
-  puts "Done building docs for ExtJS 6 - " + toolkit
-end
-
-desc "Run JSDuck on official Ext JS 6/classic build"
-task :ext6_classic do
-  toolkit = "classic"
-  puts "Building docs for ExtJS 6 - " + toolkit
-  runner = JsDuckRunner.new
-  runner.add_ext6(toolkit)
-  runner.add_debug6(toolkit)
-  #puts runner.get_options().join(' ')
-  runner.run
-
-  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
-  puts "Done building docs for ExtJS 6 - " + toolkit
-end
-
-desc "Run JSDuck on official Ext JS 6/modern build"
-task :ext6_modern do
-  toolkit = "modern"
-  puts "Building docs for ExtJS 6 - " + toolkit
-  runner = JsDuckRunner.new
-  runner.add_ext6(toolkit)
-  runner.add_debug6(toolkit)
-  #puts runner.get_options().join(' ')
-  runner.run
-
-  #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
-  puts "Done building docs for ExtJS 6 - " + toolkit
+  puts "Done building docs for ExtJS #{versn} - " + toolkit
 end
 
 task :default => :spec
