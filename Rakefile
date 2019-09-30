@@ -255,6 +255,20 @@ class JsDuckRunner
   end
 end
 
+# Download ExtJS into template/extjs
+task :get_extjs do
+  # Found in radiusdesk sourceforge project's SVN history:
+  # revision: https://sourceforge.net/p/radiusdesk/code/238/
+  # url: https://sourceforge.net/p/radiusdesk/code/238/tree/extjs/ext-4.1.1a-gpl.zip?format=raw
+
+  system "curl -o template/extjs.zip 'https://sourceforge.net/p/radiusdesk/code/238/tree/extjs/ext-4.1.1a-gpl.zip?format=raw'"
+  system "unzip template/extjs.zip -d template/"
+  # FIXME: do a less-insecure removal of folder. Or warn/fail if folder exists.
+  #system "rm -rf template/extjs"
+  system "mv template/ext-4.1.1a template/extjs"
+  system "rm template/extjs.zip"
+end
+
 # Auto-generate sdk-vars.rb config file
 task :config_file do
   if File.exists?("sdk-vars.rb")
