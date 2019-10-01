@@ -8,6 +8,8 @@ describe JsDuck::Aggregator do
   describe "both @return this and @chainable in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -31,6 +33,8 @@ describe JsDuck::Aggregator do
   describe "simple @chainable in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -54,6 +58,8 @@ describe JsDuck::Aggregator do
   describe "an @return {MyClass} this in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -77,6 +83,8 @@ describe JsDuck::Aggregator do
   describe "an @return {MyClass} this and other docs in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -100,6 +108,8 @@ describe JsDuck::Aggregator do
   describe "an @return {MyClass} thisBlah in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -118,6 +128,8 @@ describe JsDuck::Aggregator do
   describe "an @return {OtherClass} this in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -136,6 +148,8 @@ describe JsDuck::Aggregator do
   describe "an @return {MyClass} no-this in method doc" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -154,6 +168,8 @@ describe JsDuck::Aggregator do
   describe "method without any code" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** @method bar */
@@ -169,6 +185,8 @@ describe JsDuck::Aggregator do
   describe "method consisting of Ext.emptyFn in code" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** */
@@ -185,6 +203,8 @@ describe JsDuck::Aggregator do
   describe "function with 'return this;' in code" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** */
@@ -210,6 +230,8 @@ describe JsDuck::Aggregator do
   describe "constructor with no @return" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** */
@@ -226,6 +248,8 @@ describe JsDuck::Aggregator do
   describe "constructor with simple @return" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -244,6 +268,8 @@ describe JsDuck::Aggregator do
   describe "constructor with @constructor tag" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /**
@@ -262,6 +288,8 @@ describe JsDuck::Aggregator do
   describe "constructor containing 'return this;'" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** */
@@ -278,6 +306,8 @@ describe JsDuck::Aggregator do
   describe "constructor with some other explicit return type" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("MyClass", {
             /** @return {OtherClass} new instance */

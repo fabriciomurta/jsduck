@@ -8,13 +8,13 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "single alias" do
     it "detects alias" do
-      @doc[:aliases].should == {"widget" => ["foo"]}
+      expect(@doc[:aliases]) == {"widget" => ["foo"]}
     end
   end
 
   shared_examples_for "multiple aliases" do
     it "collects all aliases together" do
-      @doc[:aliases].should == {"widget" => ["foo", "bar"]}
+      expect(@doc[:aliases]) == {"widget" => ["foo", "bar"]}
     end
   end
 
@@ -53,7 +53,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "ignores the alias" do
-      @doc[:aliases].should == {}
+      expect(@doc[:aliases]) == {}
     end
   end
 
@@ -67,7 +67,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "ignores the alias" do
-      @doc[:aliases].should == {}
+      expect(@doc[:aliases]) == {}
     end
   end
 
@@ -93,7 +93,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "ignores the alias" do
-      @doc[:aliases].should == {}
+      expect(@doc[:aliases]) == {}
     end
   end
 
@@ -107,7 +107,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects a feature alias" do
-      @doc[:aliases].should == {"feature" => ["foo"]}
+      expect(@doc[:aliases]) == {"feature" => ["foo"]}
     end
   end
 
@@ -121,7 +121,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects a plugin alias" do
-      @doc[:aliases].should == {"plugin" => ["foo"]}
+      expect(@doc[:aliases]) == {"plugin" => ["foo"]}
     end
   end
 
@@ -164,13 +164,15 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "will use the first part as namespace" do
-      @doc[:aliases].should == {"widget" => ["foo.bar"]}
+      expect(@doc[:aliases]) == {"widget" => ["foo.bar"]}
     end
   end
 
   describe "Ext.define() with simple alias" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           alias: 'widget.foo'
@@ -183,7 +185,9 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with @alias overriding alias" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
-        /**
+      /** @class Ext.Base */
+
+      /**
          * @alias widget.foo
          */
         Ext.define('MyClass', {
@@ -197,6 +201,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with @xtype overriding alias" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /**
          * @xtype foo
          */
@@ -211,6 +217,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with array of aliases" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           alias: ['widget.foo', 'widget.bar']
@@ -223,6 +231,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with different kinds of aliases" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           alias: ['store.json', 'store.ajax', 'component.myclass']
@@ -230,13 +240,15 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "collects all aliases together" do
-      @doc[:aliases].should == {"store" => ["json", "ajax"], "component" => ["myclass"]}
+      expect(@doc[:aliases]) == {"store" => ["json", "ajax"], "component" => ["myclass"]}
     end
   end
 
   describe "Ext.define() with dash inside alias name" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           alias: 'widget.foo-bar'
@@ -244,13 +256,15 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "treats dash as a normal character" do
-      @doc[:aliases].should == {"widget" => ["foo-bar"]}
+      expect(@doc[:aliases]) == {"widget" => ["foo-bar"]}
     end
   end
 
   describe "Ext.define() with xtype property" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           xtype: 'foo'
@@ -263,6 +277,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with array xtype property" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           xtype: ['foo', 'bar']
@@ -275,6 +291,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with both xtype and alias" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
           alias: 'widget.foo',

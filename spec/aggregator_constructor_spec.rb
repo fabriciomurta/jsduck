@@ -80,6 +80,8 @@ describe JsDuck::Aggregator do
   describe "class with both @constructor tag and constructor property inside Ext.define()" do
     let(:methods) do
       parse(<<-EOS)["MyClass"][:members]
+        /** @class Ext.Base */
+
         /**
          * Comment here.
          * @constructor
@@ -101,6 +103,8 @@ describe JsDuck::Aggregator do
   describe "class with constructor property inside Ext.define()" do
     let(:methods) do
       parse(<<-EOS)["MyClass"][:members]
+        /** @class Ext.Base */
+
         /**
          * Comment here.
          * @private

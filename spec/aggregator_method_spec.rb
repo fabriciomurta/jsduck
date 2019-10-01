@@ -201,6 +201,8 @@ describe JsDuck::Aggregator do
   describe "method without comment inside Ext.define" do
     let(:method) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /** Some documentation. */
         Ext.define("MyClass", {
             foo: function() {}
@@ -214,6 +216,8 @@ describe JsDuck::Aggregator do
   describe "method with line comment inside Ext.define" do
     let(:method) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /** Some documentation. */
         Ext.define("MyClass", {
             // My docs
@@ -232,6 +236,8 @@ describe JsDuck::Aggregator do
   describe "property with value Ext.emptyFn inside Ext.define" do
     let(:method) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /** Some documentation. */
         Ext.define("MyClass", {
             foo: Ext.emptyFn

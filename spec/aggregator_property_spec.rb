@@ -291,6 +291,8 @@ describe JsDuck::Aggregator do
   describe "property without comment inside Ext.define" do
     let(:property) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /** Some documentation. */
         Ext.define("MyClass", {
             foo: 15
@@ -304,6 +306,8 @@ describe JsDuck::Aggregator do
   describe "property with line comment inside Ext.define" do
     let(:property) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /** Some documentation. */
         Ext.define("MyClass", {
             // My docs

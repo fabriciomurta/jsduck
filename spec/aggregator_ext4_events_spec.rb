@@ -8,6 +8,8 @@ describe JsDuck::Aggregator do
   describe "event inside Ext.define get extra parameter" do
     let(:event) do
       parse(<<-EOF)["Blah"][:members][0]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Blah", {
             /**
@@ -43,6 +45,8 @@ describe JsDuck::Aggregator do
   describe "When some class defined with Ext.define" do
     let(:events) do
       parse(<<-EOF)["Foo"][:members]
+        /** @class Ext.Base */
+
         /** @class Foo */
             /**
              * @event click

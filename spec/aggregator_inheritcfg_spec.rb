@@ -8,6 +8,8 @@ describe JsDuck::Aggregator do
   describe "auto-detected property overriding property in parent" do
     let(:classes) do
       parse(<<-EOS)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             /** @property */
@@ -38,6 +40,8 @@ describe JsDuck::Aggregator do
   describe "auto-detected property overriding config in parent" do
     let(:classes) do
       parse(<<-EOS)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             /** @cfg */
@@ -79,6 +83,8 @@ describe JsDuck::Aggregator do
       # ensure we inherit parent docs before inheriting the child docs
       # from it.
       parse(<<-EOS)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Child", {
             extend: "Parent",

@@ -17,7 +17,22 @@ describe JsDuck::Aggregator do
   describe "explicit class" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
-        /**
+       /**
+         * @class Your.Class
+         * Some docs
+         */
+
+       /**
+         * @class Foo.Mixin
+         * Some docs
+         */
+
+       /**
+         * @class Bar.Mixin
+         * Some docs
+         */
+
+       /**
          * @class MyClass
          * @extends Your.Class
          * @mixins Foo.Mixin Bar.Mixin
@@ -49,6 +64,16 @@ describe JsDuck::Aggregator do
   describe "class @tag aliases" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+       /**
+         * @class Your.Class
+         * Some docs
+         */
+
+       /**
+         * @class My.Mixin
+         * Some docs
+         */
+
         /**
          * @class MyClass
          * @extend Your.Class
@@ -74,6 +99,21 @@ describe JsDuck::Aggregator do
   describe "class with multiple @mixins" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+       /**
+         * @class My.Mixin
+         * Some docs
+         */
+
+       /**
+         * @class Your.Mixin
+         * Some docs
+         */
+
+       /**
+         * @class Other.Mixin
+         * Some docs
+         */
+
         /**
          * @class MyClass
          * @mixins My.Mixin
@@ -148,7 +188,7 @@ describe JsDuck::Aggregator do
 
   describe "Ext.extend() in code" do
     before do
-      @doc = parse("/** */ MyClass = Ext.extend(Your.Class, {  });")["MyClass"]
+      @doc = parse("/** @class Your.Class */ /** */ MyClass = Ext.extend(Your.Class, {  });")["MyClass"]
     end
     it_should_behave_like "class"
     it "detects implied extends" do
@@ -181,6 +221,10 @@ describe JsDuck::Aggregator do
   describe "basic Ext.define() in code" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Your.Class */
+        /** @class Ext.util.Observable */
+        /** @class Foo.Bar */
+
         /** */
         Ext.define('MyClass', {
           extend: 'Your.Class',
@@ -201,6 +245,8 @@ describe JsDuck::Aggregator do
   describe "Ext.ClassManager.create() instead of Ext.define()" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.ClassManager.create('MyClass', {
         });
@@ -212,6 +258,10 @@ describe JsDuck::Aggregator do
   describe "complex Ext.define() in code" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Your.Class */
+        /** @class Ext.util.Observable */
+        /** @class Foo.Bar */
+
         /** */
         Ext.define('MyClass', {
           blah: true,
@@ -235,6 +285,10 @@ describe JsDuck::Aggregator do
   describe "explicit @tags overriding Ext.define()" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Your.Class */
+        /** @class Ext.util.Observable */
+        /** @class Foo.Bar */
+
         /**
          * @class MyClass
          * @extends Your.Class
@@ -262,6 +316,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() without extend" do
     before do
       @doc = parse(<<-EOS)["MyClass"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define('MyClass', {
         });
@@ -275,6 +331,8 @@ describe JsDuck::Aggregator do
   describe "member docs after class doc" do
     before do
       @classes = parse(<<-EOS)
+        /** @class Ext.Panel */
+
         /**
          * @class
          */
@@ -302,7 +360,7 @@ describe JsDuck::Aggregator do
       @doc = @classes["MyClass"]
     end
     it "results in only one item" do
-      @classes.length.should == 1
+      @classes.length.should == 2 # account the pseudo Ext.Panel class
     end
     it_should_behave_like "class"
 
@@ -355,6 +413,10 @@ describe JsDuck::Aggregator do
   describe "one class many times" do
     before do
       @classes = parse(<<-EOS)
+        /** @class Bar */
+        /** @class Mix1 */
+        /** @class Mix2 */
+
         /**
          * @class Foo
          */
@@ -389,7 +451,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results in only one class" do
-      @classes.length.should == 1
+      @classes.length.should == 4 # account the three pseudo-classes
     end
 
     it "takes class doc from first doc-block that has one" do
@@ -476,6 +538,8 @@ describe JsDuck::Aggregator do
   describe "@extend followed by class name in {curly brackets}" do
     before do
       @doc = parse(<<-EOS)["Foo"]
+        /** @class Bar.Baz */
+
         /**
          * @class Foo
          * @extends {Bar.Baz}

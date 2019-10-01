@@ -9,6 +9,8 @@ describe JsDuck::ClassDocExpander do
   describe "class with cfgs" do
     let(:cls) do
       parse(<<-EOS)["MyClass"]
+        /** @class Bar */
+
         /**
          * @class MyClass
          * @extends Bar

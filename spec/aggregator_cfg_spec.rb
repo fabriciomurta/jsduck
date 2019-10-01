@@ -133,6 +133,8 @@ describe JsDuck::Aggregator do
 
   def parse_config_code(propertyName)
     parse(<<-EOS)["MyClass"][:members]
+      /** @class Ext.Base */
+
       /**
        * Some documentation.
        */
@@ -171,7 +173,7 @@ describe JsDuck::Aggregator do
       end
 
       it "with :linenr field" do
-        cfg[0][:linenr].should == 6
+        cfg[0][:linenr].should == 8
       end
     end
 
@@ -223,6 +225,8 @@ describe JsDuck::Aggregator do
   describe "detecting Ext.define() with all kind of configs" do
     let(:cfg) do
       parse(<<-EOS)["MyClass"][:members]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */
@@ -249,6 +253,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with line-comment before config:" do
     let(:cfg) do
       parse(<<-EOS)["MyClass"][:members]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */

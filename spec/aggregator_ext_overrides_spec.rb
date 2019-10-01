@@ -136,6 +136,8 @@ describe JsDuck::Aggregator do
   describe "auto-detected override: in Ext.define" do
     let(:classes) do
       parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Foo", {
             foobar: function(){}
@@ -164,6 +166,8 @@ describe JsDuck::Aggregator do
   describe "use of @override tag without @class" do
     let(:classes) do
       parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Foo", {
             foobar: function(){}
@@ -193,6 +197,8 @@ describe JsDuck::Aggregator do
   describe "override created with Ext.override" do
     let(:classes) do
       parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Foo", {
             foobar: function(){}
@@ -220,6 +226,8 @@ describe JsDuck::Aggregator do
   describe "@override without classname" do
     let(:classes) do
       parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Foo", {
             /** @override */

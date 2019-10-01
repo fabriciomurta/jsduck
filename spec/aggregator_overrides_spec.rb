@@ -84,6 +84,8 @@ describe JsDuck::Aggregator do
   describe "overriding with multiple auto-detected members" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
           /** */
           Ext.define('Base', {
               /** */

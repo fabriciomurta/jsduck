@@ -77,6 +77,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with undocumented property in statics:" do
     let(:member) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */
@@ -110,7 +112,7 @@ describe JsDuck::Aggregator do
       end
 
       it "with :linenr field" do
-        member[:linenr].should == 6
+        member[:linenr].should == 8
       end
     end
   end
@@ -118,6 +120,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with documented method in statics:" do
     let(:member) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */
@@ -152,7 +156,7 @@ describe JsDuck::Aggregator do
       end
 
       it "with :linenr field" do
-        member[:files][0][:linenr].should == 6
+        member[:files][0][:linenr].should == 8
       end
     end
   end
@@ -160,6 +164,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with undocumented method in inheritableStatics:" do
     let(:member) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */
@@ -193,6 +199,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with line-comment before item in statics:" do
     let(:member) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */
@@ -225,6 +233,8 @@ describe JsDuck::Aggregator do
   describe "Ext.define() with property having value Ext.emptyFn in statics:" do
     let(:member) do
       parse(<<-EOS)["MyClass"][:members][0]
+        /** @class Ext.Base */
+
         /**
          * Some documentation.
          */

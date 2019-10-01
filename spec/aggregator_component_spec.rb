@@ -8,6 +8,8 @@ describe JsDuck::Aggregator do
   describe "class without @component" do
     let(:cls) do
       parse(<<-EOS)["Foo"]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Foo", {
         });
@@ -22,6 +24,8 @@ describe JsDuck::Aggregator do
   describe "class with @component" do
     let(:cls) do
       parse(<<-EOS)["Foo"]
+        /** @class Ext.Base */
+
         /**
          * Some class
          * @component
@@ -39,6 +43,9 @@ describe JsDuck::Aggregator do
   describe "class inheriting from Ext.Component" do
     let(:cls) do
       parse(<<-EOS)["Foo"]
+        /** @class Ext.Base */
+        /** @class Ext.Component */
+
         /** */
         Ext.define("Foo", {
             extend: "Ext.Component"
@@ -54,6 +61,9 @@ describe JsDuck::Aggregator do
   describe "the Ext.Component class itself" do
     let(:cls) do
       parse(<<-EOS)["Ext.Component"]
+        /** @class Ext.Base */
+        /** @class Ext.Component */
+
         /** */
         Ext.define("Ext.Component", {
         });

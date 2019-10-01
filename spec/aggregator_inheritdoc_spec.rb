@@ -472,6 +472,8 @@ describe JsDuck::Aggregator do
   describe "parent class with property changed to config" do
     before do
       @docs = parse(<<-EOF)
+          /** @class Ext.Base */
+
           /** */
           Ext.define('Ext.Blah', {
               /**

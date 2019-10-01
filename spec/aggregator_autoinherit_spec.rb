@@ -8,6 +8,8 @@ describe JsDuck::Aggregator do
   describe "autoinherit with config:{}" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             config: {
@@ -41,6 +43,8 @@ describe JsDuck::Aggregator do
   describe "autoinherit with config:{} through two parents" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             config: {
@@ -81,6 +85,8 @@ describe JsDuck::Aggregator do
   describe "autoinherit with config:{} and no parent" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Child", {
             config: {
@@ -100,6 +106,8 @@ describe JsDuck::Aggregator do
   describe "autoinherit with several tags" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             /**
@@ -137,6 +145,8 @@ describe JsDuck::Aggregator do
   describe "autoinherit with his own and parent tags" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             /**
@@ -178,6 +188,8 @@ describe JsDuck::Aggregator do
   describe "inheriting cfg/property type" do
     let(:members) do
       ms = parse(<<-EOF)["Child"][:members]
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             /**
@@ -232,6 +244,8 @@ describe JsDuck::Aggregator do
   describe "instance members autoinherit with parent containing statics" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             inheritableStatics: {
@@ -263,6 +277,8 @@ describe JsDuck::Aggregator do
   describe "static members autoinherit with parent containing statics" do
     before do
       @docs = parse(<<-EOF)
+        /** @class Ext.Base */
+
         /** */
         Ext.define("Parent", {
             inheritableStatics: {
