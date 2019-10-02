@@ -26,7 +26,7 @@ describe JsDuck::Aggregator do
     end
 
     it "does not mark item as private" do
-      @doc[:private].should_not == true
+      expect(@doc[:private]).not_to eq(true)
     end
 
     it "marks item as :hide" do

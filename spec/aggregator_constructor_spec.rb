@@ -122,7 +122,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't detect the constructor as private" do
-      methods[0][:private].should_not == true
+      expect(methods[0][:private]).not_to eq(true)
     end
   end
 

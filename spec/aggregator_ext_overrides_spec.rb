@@ -48,7 +48,7 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "keeps the original class" do
-      classes["Foo"].should_not == nil
+      expect(classes["Foo"]).not_to eq(nil)
     end
 
     it "throws away the override" do
@@ -68,11 +68,11 @@ describe JsDuck::Aggregator do
     end
 
     it "keeps its original foo method" do
-      methods["foo"].should_not == nil
+      expect(methods["foo"]).not_to eq(nil)
     end
 
     it "gets the new bar method from override" do
-      methods["bar"].should_not == nil
+      expect(methods["bar"]).not_to eq(nil)
     end
 
     it "adds special override comment to bar method" do
@@ -84,7 +84,7 @@ describe JsDuck::Aggregator do
     end
 
     it "keeps the foobar method that's in both original and override" do
-      methods["foobar"].should_not == nil
+      expect(methods["foobar"]).not_to eq(nil)
     end
 
     it "combines docs of original and override" do
@@ -155,7 +155,7 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "adds member to overridden class" do
-      methods["bar"].should_not == nil
+      expect(methods["bar"]).not_to eq(nil)
     end
 
     it "adds note to docs about member being overridden" do
@@ -186,7 +186,7 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "adds member to overridden class" do
-      methods["bar"].should_not == nil
+      expect(methods["bar"]).not_to eq(nil)
     end
 
     it "adds note to docs about member being overridden" do
@@ -215,7 +215,7 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "adds member to overridden class" do
-      methods["bar"].should_not == nil
+      expect(methods["bar"]).not_to eq(nil)
     end
 
     it "adds note to docs about member being overridden" do
@@ -239,7 +239,7 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "gets ignored" do
-      methods["foo"].should_not == nil
+      expect(methods["foo"]).not_to eq(nil)
     end
   end
 end

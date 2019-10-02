@@ -31,7 +31,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't get readonly attribute" do
-      doc[:readonly].should_not == true
+      expect(doc[:readonly]).not_to eq(true)
     end
   end
 
@@ -92,7 +92,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets no readonly attribute" do
-      doc[:readonly].should_not == true
+      expect(doc[:readonly]).not_to eq(true)
     end
   end
 
@@ -108,7 +108,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets no readonly attribute" do
-      doc[:readonly].should_not == true
+      expect(doc[:readonly]).not_to eq(true)
     end
   end
 

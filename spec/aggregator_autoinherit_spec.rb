@@ -266,11 +266,11 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't inherit from parent static method" do
-      @cls[:members][0][:doc].should_not == "My method."
+      expect(@cls[:members][0][:doc]).not_to eq("My method.")
     end
 
     it "doesn't inherit from parent static property" do
-      @cls[:members][1][:doc].should_not == "My property."
+      expect(@cls[:members][1][:doc]).not_to eq("My property.")
     end
   end
 

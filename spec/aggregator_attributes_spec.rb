@@ -82,7 +82,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets deprecated attribute" do
-      @deprecated.should_not == nil
+      expect(@deprecated).not_to eq(nil)
     end
 
     it "detects deprecation description" do

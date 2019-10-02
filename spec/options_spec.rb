@@ -21,7 +21,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "treats empty input files list as invalid" do
-      parse("-o", "foo/").validate!(:input_files).should_not == nil
+      expect(parse("-o", "foo/").validate!(:input_files)).not_to eq(nil)
     end
 
     it "contains all non-option arguments" do
@@ -52,7 +52,7 @@ describe JsDuck::Options::Parser do
 
     it "doesn't accept --export=foo" do
       opts = parse("--export", "foo")
-      opts.validate!(:export).should_not == nil
+      expect(opts.validate!(:export)).not_to eq(nil)
     end
 
     it "is valid when no export option specified" do
@@ -77,12 +77,12 @@ describe JsDuck::Options::Parser do
 
     it "is invalid when not a number" do
       opts = parse("--guides-toc-level", "hello")
-      opts.validate!(:guides_toc_level).should_not == nil
+      expect(opts.validate!(:guides_toc_level)).not_to eq(nil)
     end
 
     it "is invalid when larger then 6" do
       opts = parse("--guides-toc-level", "7")
-      opts.validate!(:guides_toc_level).should_not == nil
+      expect(opts.validate!(:guides_toc_level)).not_to eq(nil)
     end
   end
 
@@ -107,7 +107,7 @@ describe JsDuck::Options::Parser do
 
     it "can not be set to a negative number" do
       opts = parse("--processes", "-6")
-      opts.validate!(:processes).should_not == nil
+      expect(opts.validate!(:processes)).not_to eq(nil)
     end
   end
 

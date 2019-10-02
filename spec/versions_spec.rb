@@ -104,11 +104,11 @@ describe JsDuck::Process::Versions do
     # @new
 
     it "doesn't add @new to VeryOldClass" do
-      @stuff["VeryOldClass"][:new].should_not == true
+      expect(@stuff["VeryOldClass"][:new]).not_to eq(true)
     end
 
     it "doesn't add @new to OldClass" do
-      @stuff["OldClass"][:new].should_not == true
+      expect(@stuff["OldClass"][:new]).not_to eq(true)
     end
 
     it "adds @new to NewClass" do
@@ -116,11 +116,11 @@ describe JsDuck::Process::Versions do
     end
 
     it "doesn't add @new to ClassWithNewName" do
-      @stuff["ClassWithNewName"][:new].should_not == true
+      expect(@stuff["ClassWithNewName"][:new]).not_to eq(true)
     end
 
     it "doesn't add @new to ExplicitSinceClass" do
-      @stuff["ExplicitSinceClass"][:new].should_not == true
+      expect(@stuff["ExplicitSinceClass"][:new]).not_to eq(true)
     end
 
     it "keeps explicit @new on ExplicitNewClass" do
@@ -131,11 +131,11 @@ describe JsDuck::Process::Versions do
     end
 
     it "doesn't add @new to #foo" do
-      @stuff["VeryOldClass#cfg-foo"][:new].should_not == true
+      expect(@stuff["VeryOldClass#cfg-foo"][:new]).not_to eq(true)
     end
 
     it "doesn't add @new to #bar" do
-      @stuff["VeryOldClass#cfg-bar"][:new].should_not == true
+      expect(@stuff["VeryOldClass#cfg-bar"][:new]).not_to eq(true)
     end
 
     it "adds @new to #baz" do
@@ -143,7 +143,7 @@ describe JsDuck::Process::Versions do
     end
 
     it "doesn't add @new to #zap" do
-      @stuff["VeryOldClass#cfg-zap"][:new].should_not == true
+      expect(@stuff["VeryOldClass#cfg-zap"][:new]).not_to eq(true)
     end
 
     it "keeps explicit @new in #new" do
@@ -184,7 +184,7 @@ describe JsDuck::Process::Versions do
     # @since
 
     it "gives no @new to VeryOldClass" do
-      @relations[0][:new].should_not == true
+      expect(@relations[0][:new]).not_to eq(true)
     end
 
     it "gives @new to OldClass" do

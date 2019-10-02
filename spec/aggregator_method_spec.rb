@@ -138,7 +138,7 @@ describe JsDuck::Aggregator do
     end
 
     it "isn't detected as method" do
-      @doc[:tagname].should_not == :method
+      expect(@doc[:tagname]).not_to eq(:method)
     end
   end
 

@@ -10,7 +10,7 @@ describe JsDuck::Aggregator do
       expect(doc[:tagname]).to eq(:class)
     end
     it "sets :enum field" do
-      doc[:enum].should_not == nil
+      expect(doc[:enum]).not_to eq(nil)
     end
     it "detects name" do
       expect(doc[:name]).to eq("My.enumeration.Type")
@@ -51,7 +51,7 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "non_doc_enum" do
     it "doesn't detect an enum for doc purposes only" do
-      doc[:enum][:doc_only].should_not == true
+      expect(doc[:enum][:doc_only]).not_to eq(true)
     end
   end
 
@@ -180,7 +180,7 @@ describe JsDuck::Aggregator do
     end
 
     it "keeps the explicit :inheritdoc tag in doc-commented member" do
-      doc[:members][1][:inheritdoc].should_not == nil
+      expect(doc[:members][1][:inheritdoc]).not_to eq(nil)
     end
   end
 

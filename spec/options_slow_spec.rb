@@ -33,7 +33,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "is invalid when :stdout but not export" do
-      parse("--output", "-").validate!(:output).should_not == nil
+      expect(parse("--output", "-").validate!(:output)).not_to eq(nil)
     end
 
     it "is valid when :stdout and export" do
@@ -41,7 +41,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "is invalid when no output dir specified" do
-      parse().validate!(:output).should_not == nil
+      expect(parse().validate!(:output)).not_to eq(nil)
     end
 
     it "is valid when output dir exists and is a directory" do
@@ -51,7 +51,7 @@ describe JsDuck::Options::Parser do
 
     it "is invalid when output dir is not a directory" do
       m = {:exists? => Proc.new {|f| f == "foo/"}, :directory? => false}
-      mock_parse(m, "-o", "foo/").validate!(:output).should_not == nil
+      expect(mock_parse(m, "-o", "foo/").validate!(:output)).not_to eq(nil)
     end
 
     it "is valid when parent dir of output dir exists" do
@@ -80,7 +80,7 @@ describe JsDuck::Options::Parser do
 
     it "is invalid when parent dir of output dir is missing" do
       m = {:exists? => false}
-      mock_parse(m, "-o", "foo/").validate!(:output).should_not == nil
+      expect(mock_parse(m, "-o", "foo/").validate!(:output)).not_to eq(nil)
     end
   end
 
@@ -99,7 +99,7 @@ describe JsDuck::Options::Parser do
         :exists? => false,
       }
       opts = mock_parse(m, "--template", "foo")
-      opts.validate!(:template).should_not == nil
+      expect(opts.validate!(:template)).not_to eq(nil)
     end
 
     it "is invalid when template dir has no /resources/css dir" do
@@ -107,7 +107,7 @@ describe JsDuck::Options::Parser do
         :exists? => Proc.new {|fname| fname == "foo/extjs"},
       }
       opts = mock_parse(m, "--template", "foo")
-      opts.validate!(:template).should_not == nil
+      expect(opts.validate!(:template)).not_to eq(nil)
     end
 
     it "is valid when template dir contains both /extjs and /resouces/css dirs" do

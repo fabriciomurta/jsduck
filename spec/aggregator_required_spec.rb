@@ -18,7 +18,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "is not required by default" do
-      @doc[:required].should_not == true
+      expect(@doc[:required]).not_to eq(true)
     end
   end
 
@@ -45,7 +45,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "doesn't become a required class" do
-      @doc[:required].should_not == true
+      expect(@doc[:required]).not_to eq(true)
     end
     it "contains required config" do
       expect(@doc[:members][0][:required]).to eq(true)
@@ -63,11 +63,11 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't have the config marked as required" do
-      @doc[:required].should_not == true
+      expect(@doc[:required]).not_to eq(true)
     end
 
     it "doesn't have the subproperty marked as required" do
-      @doc[:properties][0][:required].should_not == true
+      expect(@doc[:properties][0][:required]).not_to eq(true)
     end
 
     it "contains the (required) inside subproperty description" do

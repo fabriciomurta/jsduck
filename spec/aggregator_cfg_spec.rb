@@ -187,7 +187,7 @@ describe JsDuck::Aggregator do
       end
 
       it "as public" do
-        cfg[1][:private].should_not == true
+        expect(cfg[1][:private]).not_to eq(true)
       end
 
       it "with :accessor flag" do

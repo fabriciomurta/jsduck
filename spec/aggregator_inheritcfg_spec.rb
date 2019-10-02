@@ -33,7 +33,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects property in child as public" do
-      classes["Child"][:members][0][:private].should_not == true
+      expect(classes["Child"][:members][0][:private]).not_to eq(true)
     end
   end
 

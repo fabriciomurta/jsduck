@@ -162,15 +162,15 @@ describe "JsDuck::Js::Returns#detect" do
 
   describe "doesn't return [:this] when function body" do
     it "is empty" do
-      returns("/** */ function foo() {}").should_not == [:this]
+      expect(returns("/** */ function foo() {}")).not_to eq([:this])
     end
 
     it "has empty return statement" do
-      returns("/** */ function foo() { return; }").should_not == [:this]
+      expect(returns("/** */ function foo() { return; }")).not_to eq([:this])
     end
 
     it "has RETURN THIS after statements containing a RETURN" do
-      returns(<<-EOJS).should_not == [:this]
+      expect(returns(<<-EOJS)).not_to eq([:this])
       /** */
       function foo() {
           while (x) {
@@ -185,7 +185,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has WHILE containing RETURN THIS" do
-      returns(<<-EOJS).should_not == [:this]
+      expect(returns(<<-EOJS)).not_to eq([:this])
       /** */
       function foo() {
           while (condition) {
@@ -196,7 +196,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has only one branch finishing with RETURN THIS" do
-      returns(<<-EOJS).should_not == [:this]
+      expect(returns(<<-EOJS)).not_to eq([:this])
       /** */
       function foo() {
           if (foo) {

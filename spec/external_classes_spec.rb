@@ -15,11 +15,11 @@ describe JsDuck::ExternalClasses do
   end
 
   it "doesn't match completely different classname" do
-    @external.is?("Zap").should_not == true
+    expect(@external.is?("Zap")).not_to eq(true)
   end
 
   it "doesn't match classname beginning like an external classname" do
-    @external.is?("Foo.Bar").should_not == true
+    expect(@external.is?("Foo.Bar")).not_to eq(true)
   end
 
   it "matches external classname defined with a wildcard" do

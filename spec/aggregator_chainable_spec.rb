@@ -121,7 +121,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -141,7 +141,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -161,7 +161,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -178,7 +178,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -196,7 +196,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -299,7 +299,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't get @chainable tag" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 
@@ -333,7 +333,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't detect chainable from code" do
-      cls[:members][0][:chainable].should_not == true
+      expect(cls[:members][0][:chainable]).not_to eq(true)
     end
   end
 end

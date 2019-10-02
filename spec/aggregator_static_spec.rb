@@ -25,7 +25,7 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't detect inheritable property" do
-      @doc[:inheritable].should_not == true
+      expect(@doc[:inheritable]).not_to eq(true)
     end
   end
 
@@ -152,7 +152,7 @@ describe JsDuck::Aggregator do
       end
 
       it "as public" do
-        member[:private].should_not == true
+        expect(member[:private]).not_to eq(true)
       end
 
       it "with :linenr field" do

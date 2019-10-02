@@ -141,7 +141,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds @deprecated to getter" do
-      @members["getFoo"][:deprecated].should_not == nil
+      expect(@members["getFoo"][:deprecated]).not_to eq(nil)
     end
 
     it "doesn't add @accessor to getter" do

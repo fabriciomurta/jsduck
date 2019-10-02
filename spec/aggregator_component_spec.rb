@@ -17,7 +17,7 @@ describe JsDuck::Aggregator do
     end
 
     it "does not get the :component flag" do
-      cls[:component].should_not == true
+      expect(cls[:component]).not_to eq(true)
     end
   end
 
