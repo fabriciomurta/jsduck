@@ -22,15 +22,15 @@ describe JsDuck::BaseType do
 
   describe "detects as class" do
     it "@class tag" do
-      detect("/** @class */").should == :class
+      expect(detect("/** @class */")).to eq(:class)
     end
 
     it "class-like function" do
-      detect("/** */ function MyClass() {}").should == :class
+      expect(detect("/** */ function MyClass() {}")).to eq(:class)
     end
 
     it "Ext.define()" do
-      detect(<<-EOS).should == :class
+      expect(detect(<<-EOS)).to eq(:class)
         /** */
         Ext.define('MyClass', {
         });
@@ -40,69 +40,69 @@ describe JsDuck::BaseType do
 
   describe "detects as method" do
     it "@method tag" do
-      detect("/** @method */").should == :method
+      expect(detect("/** @method */")).to eq(:method)
     end
 
     it "@constructor tag" do
-      detect("/** @constructor */").should == :method
+      expect(detect("/** @constructor */")).to eq(:method)
     end
 
     it "@param tag" do
-      detect("/** @param {Number} x */").should == :method
+      expect(detect("/** @param {Number} x */")).to eq(:method)
     end
 
     it "@return tag" do
-      detect("/** @return {Boolean} */").should == :method
+      expect(detect("/** @return {Boolean} */")).to eq(:method)
     end
 
     it "function declaration" do
-      detect("/** */ function foo() {}").should == :method
+      expect(detect("/** */ function foo() {}")).to eq(:method)
     end
   end
 
   describe "detects as event" do
     it "@event tag" do
-      detect("/** @event */").should == :event
+      expect(detect("/** @event */")).to eq(:event)
     end
 
     it "@event and @param tags" do
-      detect("/** @event @param {Number} x */").should == :event
+      expect(detect("/** @event @param {Number} x */")).to eq(:event)
     end
   end
 
   describe "detects as config" do
     it "@cfg tag" do
-      detect("/** @cfg */").should == :cfg
+      expect(detect("/** @cfg */")).to eq(:cfg)
     end
   end
 
   describe "detects as property" do
     it "@property tag" do
-      detect("/** @property */").should == :property
+      expect(detect("/** @property */")).to eq(:property)
     end
 
     it "@type tag" do
-      detect("/** @type Foo */").should == :property
+      expect(detect("/** @type Foo */")).to eq(:property)
     end
 
     it "empty doc-comment with no code" do
-      detect("/** */").should == :property
+      expect(detect("/** */")).to eq(:property)
     end
   end
 
   describe "detects as css variable" do
     it "@var tag" do
-      detect("/** @var */").should == :css_var
+      expect(detect("/** @var */")).to eq(:css_var)
     end
   end
 
   describe "detects as css mixin" do
     it "@mixin in code" do
-      detect("/** */ @mixin foo-bar {}", :css).should == :css_mixin
+      expect(detect("/** */ @mixin foo-bar {}", :css)).to eq(:css_mixin)
     end
 
     it "@param in doc and @mixin in code" do
-      detect("/** @param {number} $foo */ @mixin foo-bar {}", :css).should == :css_mixin
+      expect(detect("/** @param {number} $foo */ @mixin foo-bar {}", :css)).to eq(:css_mixin)
     end
   end
 

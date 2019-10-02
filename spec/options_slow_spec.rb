@@ -21,15 +21,15 @@ describe JsDuck::Options::Parser do
 
   describe :output do
     it "is set with --output option" do
-      parse("--output", "foo/").output.should == "foo/"
+      expect(parse("--output", "foo/").output).to eq("foo/")
     end
 
     it "is set with -o option" do
-      parse("-o", "foo/").output.should == "foo/"
+      expect(parse("-o", "foo/").output).to eq("foo/")
     end
 
     it "is set to :stdout with -" do
-      parse("--output", "-").output.should == :stdout
+      expect(parse("--output", "-").output).to eq(:stdout)
     end
 
     it "is invalid when :stdout but not export" do
@@ -37,7 +37,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "is valid when :stdout and export" do
-      parse("--output", "-", "--export", "full").validate!(:output).should == nil
+      expect(parse("--output", "-", "--export", "full").validate!(:output)).to eq(nil)
     end
 
     it "is invalid when no output dir specified" do
@@ -46,7 +46,7 @@ describe JsDuck::Options::Parser do
 
     it "is valid when output dir exists and is a directory" do
       m = {:exists? => Proc.new {|f| f == "foo/"}, :directory? => true}
-      mock_parse(m, "-o", "foo/").validate!(:output).should == nil
+      expect(mock_parse(m, "-o", "foo/").validate!(:output)).to eq(nil)
     end
 
     it "is invalid when output dir is not a directory" do
@@ -75,7 +75,7 @@ describe JsDuck::Options::Parser do
           end
         end
       }
-      mock_parse(m, "-o", "foo/").validate!(:output).should == nil
+      expect(mock_parse(m, "-o", "foo/").validate!(:output)).to eq(nil)
     end
 
     it "is invalid when parent dir of output dir is missing" do
@@ -91,7 +91,7 @@ describe JsDuck::Options::Parser do
 
     it "is not validated when --export set" do
       opts = parse("--template", "foo", "--export", "full")
-      opts.validate!(:template).should == nil
+      expect(opts.validate!(:template)).to eq(nil)
     end
 
     it "is invalid when template dir has no /extjs dir" do
@@ -115,7 +115,7 @@ describe JsDuck::Options::Parser do
         :exists? => Proc.new {|fname| fname == "foo/extjs" || fname == "foo/resources/css" },
       }
       opts = mock_parse(m, "--template", "foo")
-      opts.validate!(:template).should == nil
+      expect(opts.validate!(:template)).to eq(nil)
     end
   end
 
@@ -131,8 +131,8 @@ describe JsDuck::Options::Parser do
         })
 
       opts = JsDuck::Options::Parser.new(file, cfg).parse(["--config", "conf.json"])
-      opts.output.should == "foo"
-      opts.input_files.should == ["file.js"]
+      expect(opts.output).to eq("foo")
+      expect(opts.input_files).to eq(["file.js"])
     end
   end
 

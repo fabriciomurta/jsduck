@@ -10,7 +10,7 @@ describe JsDuck::Css::Parser do
     let(:docs) { parse("") }
 
     it "finds no documentation" do
-      docs.length.should == 0
+      expect(docs.length).to eq(0)
     end
   end
 
@@ -29,7 +29,7 @@ describe JsDuck::Css::Parser do
     end
 
     it "finds no documentation" do
-      docs.length.should == 0
+      expect(docs.length).to eq(0)
     end
   end
 
@@ -49,7 +49,7 @@ describe JsDuck::Css::Parser do
     end
 
     it "finds them all" do
-      docs.length.should == 4
+      expect(docs.length).to eq(4)
     end
   end
 
@@ -62,27 +62,27 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects comment" do
-      var[:comment].should == " My variable "
+      expect(var[:comment]).to eq(" My variable ")
     end
 
     it "detects line number" do
-      var[:linenr].should == 1
+      expect(var[:linenr]).to eq(1)
     end
 
     it "detects :css_var type" do
-      var[:code][:tagname].should == :css_var
+      expect(var[:code][:tagname]).to eq(:css_var)
     end
 
     it "detects name" do
-      var[:code][:name].should == "$foo"
+      expect(var[:code][:name]).to eq("$foo")
     end
 
     it "detects default value" do
-      var[:code][:default].should == "10em"
+      expect(var[:code][:default]).to eq("10em")
     end
 
     it "detects type" do
-      var[:code][:type].should == "number"
+      expect(var[:code][:type]).to eq("number")
     end
   end
 
@@ -97,39 +97,39 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects comment" do
-      var[:comment].should == " My mixin "
+      expect(var[:comment]).to eq(" My mixin ")
     end
 
     it "detects :css_mixin type" do
-      var[:code][:tagname].should == :css_mixin
+      expect(var[:code][:tagname]).to eq(:css_mixin)
     end
 
     it "detects name" do
-      var[:code][:name].should == "foo"
+      expect(var[:code][:name]).to eq("foo")
     end
 
     it "detects correct number of parameters" do
-      var[:code][:params].length.should == 2
+      expect(var[:code][:params].length).to eq(2)
     end
 
     it "detects name of first param" do
-      var[:code][:params][0][:name].should == "$alpha"
+      expect(var[:code][:params][0][:name]).to eq("$alpha")
     end
 
     it "detects no default value for first param" do
-      var[:code][:params][0][:default].should == nil
+      expect(var[:code][:params][0][:default]).to eq(nil)
     end
 
     it "detects name of second param" do
-      var[:code][:params][1][:name].should == "$beta"
+      expect(var[:code][:params][1][:name]).to eq("$beta")
     end
 
     it "detects default value for second param" do
-      var[:code][:params][1][:default].should == "2px"
+      expect(var[:code][:params][1][:default]).to eq("2px")
     end
 
     it "detects type for second param" do
-      var[:code][:params][1][:type].should == "number"
+      expect(var[:code][:params][1][:type]).to eq("number")
     end
   end
 
@@ -144,11 +144,11 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects comment" do
-      var[:comment].should == " My docs "
+      expect(var[:comment]).to eq(" My docs ")
     end
 
     it "detects code as :property" do
-      var[:code][:tagname].should == :property
+      expect(var[:code][:tagname]).to eq(:property)
     end
   end
 
@@ -160,11 +160,11 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects one docset" do
-      docs.length.should == 1
+      expect(docs.length).to eq(1)
     end
 
     it "detects code as :property" do
-      docs[0][:code][:tagname].should == :property
+      expect(docs[0][:code][:tagname]).to eq(:property)
     end
   end
 
@@ -177,7 +177,7 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects two docsets" do
-      docs.length.should == 2
+      expect(docs.length).to eq(2)
     end
   end
 
@@ -190,7 +190,7 @@ describe JsDuck::Css::Parser do
     end
 
     it "detects the function call as default value" do
-      var[:code][:default].should == "myfunc(1, 2)"
+      expect(var[:code][:default]).to eq("myfunc(1, 2)")
     end
   end
 

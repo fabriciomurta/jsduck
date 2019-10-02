@@ -8,7 +8,7 @@ describe JsDuck::Warning::Parser do
 
   describe "parsing empty string" do
     it "results in empty array" do
-      parse("").should == []
+      expect(parse("")).to eq([])
     end
   end
 
@@ -16,18 +16,18 @@ describe JsDuck::Warning::Parser do
     let(:warnings) { parse("+foo, bar_bar, -baz") }
 
     it "results in 3 warning defs" do
-      warnings.length.should == 3
+      expect(warnings.length).to eq(3)
     end
 
     describe "first" do
       let(:w) { warnings[0] }
 
       it "is of type :foo" do
-        w[:type].should == :foo
+        expect(w[:type]).to eq(:foo)
       end
 
       it "is enabled" do
-        w[:enabled].should == true
+        expect(w[:enabled]).to eq(true)
       end
     end
 
@@ -35,11 +35,11 @@ describe JsDuck::Warning::Parser do
       let(:w) { warnings[1] }
 
       it "is of type :bar_bar" do
-        w[:type].should == :bar_bar
+        expect(w[:type]).to eq(:bar_bar)
       end
 
       it "is enabled" do
-        w[:enabled].should == true
+        expect(w[:enabled]).to eq(true)
       end
     end
 
@@ -47,11 +47,11 @@ describe JsDuck::Warning::Parser do
       let(:w) { warnings[2] }
 
       it "is of type :baz" do
-        w[:type].should == :baz
+        expect(w[:type]).to eq(:baz)
       end
 
       it "is disabled" do
-        w[:enabled].should == false
+        expect(w[:enabled]).to eq(false)
       end
     end
   end
@@ -60,7 +60,7 @@ describe JsDuck::Warning::Parser do
     let(:w) { parse("foo:/some/path ")[0] }
 
     it "detects path" do
-      w[:path].should == "/some/path"
+      expect(w[:path]).to eq("/some/path")
     end
   end
 
@@ -68,7 +68,7 @@ describe JsDuck::Warning::Parser do
     let(:warnings) { parse("foo:/some/path,bar:/other/path") }
 
     it "detects two warnings" do
-      warnings.length.should == 2
+      expect(warnings.length).to eq(2)
     end
   end
 
@@ -76,7 +76,7 @@ describe JsDuck::Warning::Parser do
     let(:w) { parse("nodoc(class,public)")[0] }
 
     it "detects params" do
-      w[:params].should == [:class, :public]
+      expect(w[:params]).to eq([:class, :public])
     end
   end
 
@@ -84,7 +84,7 @@ describe JsDuck::Warning::Parser do
     let(:w) { parse("nodoc(,private)")[0] }
 
     it "detects also empty params" do
-      w[:params].should == [nil, :private]
+      expect(w[:params]).to eq([nil, :private])
     end
   end
 
@@ -93,7 +93,7 @@ describe JsDuck::Warning::Parser do
       begin
         parse("?123")
       rescue JsDuck::Warning::WarnException => e
-        e.message.should == "Unexpected '?' at --warnings='<HERE>?123'"
+        expect(e.message).to eq("Unexpected '?' at --warnings='<HERE>?123'")
       end
     end
   end
@@ -103,7 +103,7 @@ describe JsDuck::Warning::Parser do
       begin
         parse("tag?123")
       rescue JsDuck::Warning::WarnException => e
-        e.message.should == "Unexpected '?' at --warnings='tag<HERE>?123'"
+        expect(e.message).to eq("Unexpected '?' at --warnings='tag<HERE>?123'")
       end
     end
   end
@@ -113,7 +113,7 @@ describe JsDuck::Warning::Parser do
       begin
         parse("nodoc(?)")
       rescue JsDuck::Warning::WarnException => e
-        e.message.should == "Unexpected '?' at --warnings='nodoc(<HERE>?)'"
+        expect(e.message).to eq("Unexpected '?' at --warnings='nodoc(<HERE>?)'")
       end
     end
   end
@@ -123,7 +123,7 @@ describe JsDuck::Warning::Parser do
       begin
         parse("nodoc(foo?)")
       rescue JsDuck::Warning::WarnException => e
-        e.message.should == "Unexpected '?' at --warnings='nodoc(foo<HERE>?)'"
+        expect(e.message).to eq("Unexpected '?' at --warnings='nodoc(foo<HERE>?)'")
       end
     end
   end

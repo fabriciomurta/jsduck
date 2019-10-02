@@ -12,19 +12,19 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "example property" do
     it "creates property" do
-      @doc[:tagname].should == :property
+      expect(@doc[:tagname]).to eq(:property)
     end
 
     it "detects name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
 
     it "detects type" do
-      @doc[:type].should == "String"
+      expect(@doc[:type]).to eq("String")
     end
 
     it "takes documentation from doc-comment" do
-      @doc[:doc].should == "Some documentation."
+      expect(@doc[:doc]).to eq("Some documentation.")
     end
   end
 
@@ -64,7 +64,7 @@ describe JsDuck::Aggregator do
     end
 
     it "default type is Object" do
-      @doc[:type].should == "Object"
+      expect(@doc[:type]).to eq("Object")
     end
   end
 
@@ -93,10 +93,10 @@ describe JsDuck::Aggregator do
     end
 
     it "detects property" do
-      @doc[:tagname].should == :property
+      expect(@doc[:tagname]).to eq(:property)
     end
     it "detects name" do
-      @doc[:name].should == "MY_CONSTANT"
+      expect(@doc[:name]).to eq("MY_CONSTANT")
     end
   end
 
@@ -123,7 +123,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "should detect the variable name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
   end
 
@@ -137,7 +137,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "should detect the first variable name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
   end
 
@@ -151,7 +151,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "should fail detecting name of the property" do
-      @doc[:name].should == ""
+      expect(@doc[:name]).to eq("")
     end
   end
 
@@ -172,15 +172,15 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "accessor property" do
     it "creates property" do
-      @doc[:tagname].should == :property
+      expect(@doc[:tagname]).to eq(:property)
     end
 
     it "detects name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
 
     it "detects type as default" do
-      @doc[:type].should == "Object"
+      expect(@doc[:type]).to eq("Object")
     end
   end
 
@@ -218,7 +218,7 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "auto type" do
     it "should imply correct type" do
-      @doc[:type].should == @type
+      expect(@doc[:type]).to eq(@type)
     end
   end
 
@@ -272,19 +272,19 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "auto detected property" do
     it "detects a property" do
-      property[:tagname].should == :property
+      expect(property[:tagname]).to eq(:property)
     end
 
     it "detects property name" do
-      property[:name].should == 'foo'
+      expect(property[:name]).to eq('foo')
     end
 
     it "flags property with :inheritdoc" do
-      property[:inheritdoc].should == {}
+      expect(property[:inheritdoc]).to eq({})
     end
 
     it "flags property as :autodetected" do
-      property[:autodetected][:tagname].should == :property
+      expect(property[:autodetected][:tagname]).to eq(:property)
     end
   end
 
@@ -319,7 +319,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected property"
 
     it "detects property documentation" do
-      property[:doc].should == 'My docs'
+      expect(property[:doc]).to eq('My docs')
     end
   end
 
@@ -350,7 +350,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected property"
 
     it "detects property documentation" do
-      property[:doc].should == 'My docs'
+      expect(property[:doc]).to eq('My docs')
     end
   end
 
@@ -381,7 +381,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected property"
 
     it "detects property documentation" do
-      property[:doc].should == 'My docs'
+      expect(property[:doc]).to eq('My docs')
     end
   end
 
@@ -401,7 +401,7 @@ describe JsDuck::Aggregator do
     end
 
     it "are all ignored" do
-      members.length.should == 0
+      expect(members.length).to eq(0)
     end
   end
 

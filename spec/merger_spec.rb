@@ -24,19 +24,19 @@ describe JsDuck::Merger do
     end
 
     it "gets tagname from doc" do
-      @doc[:tagname].should == :cfg
+      expect(@doc[:tagname]).to eq(:cfg)
     end
     it "gets type from doc" do
-      @doc[:type].should == "String"
+      expect(@doc[:type]).to eq("String")
     end
     it "gets documentation from doc" do
-      @doc[:doc].should == "My Config"
+      expect(@doc[:doc]).to eq("My Config")
     end
     it "gets name from code" do
-      @doc[:name].should == "option"
+      expect(@doc[:name]).to eq("option")
     end
     it "keeps line number data" do
-      @doc[:files][0][:linenr].should == 15
+      expect(@doc[:files][0][:linenr]).to eq(15)
     end
   end
 
@@ -59,16 +59,16 @@ describe JsDuck::Merger do
     end
 
     it "gets tagname from code" do
-      @doc[:tagname].should == :property
+      expect(@doc[:tagname]).to eq(:property)
     end
     it "gets type from code" do
-      @doc[:type].should == "Boolean"
+      expect(@doc[:type]).to eq("Boolean")
     end
     it "gets documentation from doc" do
-      @doc[:doc].should == "Hello world"
+      expect(@doc[:doc]).to eq("Hello world")
     end
     it "gets name from code" do
-      @doc[:name].should == "prop"
+      expect(@doc[:name]).to eq("prop")
     end
   end
 

@@ -32,11 +32,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from parent" do
-      @cfg[:doc].should == "My config."
+      expect(@cfg[:doc]).to eq("My config.")
     end
 
     it "inherits being public from parent" do
-      @cfg[:private].should == nil
+      expect(@cfg[:private]).to eq(nil)
     end
   end
 
@@ -74,11 +74,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from parent" do
-      @cfg[:doc].should == "My config."
+      expect(@cfg[:doc]).to eq("My config.")
     end
 
     it "inherits being public from parent" do
-      @cfg[:private].should == nil
+      expect(@cfg[:private]).to eq(nil)
     end
   end
 
@@ -99,7 +99,7 @@ describe JsDuck::Aggregator do
     end
 
     it "becomes private" do
-      @cfg[:private].should == true
+      expect(@cfg[:private]).to eq(true)
     end
   end
 
@@ -129,16 +129,16 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits @protected" do
-      @property[:protected].should == true
+      expect(@property[:protected]).to eq(true)
     end
 
     it "inherits @deprecated" do
-      @property[:deprecated][:version].should == "4.0"
-      @property[:deprecated][:text].should == "Use something else."
+      expect(@property[:deprecated][:version]).to eq("4.0")
+      expect(@property[:deprecated][:text]).to eq("Use something else.")
     end
 
     it "inherits @readonly" do
-      @property[:readonly].should == true
+      expect(@property[:readonly]).to eq(true)
     end
   end
 
@@ -169,19 +169,19 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits @protected" do
-      @property[:protected].should == true
+      expect(@property[:protected]).to eq(true)
     end
 
     it "keeps @readonly" do
-      @property[:readonly].should == true
+      expect(@property[:readonly]).to eq(true)
     end
 
     it "keeps default value" do
-      @property[:default].should == "10"
+      expect(@property[:default]).to eq("10")
     end
 
     it "overrides @deprecated of parent with its own @deprecated" do
-      @property[:deprecated][:version].should == "4.0"
+      expect(@property[:deprecated][:version]).to eq("4.0")
     end
   end
 
@@ -225,19 +225,19 @@ describe JsDuck::Aggregator do
     end
 
     it "explicit inherit from public parent keeps the type of parent" do
-      members["foo"][:type].should == "String/Number"
+      expect(members["foo"][:type]).to eq("String/Number")
     end
 
     it "autoinherit from public parent keeps the type of parent" do
-      members["bar"][:type].should == "String/Number"
+      expect(members["bar"][:type]).to eq("String/Number")
     end
 
     it "autoinherit from private parent overrides parent type" do
-      members["baz"][:type].should == "String"
+      expect(members["baz"][:type]).to eq("String")
     end
 
     it "autoinherit from explicitly documented private parent keeps parent type" do
-      members["zap"][:type].should == "String/Number"
+      expect(members["zap"][:type]).to eq("String/Number")
     end
   end
 
@@ -301,11 +301,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits from parent static method" do
-      @cls[:members][0][:doc].should == "My method."
+      expect(@cls[:members][0][:doc]).to eq("My method.")
     end
 
     it "inherits from parent static property" do
-      @cls[:members][1][:doc].should == "My property."
+      expect(@cls[:members][1][:doc]).to eq("My property.")
     end
   end
 end

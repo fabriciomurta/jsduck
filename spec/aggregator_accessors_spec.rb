@@ -33,19 +33,19 @@ describe JsDuck::Aggregator do
     end
 
     it "sets getFoo return type to @cfg type" do
-      @members["getFoo"][:return][:type].should == "String"
+      expect(@members["getFoo"][:return][:type]).to eq("String")
     end
 
     it "sets getFoo to have 0 parameters" do
-      @members["getFoo"][:params].length.should == 0
+      expect(@members["getFoo"][:params].length).to eq(0)
     end
 
     it "sets getFoo owner @cfg owner" do
-      @members["getFoo"][:owner].should == "MyClass"
+      expect(@members["getFoo"][:owner]).to eq("MyClass")
     end
 
     it "generates dummy docs for getFoo" do
-      @members["getFoo"][:doc].should == "Returns the value of {@link #cfg-foo}."
+      expect(@members["getFoo"][:doc]).to eq("Returns the value of {@link #cfg-foo}.")
     end
 
     it "creates setFoo method" do
@@ -53,27 +53,27 @@ describe JsDuck::Aggregator do
     end
 
     it "sets setFoo return type to nil" do
-      @members["setFoo"][:return].should == nil
+      expect(@members["setFoo"][:return]).to eq(nil)
     end
 
     it "sets setFoo parameter type to @cfg type" do
-      @members["setFoo"][:params][0][:type].should == "String"
+      expect(@members["setFoo"][:params][0][:type]).to eq("String")
     end
 
     it "sets setFoo parameter name to @cfg name" do
-      @members["setFoo"][:params][0][:name].should == "foo"
+      expect(@members["setFoo"][:params][0][:name]).to eq("foo")
     end
 
     it "generates dummy docs for setFoo parameter" do
-      @members["setFoo"][:params][0][:doc].should == "The new value."
+      expect(@members["setFoo"][:params][0][:doc]).to eq("The new value.")
     end
 
     it "sets setFoo owner @cfg owner" do
-      @members["setFoo"][:owner].should == "MyClass"
+      expect(@members["setFoo"][:owner]).to eq("MyClass")
     end
 
     it "generates dummy docs for setFoo" do
-      @members["setFoo"][:doc].should == "Sets the value of {@link #cfg-foo}."
+      expect(@members["setFoo"][:doc]).to eq("Sets the value of {@link #cfg-foo}.")
     end
 
   end
@@ -104,11 +104,11 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't create getter when method already present" do
-      @members["getFoo"][:doc].should == "Custom comment."
+      expect(@members["getFoo"][:doc]).to eq("Custom comment.")
     end
 
     it "doesn't create setter when method already present" do
-      @members["setBar"][:doc].should == "Custom comment."
+      expect(@members["setBar"][:doc]).to eq("Custom comment.")
     end
 
     it "creates getter when method not present" do
@@ -137,7 +137,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds @protected to getter" do
-      @members["getFoo"][:protected].should == true
+      expect(@members["getFoo"][:protected]).to eq(true)
     end
 
     it "adds @deprecated to getter" do
@@ -145,22 +145,22 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't add @accessor to getter" do
-      @members["getFoo"][:accessor].should == nil
+      expect(@members["getFoo"][:accessor]).to eq(nil)
     end
 
     it "doesn't add @evented to getter" do
-      @members["getFoo"][:evented].should == nil
+      expect(@members["getFoo"][:evented]).to eq(nil)
     end
 
     # Lighter tests for setter and event.
     # The same method takes care of inheriting in all cases.
 
     it "adds @protected to setter" do
-      @members["setFoo"][:protected].should == true
+      expect(@members["setFoo"][:protected]).to eq(true)
     end
 
     it "adds @protected to event" do
-      @members["foochange"][:protected].should == true
+      expect(@members["foochange"][:protected]).to eq(true)
     end
   end
 
@@ -180,19 +180,19 @@ describe JsDuck::Aggregator do
     end
 
     it "creates accessors" do
-      @accessors.length.should == 2
+      expect(@accessors.length).to eq(2)
     end
 
     it "creates private getter" do
-      @accessors[0][:private].should == true
+      expect(@accessors[0][:private]).to eq(true)
     end
 
     it "creates private setter" do
-      @accessors[1][:private].should == true
+      expect(@accessors[1][:private]).to eq(true)
     end
 
     it "creates private event" do
-      @events[0][:private].should == true
+      expect(@events[0][:private]).to eq(true)
     end
   end
 
@@ -210,15 +210,15 @@ describe JsDuck::Aggregator do
     end
 
     it "creates accessors" do
-      @accessors.length.should == 2
+      expect(@accessors.length).to eq(2)
     end
 
     it "creates hidden getter" do
-      @accessors[0][:hide].should == true
+      expect(@accessors[0][:hide]).to eq(true)
     end
 
     it "creates hidden setter" do
-      @accessors[1][:hide].should == true
+      expect(@accessors[1][:hide]).to eq(true)
     end
   end
 
@@ -236,7 +236,7 @@ describe JsDuck::Aggregator do
     end
 
     it "creates foochange event" do
-      @members["foochange"][:name].should == "foochange"
+      expect(@members["foochange"][:name]).to eq("foochange")
     end
 
     it "creates documentation for foochange event" do
@@ -245,7 +245,7 @@ describe JsDuck::Aggregator do
     end
 
     it "has 3 params" do
-      @members["foochange"][:params].length.should == 3
+      expect(@members["foochange"][:params].length).to eq(3)
     end
 
     describe "1st param" do
@@ -254,15 +254,15 @@ describe JsDuck::Aggregator do
       end
 
       it "is this" do
-        @param[:name].should == "this"
+        expect(@param[:name]).to eq("this")
       end
 
       it "is the same type as the class" do
-        @param[:type].should == "MyClass"
+        expect(@param[:type]).to eq("MyClass")
       end
 
       it "has documentation" do
-        @param[:doc].should == "The MyClass instance."
+        expect(@param[:doc]).to eq("The MyClass instance.")
       end
     end
 
@@ -272,15 +272,15 @@ describe JsDuck::Aggregator do
       end
 
       it "is value" do
-        @param[:name].should == "value"
+        expect(@param[:name]).to eq("value")
       end
 
       it "is the same type as the cfg" do
-        @param[:type].should == "String"
+        expect(@param[:type]).to eq("String")
       end
 
       it "has documentation" do
-        @param[:doc].should == "The new value being set."
+        expect(@param[:doc]).to eq("The new value being set.")
       end
     end
 
@@ -290,15 +290,15 @@ describe JsDuck::Aggregator do
       end
 
       it "is oldValue" do
-        @param[:name].should == "oldValue"
+        expect(@param[:name]).to eq("oldValue")
       end
 
       it "is the same type as the cfg" do
-        @param[:type].should == "String"
+        expect(@param[:type]).to eq("String")
       end
 
       it "has documentation" do
-        @param[:doc].should == "The existing value."
+        expect(@param[:doc]).to eq("The existing value.")
       end
     end
 
@@ -322,11 +322,11 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't create any additional events" do
-      @events.length.should == 1
+      expect(@events.length).to eq(1)
     end
 
     it "leaves the existing event as is." do
-      @events[0][:doc].should == "Event comment."
+      expect(@events[0][:doc]).to eq("Event comment.")
     end
   end
 

@@ -16,15 +16,15 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "optional parameter" do
     it "makes parameter optional" do
-      @param[:optional].should == true
+      expect(@param[:optional]).to eq(true)
     end
 
     it "keeps parameter name" do
-      @param[:name].should == "foo"
+      expect(@param[:name]).to eq("foo")
     end
 
     it "leaves optionality syntax out of description" do
-      @param[:doc].should == "Something"
+      expect(@param[:doc]).to eq("Something")
     end
   end
 
@@ -105,7 +105,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "optional parameter"
 
     it "doesn't include the optionality notation to type definition" do
-      @param[:type].should == "Number"
+      expect(@param[:type]).to eq("Number")
     end
   end
 
@@ -134,7 +134,7 @@ describe JsDuck::Aggregator do
     end
     it_should_behave_like "optional parameter"
     it "has default value" do
-      @param[:default].should == "42"
+      expect(@param[:default]).to eq("42")
     end
   end
 
@@ -149,7 +149,7 @@ describe JsDuck::Aggregator do
     end
     it_should_behave_like "optional parameter"
     it "has default value" do
-      @param[:default].should == '"Hello, my [dear]!"'
+      expect(@param[:default]).to eq('"Hello, my [dear]!"')
     end
   end
 
@@ -162,7 +162,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == "3"
+      expect(@doc[:default]).to eq("3")
     end
   end
 
@@ -175,7 +175,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == "/[0-9]+/"
+      expect(@doc[:default]).to eq("/[0-9]+/")
     end
   end
 
@@ -188,7 +188,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == "true"
+      expect(@doc[:default]).to eq("true")
     end
   end
 
@@ -201,7 +201,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == "false"
+      expect(@doc[:default]).to eq("false")
     end
   end
 
@@ -214,7 +214,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == '["foo", 5, /[a-z]/]'
+      expect(@doc[:default]).to eq('["foo", 5, /[a-z]/]')
     end
   end
 
@@ -227,7 +227,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value" do
-      @doc[:default].should == '{"foo": 5, bar: [1, 2, 3]}'
+      expect(@doc[:default]).to eq('{"foo": 5, bar: [1, 2, 3]}')
     end
   end
 
@@ -240,7 +240,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has this as default value" do
-      @doc[:default].should == 'this'
+      expect(@doc[:default]).to eq('this')
     end
   end
 
@@ -253,7 +253,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has the rubbish as default value" do
-      @doc[:default].should == '!haa'
+      expect(@doc[:default]).to eq('!haa')
     end
   end
 
@@ -266,7 +266,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has everything up to ] as default value" do
-      @doc[:default].should == '7 and me too'
+      expect(@doc[:default]).to eq('7 and me too')
     end
   end
 
@@ -279,7 +279,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has the full literal as default value" do
-      @doc[:default].should == '[ho, ho]'
+      expect(@doc[:default]).to eq('[ho, ho]')
     end
   end
 
@@ -292,7 +292,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has default value up to first ]" do
-      @doc[:default].should == '[...'
+      expect(@doc[:default]).to eq('[...')
     end
   end
 
@@ -305,7 +305,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has the bogus object literla as default value" do
-      @doc[:default].should == '{ho:5, ho}'
+      expect(@doc[:default]).to eq('{ho:5, ho}')
     end
   end
 
@@ -318,7 +318,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has the unfinish object literal as default value" do
-      @doc[:default].should == '{ho:5'
+      expect(@doc[:default]).to eq('{ho:5')
     end
   end
 
@@ -331,7 +331,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "includes the ] inside default value" do
-      @doc[:default].should == '"]"'
+      expect(@doc[:default]).to eq('"]"')
     end
   end
 
@@ -344,8 +344,8 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "includes the \" inside default value" do
-      @doc[:default].should == '" \\"] "'
-      @doc[:doc].should == 'Something'
+      expect(@doc[:default]).to eq('" \\"] "')
+      expect(@doc[:doc]).to eq('Something')
     end
   end
 
@@ -359,7 +359,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the default value" do
-      @doc[:default].should == '18'
+      expect(@doc[:default]).to eq('18')
     end
   end
 
@@ -373,7 +373,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the default value" do
-      @doc[:default].should == '"Hello"'
+      expect(@doc[:default]).to eq('"Hello"')
     end
   end
 
@@ -387,7 +387,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the default value" do
-      @doc[:default].should == '/[a-z]/'
+      expect(@doc[:default]).to eq('/[a-z]/')
     end
   end
 
@@ -401,7 +401,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the default value" do
-      @doc[:default].should == '[1, 2, 3]'
+      expect(@doc[:default]).to eq('[1, 2, 3]')
     end
   end
 
@@ -415,7 +415,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the default value" do
-      @doc[:default].should == '{foo: 3, bar: "2"}'
+      expect(@doc[:default]).to eq('{foo: 3, bar: "2"}')
     end
   end
 
@@ -429,7 +429,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "replaces Ext.baseCSSPrefix with 'x-'" do
-      @doc[:default].should == 'Ext.baseCSSPrefix + "foo"'
+      expect(@doc[:default]).to eq('Ext.baseCSSPrefix + "foo"')
     end
   end
 
@@ -443,7 +443,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detects the literal expression from code" do
-      @doc[:default].should == "5 + 5"
+      expect(@doc[:default]).to eq("5 + 5")
     end
   end
 
@@ -457,7 +457,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "doesn't get the default value from code" do
-      @doc[:default].should == nil
+      expect(@doc[:default]).to eq(nil)
     end
   end
 
@@ -471,10 +471,10 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "doesn't get the default value from code" do
-      @doc[:default].should == nil
+      expect(@doc[:default]).to eq(nil)
     end
     it "doesn't get the type from code" do
-      @doc[:type].should == "Object"
+      expect(@doc[:type]).to eq("Object")
     end
   end
 
@@ -488,10 +488,10 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "gets default value from code" do
-      @doc[:default].should == "true"
+      expect(@doc[:default]).to eq("true")
     end
     it "gets the type from code" do
-      @doc[:type].should == "Boolean"
+      expect(@doc[:type]).to eq("Boolean")
     end
   end
 
@@ -505,7 +505,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "gets default value from code" do
-      @doc[:default].should == "5"
+      expect(@doc[:default]).to eq("5")
     end
   end
 
@@ -520,10 +520,10 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "loses the auto-detected default value" do
-      @doc[:default].should == nil
+      expect(@doc[:default]).to eq(nil)
     end
     it "loses the auto-detected type" do
-      @doc[:type].should == nil
+      expect(@doc[:type]).to eq(nil)
     end
   end
 

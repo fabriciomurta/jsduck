@@ -66,39 +66,39 @@ describe JsDuck::Process::Versions do
     # @since
 
     it "adds @since 1.0 to VeryOldClass" do
-      @stuff["VeryOldClass"][:since].should == "1.0"
+      expect(@stuff["VeryOldClass"][:since]).to eq("1.0")
     end
 
     it "adds @since 2.0 to OldClass" do
-      @stuff["OldClass"][:since].should == "2.0"
+      expect(@stuff["OldClass"][:since]).to eq("2.0")
     end
 
     it "adds @since 3.0 to NewClass" do
-      @stuff["NewClass"][:since].should == "3.0"
+      expect(@stuff["NewClass"][:since]).to eq("3.0")
     end
 
     it "adds @since 2.0 to ClassWithNewName" do
-      @stuff["ClassWithNewName"][:since].should == "2.0"
+      expect(@stuff["ClassWithNewName"][:since]).to eq("2.0")
     end
 
     it "doesn't override explicit @since 1.0 in ExplicitSinceClass" do
-      @stuff["ExplicitSinceClass"][:since].should == "1.0"
+      expect(@stuff["ExplicitSinceClass"][:since]).to eq("1.0")
     end
 
     it "adds @since 1.0 to #foo" do
-      @stuff["VeryOldClass#cfg-foo"][:since].should == "1.0"
+      expect(@stuff["VeryOldClass#cfg-foo"][:since]).to eq("1.0")
     end
 
     it "adds @since 2.0 to #bar" do
-      @stuff["VeryOldClass#cfg-bar"][:since].should == "2.0"
+      expect(@stuff["VeryOldClass#cfg-bar"][:since]).to eq("2.0")
     end
 
     it "adds @since 3.0 to #baz" do
-      @stuff["VeryOldClass#cfg-baz"][:since].should == "3.0"
+      expect(@stuff["VeryOldClass#cfg-baz"][:since]).to eq("3.0")
     end
 
     it "doesn't override explicit @since 1.0 in #zap" do
-      @stuff["VeryOldClass#cfg-zap"][:since].should == "1.0"
+      expect(@stuff["VeryOldClass#cfg-zap"][:since]).to eq("1.0")
     end
 
     # @new
@@ -112,7 +112,7 @@ describe JsDuck::Process::Versions do
     end
 
     it "adds @new to NewClass" do
-      @stuff["NewClass"][:new].should == true
+      expect(@stuff["NewClass"][:new]).to eq(true)
     end
 
     it "doesn't add @new to ClassWithNewName" do
@@ -127,7 +127,7 @@ describe JsDuck::Process::Versions do
       # Though it seems like a weird case, there could be a situation
       # where 1.0 had class Foo, which was removed in 2.0, but in 3.0 a
       # completely unrelated Foo class was introduced.
-      @stuff["ExplicitNewClass"][:new].should == true
+      expect(@stuff["ExplicitNewClass"][:new]).to eq(true)
     end
 
     it "doesn't add @new to #foo" do
@@ -139,7 +139,7 @@ describe JsDuck::Process::Versions do
     end
 
     it "adds @new to #baz" do
-      @stuff["VeryOldClass#cfg-baz"][:new].should == true
+      expect(@stuff["VeryOldClass#cfg-baz"][:new]).to eq(true)
     end
 
     it "doesn't add @new to #zap" do
@@ -147,7 +147,7 @@ describe JsDuck::Process::Versions do
     end
 
     it "keeps explicit @new in #new" do
-      @stuff["VeryOldClass#cfg-new"][:new].should == true
+      expect(@stuff["VeryOldClass#cfg-new"][:new]).to eq(true)
     end
 
   end
@@ -188,11 +188,11 @@ describe JsDuck::Process::Versions do
     end
 
     it "gives @new to OldClass" do
-      @relations[1][:new].should == true
+      expect(@relations[1][:new]).to eq(true)
     end
 
     it "gives no @new to NewClass" do
-      @relations[2][:new].should == true
+      expect(@relations[2][:new]).to eq(true)
     end
   end
 
@@ -240,23 +240,23 @@ describe JsDuck::Process::Versions do
       end
 
       it "adds @since 1.0 to our method" do
-        method[:since].should == "1.0"
+        expect(method[:since]).to eq("1.0")
       end
 
       it "adds no @since to 1st param, because it's also from 1.0" do
-        method[:params][0][:since].should == nil
+        expect(method[:params][0][:since]).to eq(nil)
       end
 
       it "adds @since 2.0 to 2nd param (although it was named differently in 2.0)" do
-        method[:params][1][:since].should == "2.0"
+        expect(method[:params][1][:since]).to eq("2.0")
       end
 
       it "adds @since 3.0 to 3rd param" do
-        method[:params][2][:since].should == "3.0"
+        expect(method[:params][2][:since]).to eq("3.0")
       end
 
       it "adds @new to 3rd param" do
-        method[:params][2][:new].should == true
+        expect(method[:params][2][:new]).to eq(true)
       end
     end
 
@@ -266,11 +266,11 @@ describe JsDuck::Process::Versions do
       end
 
       it "adds @since 0.1 to our method" do
-        method[:since].should == "0.1"
+        expect(method[:since]).to eq("0.1")
       end
 
       it "doesn't add a @since to parameter" do
-        method[:params][0][:since].should == nil
+        expect(method[:params][0][:since]).to eq(nil)
       end
     end
 

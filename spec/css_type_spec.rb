@@ -11,54 +11,54 @@ describe JsDuck::Css::Type do
 
   describe "detects" do
     it "plain number --> number" do
-      detect("3.14").should == "number"
+      expect(detect("3.14")).to eq("number")
     end
     it "percentage --> number" do
-      detect("10%").should == "number"
+      expect(detect("10%")).to eq("number")
     end
     it "measurement --> number" do
-      detect("15px").should == "number"
+      expect(detect("15px")).to eq("number")
     end
 
     it "unquoted string --> string" do
-      detect("bold").should == "string"
+      expect(detect("bold")).to eq("string")
     end
     it "quoted string --> string" do
-      detect('"blah blah"').should == "string"
+      expect(detect('"blah blah"')).to eq("string")
     end
 
     it "color name --> color" do
-      detect("orange").should == "color"
+      expect(detect("orange")).to eq("color")
     end
     it "color code --> color" do
-      detect("#ff00cc").should == "color"
+      expect(detect("#ff00cc")).to eq("color")
     end
     it "rgba() --> color" do
-      detect("rgba(255, 0, 0, 0.5)").should == "color"
+      expect(detect("rgba(255, 0, 0, 0.5)")).to eq("color")
     end
     it "hsl() --> color" do
-      detect("hsl(0, 100%, 50%)").should == "color"
+      expect(detect("hsl(0, 100%, 50%)")).to eq("color")
     end
     it "fade-in() --> color" do
-      detect("fade-in(#cc00cc, 0.2)").should == "color"
+      expect(detect("fade-in(#cc00cc, 0.2)")).to eq("color")
     end
 
     it "true --> boolean" do
-      detect("true").should == "boolean"
+      expect(detect("true")).to eq("boolean")
     end
     it "false --> boolean" do
-      detect("false").should == "boolean"
+      expect(detect("false")).to eq("boolean")
     end
 
     it "comma-separated list --> list" do
-      detect("'Arial', Verdana, sans-serif").should == "list"
+      expect(detect("'Arial', Verdana, sans-serif")).to eq("list")
     end
     it "space-separated list --> list" do
-      detect("2px 4px 2px 4px").should == "list"
+      expect(detect("2px 4px 2px 4px")).to eq("list")
     end
 
     it "null --> nil" do
-      detect("null").should == nil
+      expect(detect("null")).to eq(nil)
     end
   end
 

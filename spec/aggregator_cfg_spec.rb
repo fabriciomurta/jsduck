@@ -12,19 +12,19 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "example cfg" do
     it "creates cfg" do
-      @doc[:tagname].should == :cfg
+      expect(@doc[:tagname]).to eq(:cfg)
     end
 
     it "detects name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
 
     it "detects type" do
-      @doc[:type].should == "String"
+      expect(@doc[:type]).to eq("String")
     end
 
     it "takes documentation from doc-comment" do
-      @doc[:doc].should == "Some documentation."
+      expect(@doc[:doc]).to eq("Some documentation.")
     end
   end
 
@@ -65,7 +65,7 @@ describe JsDuck::Aggregator do
     end
 
     it "default type is Object" do
-      @doc[:type].should == "Object"
+      expect(@doc[:type]).to eq("Object")
     end
   end
 
@@ -81,7 +81,7 @@ describe JsDuck::Aggregator do
     end
 
     it "default type is Object" do
-      @doc[:type].should == "Object"
+      expect(@doc[:type]).to eq("Object")
     end
   end
 
@@ -96,7 +96,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects the name" do
-      @doc[:name].should == "foo-bar"
+      expect(@doc[:name]).to eq("foo-bar")
     end
   end
 
@@ -111,7 +111,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is detected as config" do
-      @doc[:tagname].should == :cfg
+      expect(@doc[:tagname]).to eq(:cfg)
     end
   end
 
@@ -127,7 +127,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is detected as config" do
-      @doc[:tagname].should == :cfg
+      expect(@doc[:tagname]).to eq(:cfg)
     end
   end
 
@@ -152,38 +152,38 @@ describe JsDuck::Aggregator do
     # Generic tests
 
     it "finds configs" do
-      cfg.all? {|m| m[:tagname] == :cfg }.should == true
+      expect(cfg.all? {|m| m[:tagname] == :cfg }).to eq(true)
     end
 
     it "finds two configs" do
-      cfg.length.should == 2
+      expect(cfg.length).to eq(2)
     end
 
     describe "auto-detected config" do
       it "with :inheritdoc flag" do
-        cfg[0][:inheritdoc].should == {}
+        expect(cfg[0][:inheritdoc]).to eq({})
       end
 
       it "with :accessor flag" do
-        cfg[0][:accessor].should == true
+        expect(cfg[0][:accessor]).to eq(true)
       end
 
       it "with :autodetected flag" do
-        cfg[0][:autodetected][:tagname].should == :cfg
+        expect(cfg[0][:autodetected][:tagname]).to eq(:cfg)
       end
 
       it "with :linenr field" do
-        cfg[0][:linenr].should == 8
+        expect(cfg[0][:linenr]).to eq(8)
       end
     end
 
     describe "documented config" do
       it "with docs" do
-        cfg[1][:doc].should == "Docs for bar"
+        expect(cfg[1][:doc]).to eq("Docs for bar")
       end
 
       it "with owner" do
-        cfg[1][:owner].should == "MyClass"
+        expect(cfg[1][:owner]).to eq("MyClass")
       end
 
       it "as public" do
@@ -191,7 +191,7 @@ describe JsDuck::Aggregator do
       end
 
       it "with :accessor flag" do
-        cfg[1][:accessor].should == true
+        expect(cfg[1][:accessor]).to eq(true)
       end
     end
   end
@@ -214,11 +214,11 @@ describe JsDuck::Aggregator do
     it_should_behave_like "config"
 
     it "auto-detected config with :evented flag" do
-      cfg[0][:evented].should == true
+      expect(cfg[0][:evented]).to eq(true)
     end
 
     it "documented config with :evented flag" do
-      cfg[1][:evented].should == true
+      expect(cfg[1][:evented]).to eq(true)
     end
   end
 
@@ -246,7 +246,7 @@ describe JsDuck::Aggregator do
     end
 
     it "merges all configs together" do
-      cfg.length.should == 4
+      expect(cfg.length).to eq(4)
     end
   end
 
@@ -268,19 +268,19 @@ describe JsDuck::Aggregator do
     end
 
     it "detects one config" do
-      cfg.length.should == 1
+      expect(cfg.length).to eq(1)
     end
 
     it "detects documentation" do
-      cfg[0][:doc].should == "My config"
+      expect(cfg[0][:doc]).to eq("My config")
     end
 
     it "detects the config with :inheritdoc flag" do
-      cfg[0][:inheritdoc].should == {}
+      expect(cfg[0][:inheritdoc]).to eq({})
     end
 
     it "detects the config with :autodetected flag" do
-      cfg[0][:autodetected][:tagname].should == :cfg
+      expect(cfg[0][:autodetected][:tagname]).to eq(:cfg)
     end
   end
 

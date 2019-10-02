@@ -11,7 +11,7 @@ describe JsDuck::Js::Parser do
       begin
         parse("if ( x \n } alert('Hello');")
       rescue
-        $!.to_s.should == "Invalid JavaScript syntax: Unexpected '}' on line 2"
+        expect($!.to_s).to eq("Invalid JavaScript syntax: Unexpected '}' on line 2")
       end
     end
 
@@ -19,7 +19,7 @@ describe JsDuck::Js::Parser do
       begin
         parse("if ( x ) alert( ")
       rescue
-        $!.to_s.should == "Invalid JavaScript syntax: Unexpected end of file"
+        expect($!.to_s).to eq("Invalid JavaScript syntax: Unexpected end of file")
       end
     end
   end
@@ -35,11 +35,11 @@ describe JsDuck::Js::Parser do
     end
 
     it "detects 1-based line number of comment on first line" do
-      @docs[0][:linenr].should == 1
+      expect(@docs[0][:linenr]).to eq(1)
     end
 
     it "detects line number of second comment on 4th line" do
-      @docs[1][:linenr].should == 4
+      expect(@docs[1][:linenr]).to eq(4)
     end
   end
 
@@ -49,7 +49,7 @@ describe JsDuck::Js::Parser do
     end
 
     it "results in plain comment" do
-      @docs[0][:type].should == :plain_comment
+      expect(@docs[0][:type]).to eq(:plain_comment)
     end
   end
 
@@ -59,11 +59,11 @@ describe JsDuck::Js::Parser do
     end
 
     it "results in plain comment" do
-      @docs[0][:type].should == :plain_comment
+      expect(@docs[0][:type]).to eq(:plain_comment)
     end
 
     it "doesn't strip anything from the beginning of comment" do
-      @docs[0][:comment].should == " Hello world "
+      expect(@docs[0][:comment]).to eq(" Hello world ")
     end
   end
 
@@ -73,11 +73,11 @@ describe JsDuck::Js::Parser do
     end
 
     it "results in doc comment" do
-      @docs[0][:type].should == :doc_comment
+      expect(@docs[0][:type]).to eq(:doc_comment)
     end
 
     it "strips * at the beginning of comment" do
-      @docs[0][:comment].should == " Hello world "
+      expect(@docs[0][:comment]).to eq(" Hello world ")
     end
   end
 
@@ -91,7 +91,7 @@ describe JsDuck::Js::Parser do
     end
 
     it "detects no code associated with comment" do
-      @docs[0][:code].should == nil
+      expect(@docs[0][:code]).to eq(nil)
     end
   end
 
@@ -108,19 +108,19 @@ describe JsDuck::Js::Parser do
     end
 
     it "finds two comments" do
-      @docs.length.should == 2
+      expect(@docs.length).to eq(2)
     end
 
     it "detects first comment as belonging to first function" do
-      @docs[0][:comment].should == " Function A"
-      @docs[0][:code]["type"].should == "FunctionDeclaration"
-      @docs[0][:code]["id"]["name"].should == "a"
+      expect(@docs[0][:comment]).to eq(" Function A")
+      expect(@docs[0][:code]["type"]).to eq("FunctionDeclaration")
+      expect(@docs[0][:code]["id"]["name"]).to eq("a")
     end
 
     it "detects second comment as belonging to second function" do
-      @docs[1][:comment].should == " Function B"
-      @docs[1][:code]["type"].should == "FunctionDeclaration"
-      @docs[1][:code]["id"]["name"].should == "b"
+      expect(@docs[1][:comment]).to eq(" Function B")
+      expect(@docs[1][:code]["type"]).to eq("FunctionDeclaration")
+      expect(@docs[1][:code]["id"]["name"]).to eq("b")
     end
   end
 
@@ -135,15 +135,15 @@ describe JsDuck::Js::Parser do
     end
 
     it "finds two comments" do
-      @docs.length.should == 2
+      expect(@docs.length).to eq(2)
     end
 
     it "detects no code associated with first comment" do
-      @docs[0][:code].should == nil
+      expect(@docs[0][:code]).to eq(nil)
     end
 
     it "detects second comment as belonging to the function" do
-      @docs[1][:code]["type"].should == "FunctionDeclaration"
+      expect(@docs[1][:code]["type"]).to eq("FunctionDeclaration")
     end
   end
 
@@ -159,15 +159,15 @@ describe JsDuck::Js::Parser do
     end
 
     it "finds one comment" do
-      @docs.length.should == 1
+      expect(@docs.length).to eq(1)
     end
 
     it "merges all the line-comments together" do
-      @docs[0][:comment].should == " Very\n Long\n Comment"
+      expect(@docs[0][:comment]).to eq(" Very\n Long\n Comment")
     end
 
     it "detects the whole comment as belonging to the function" do
-      @docs[0][:code]["type"].should == "FunctionDeclaration"
+      expect(@docs[0][:code]["type"]).to eq("FunctionDeclaration")
     end
   end
 
@@ -186,7 +186,7 @@ describe JsDuck::Js::Parser do
     end
 
     it "gets treated as three separate comments" do
-      @docs.length.should == 3
+      expect(@docs.length).to eq(3)
     end
   end
 
@@ -205,15 +205,15 @@ describe JsDuck::Js::Parser do
     end
 
     it "finds two comments" do
-      @docs.length.should == 2
+      expect(@docs.length).to eq(2)
     end
 
     it "merges first two line-comments together" do
-      @docs[0][:comment].should == " First\n Comment for A"
+      expect(@docs[0][:comment]).to eq(" First\n Comment for A")
     end
 
     it "merges second two line-comments together" do
-      @docs[1][:comment].should == " Second\n Comment for B"
+      expect(@docs[1][:comment]).to eq(" Second\n Comment for B")
     end
   end
 
@@ -229,12 +229,12 @@ describe JsDuck::Js::Parser do
     end
 
     it "detects comment as belonging to the inner function" do
-      @docs[0][:code]["type"].should == "FunctionDeclaration"
-      @docs[0][:code]["id"]["name"].should == "a"
+      expect(@docs[0][:code]["type"]).to eq("FunctionDeclaration")
+      expect(@docs[0][:code]["id"]["name"]).to eq("a")
     end
 
     it "detects range" do
-      @docs[0][:code]["range"].should == [61, 89, 3]
+      expect(@docs[0][:code]["range"]).to eq([61, 89, 3])
     end
   end
 
@@ -256,8 +256,8 @@ describe JsDuck::Js::Parser do
     end
 
     it "detects comment as belonging to the inner function" do
-      @docs[0][:code]["type"].should == "FunctionDeclaration"
-      @docs[0][:code]["id"]["name"].should == "a"
+      expect(@docs[0][:code]["type"]).to eq("FunctionDeclaration")
+      expect(@docs[0][:code]["id"]["name"]).to eq("a")
     end
   end
 
@@ -273,8 +273,8 @@ describe JsDuck::Js::Parser do
     end
 
     it "detects comment as belonging to the second property" do
-      @docs[0][:code]["type"].should == "Property"
-      @docs[0][:code]["key"]["name"].should == "bar"
+      expect(@docs[0][:code]["type"]).to eq("Property")
+      expect(@docs[0][:code]["key"]["name"]).to eq("bar")
     end
   end
 
@@ -286,8 +286,8 @@ describe JsDuck::Js::Parser do
     end
 
     it "associates comment with the code" do
-      @docs[0][:comment].should == " Blah "
-      @docs[0][:code]["type"].should == "ObjectExpression"
+      expect(@docs[0][:comment]).to eq(" Blah ")
+      expect(@docs[0][:code]["type"]).to eq("ObjectExpression")
     end
   end
 
@@ -301,8 +301,8 @@ describe JsDuck::Js::Parser do
     end
 
     it "associates comment with the next array member after that" do
-      @docs[0][:comment].should == " Blah "
-      @docs[0][:code]["value"].should == 6
+      expect(@docs[0][:comment]).to eq(" Blah ")
+      expect(@docs[0][:code]["value"]).to eq(6)
     end
   end
 

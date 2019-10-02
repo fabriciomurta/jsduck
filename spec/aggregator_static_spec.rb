@@ -21,7 +21,7 @@ describe JsDuck::Aggregator do
     end
 
     it "labels that method as static" do
-      @doc[:static].should == true
+      expect(@doc[:static]).to eq(true)
     end
 
     it "doesn't detect inheritable property" do
@@ -42,11 +42,11 @@ describe JsDuck::Aggregator do
     end
 
     it "labels that method as static" do
-      @doc[:static].should == true
+      expect(@doc[:static]).to eq(true)
     end
 
     it "detects the @inheritable property" do
-      @doc[:inheritable].should == true
+      expect(@doc[:inheritable]).to eq(true)
     end
   end
 
@@ -70,7 +70,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds static members to :members" do
-      @doc[:members].length.should == 2
+      expect(@doc[:members].length).to eq(2)
     end
   end
 
@@ -92,27 +92,27 @@ describe JsDuck::Aggregator do
 
     describe "detects a member" do
       it "with :property tagname" do
-        member[:tagname].should == :property
+        expect(member[:tagname]).to eq(:property)
       end
 
       it "with :static flag" do
-        member[:static].should == true
+        expect(member[:static]).to eq(true)
       end
 
       it "with :autodetected flag" do
-        member[:autodetected][:tagname].should == :property
+        expect(member[:autodetected][:tagname]).to eq(:property)
       end
 
       it "with owner" do
-        member[:owner].should == "MyClass"
+        expect(member[:owner]).to eq("MyClass")
       end
 
       it "as private" do
-        member[:private].should == true
+        expect(member[:private]).to eq(true)
       end
 
       it "with :linenr field" do
-        member[:linenr].should == 8
+        expect(member[:linenr]).to eq(8)
       end
     end
   end
@@ -136,19 +136,19 @@ describe JsDuck::Aggregator do
 
     describe "detects a member" do
       it "with :method tagname" do
-        member[:tagname].should == :method
+        expect(member[:tagname]).to eq(:method)
       end
 
       it "with :static flag" do
-        member[:static].should == true
+        expect(member[:static]).to eq(true)
       end
 
       it "with docs" do
-        member[:doc].should == "Docs for bar"
+        expect(member[:doc]).to eq("Docs for bar")
       end
 
       it "with owner" do
-        member[:owner].should == "MyClass"
+        expect(member[:owner]).to eq("MyClass")
       end
 
       it "as public" do
@@ -156,7 +156,7 @@ describe JsDuck::Aggregator do
       end
 
       it "with :linenr field" do
-        member[:files][0][:linenr].should == 8
+        expect(member[:files][0][:linenr]).to eq(8)
       end
     end
   end
@@ -179,19 +179,19 @@ describe JsDuck::Aggregator do
 
     describe "detects a member" do
       it "with :method tagname" do
-        member[:tagname].should == :method
+        expect(member[:tagname]).to eq(:method)
       end
 
       it "with :static flag" do
-        member[:static].should == true
+        expect(member[:static]).to eq(true)
       end
 
       it "with :inheritable flag" do
-        member[:inheritable].should == true
+        expect(member[:inheritable]).to eq(true)
       end
 
       it "with :inheritdoc flag" do
-        member[:inheritdoc].should == {}
+        expect(member[:inheritdoc]).to eq({})
       end
     end
   end
@@ -214,19 +214,19 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a static" do
-      member[:static].should == true
+      expect(member[:static]).to eq(true)
     end
 
     it "detects a method" do
-      member[:tagname].should == :method
+      expect(member[:tagname]).to eq(:method)
     end
 
     it "detects documentation" do
-      member[:doc].should == "Check this out"
+      expect(member[:doc]).to eq("Check this out")
     end
 
     it "detects the method with :autodetected flag" do
-      member[:autodetected][:tagname].should == :method
+      expect(member[:autodetected][:tagname]).to eq(:method)
     end
   end
 
@@ -247,11 +247,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a static" do
-      member[:static].should == true
+      expect(member[:static]).to eq(true)
     end
 
     it "detects a method" do
-      member[:tagname].should == :method
+      expect(member[:tagname]).to eq(:method)
     end
   end
 

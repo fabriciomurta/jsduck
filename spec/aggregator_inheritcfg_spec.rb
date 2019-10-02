@@ -25,11 +25,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a property in parent" do
-      classes["Parent"][:members][0][:tagname].should == :property
+      expect(classes["Parent"][:members][0][:tagname]).to eq(:property)
     end
 
     it "detects a property in child" do
-      classes["Child"][:members][0][:tagname].should == :property
+      expect(classes["Child"][:members][0][:tagname]).to eq(:property)
     end
 
     it "detects property in child as public" do
@@ -57,11 +57,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a config in parent" do
-      classes["Parent"][:members][0][:tagname].should == :cfg
+      expect(classes["Parent"][:members][0][:tagname]).to eq(:cfg)
     end
 
     it "detects a config in child" do
-      classes["Child"][:members][0][:tagname].should == :cfg
+      expect(classes["Child"][:members][0][:tagname]).to eq(:cfg)
     end
 
     it "detects the child config with correct tagname" do
@@ -73,7 +73,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects no properties in child" do
-      classes["Child"][:members].length.should == 1
+      expect(classes["Child"][:members].length).to eq(1)
     end
   end
 
@@ -106,11 +106,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a config in child" do
-      classes["Child"][:members][0][:tagname].should == :cfg
+      expect(classes["Child"][:members][0][:tagname]).to eq(:cfg)
     end
 
     it "detects a config in parent" do
-      classes["Parent"][:members][0][:tagname].should == :cfg
+      expect(classes["Parent"][:members][0][:tagname]).to eq(:cfg)
     end
   end
 

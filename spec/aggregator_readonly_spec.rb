@@ -15,7 +15,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets readonly attribute" do
-      doc[:readonly].should == true
+      expect(doc[:readonly]).to eq(true)
     end
   end
 
@@ -47,7 +47,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets readonly attribute" do
-      doc[:readonly].should == true
+      expect(doc[:readonly]).to eq(true)
     end
   end
 
@@ -62,7 +62,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets readonly attribute" do
-      doc[:readonly].should == true
+      expect(doc[:readonly]).to eq(true)
     end
   end
 
@@ -77,7 +77,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets a readonly attribute" do
-      doc[:readonly].should == true
+      expect(doc[:readonly]).to eq(true)
     end
   end
 

@@ -36,7 +36,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets the :component flag" do
-      cls[:component].should == true
+      expect(cls[:component]).to eq(true)
     end
   end
 
@@ -54,7 +54,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets the :component flag" do
-      cls[:component].should == true
+      expect(cls[:component]).to eq(true)
     end
   end
 
@@ -71,7 +71,7 @@ describe JsDuck::Aggregator do
     end
 
     it "also gets the :component flag" do
-      cls[:component].should == true
+      expect(cls[:component]).to eq(true)
     end
   end
 

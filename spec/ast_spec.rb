@@ -9,47 +9,47 @@ describe JsDuck::Js::Ast do
 
   describe "detects as class" do
     it "function beginning with uppercase letter" do
-      detect("/** */ function MyClass() {}").should == :class
+      expect(detect("/** */ function MyClass() {}")).to eq(:class)
     end
 
     it "function assignment to uppercase name" do
-      detect("/** */ MyClass = function() {}").should == :class
+      expect(detect("/** */ MyClass = function() {}")).to eq(:class)
     end
 
     it "function assignment to uppercase property" do
-      detect("/** */ foo.MyClass = function() {}").should == :class
+      expect(detect("/** */ foo.MyClass = function() {}")).to eq(:class)
     end
 
     it "uppercase var initialization with function" do
-      detect("/** */ var MyClass = function() {}").should == :class
+      expect(detect("/** */ var MyClass = function() {}")).to eq(:class)
     end
 
     it "object literal assignment to uppercase name" do
-      detect("/** */ MyClass = {};").should == :class
+      expect(detect("/** */ MyClass = {};")).to eq(:class)
     end
 
     it "doc-comment right before object literal" do
-      detect("MyClass = makeClass( /** */ {} );").should == :class
+      expect(detect("MyClass = makeClass( /** */ {} );")).to eq(:class)
     end
 
     it "Ext.extend()" do
-      detect("/** */ MyClass = Ext.extend(Your.Class, {  });").should == :class
+      expect(detect("/** */ MyClass = Ext.extend(Your.Class, {  });")).to eq(:class)
     end
 
     it "var initialized with Ext.extend()" do
-      detect("/** */ var MyClass = Ext.extend(Your.Class, {  });").should == :class
+      expect(detect("/** */ var MyClass = Ext.extend(Your.Class, {  });")).to eq(:class)
     end
 
     it "Ext.extend() assigned to lowercase name" do
-      detect("/** */ myclass = Ext.extend(Your.Class, {  });").should == :class
+      expect(detect("/** */ myclass = Ext.extend(Your.Class, {  });")).to eq(:class)
     end
 
     it "lowercase var initialized with Ext.extend()" do
-      detect("/** */ var myclass = Ext.extend(Your.Class, {  });").should == :class
+      expect(detect("/** */ var myclass = Ext.extend(Your.Class, {  });")).to eq(:class)
     end
 
     it "Ext.define()" do
-      detect(<<-EOS).should == :class
+      expect(detect(<<-EOS)).to eq(:class)
         /** */
         Ext.define('MyClass', {
         });
@@ -57,7 +57,7 @@ describe JsDuck::Js::Ast do
     end
 
     it "Ext.ClassManager.create()" do
-      detect(<<-EOS).should == :class
+      expect(detect(<<-EOS)).to eq(:class)
         /** */
         Ext.ClassManager.create('MyClass', {
         });
@@ -67,39 +67,39 @@ describe JsDuck::Js::Ast do
 
   describe "detects as method" do
     it "function beginning with underscore" do
-      detect("/** */ function _Foo() {}").should == :method
+      expect(detect("/** */ function _Foo() {}")).to eq(:method)
     end
 
     it "lowercase function name" do
-      detect("/** */ function foo() {}").should == :method
+      expect(detect("/** */ function foo() {}")).to eq(:method)
     end
 
     it "assignment of function" do
-      detect("/** */ foo = function() {}").should == :method
+      expect(detect("/** */ foo = function() {}")).to eq(:method)
     end
 
     it "assignment of Ext.emptyFn" do
-      detect("/** */ foo = Ext.emptyFn").should == :method
+      expect(detect("/** */ foo = Ext.emptyFn")).to eq(:method)
     end
 
     it "var initialized with function" do
-      detect("/** */ var foo = function() {}").should == :method
+      expect(detect("/** */ var foo = function() {}")).to eq(:method)
     end
 
     it "var initialized with Ext.emptyFn" do
-      detect("/** */ var foo = Ext.emptyFn").should == :method
+      expect(detect("/** */ var foo = Ext.emptyFn")).to eq(:method)
     end
 
     it "anonymous function as expression" do
-      detect("/** */ (function(){})").should == :method
+      expect(detect("/** */ (function(){})")).to eq(:method)
     end
 
     it "anonymous function as parameter" do
-      detect("doSomething('blah', /** */ function(){});").should == :method
+      expect(detect("doSomething('blah', /** */ function(){});")).to eq(:method)
     end
 
     it "object property initialized with function" do
-      detect(<<-EOS).should == :method
+      expect(detect(<<-EOS)).to eq(:method)
         Foo = {
             /** */
             bar: function(){}
@@ -108,7 +108,7 @@ describe JsDuck::Js::Ast do
     end
 
     it "object property in comma-first notation initialized with function" do
-      detect(<<-EOS).should == :method
+      expect(detect(<<-EOS)).to eq(:method)
         Foo = {
             foo: 5
             /** */
@@ -118,7 +118,7 @@ describe JsDuck::Js::Ast do
     end
 
     it "object property initialized with Ext.emptyFn" do
-      detect(<<-EOS).should == :method
+      expect(detect(<<-EOS)).to eq(:method)
         Foo = {
             /** */
             bar: Ext.emptyFn
@@ -129,7 +129,7 @@ describe JsDuck::Js::Ast do
 
   describe "detects as property" do
     it "no code" do
-      detect("/** */").should == :property
+      expect(detect("/** */")).to eq(:property)
     end
   end
 

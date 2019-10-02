@@ -9,31 +9,31 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "name in" do
     it "function declaration" do
-      detect("/** */ function MyClass() {}")[:name].should == "MyClass"
+      expect(detect("/** */ function MyClass() {}")[:name]).to eq("MyClass")
     end
 
     it "function assignment" do
-      detect("/** */ MyClass = function() {}")[:name].should == "MyClass"
+      expect(detect("/** */ MyClass = function() {}")[:name]).to eq("MyClass")
     end
 
     it "function assignment to property" do
-      detect("/** */ foo.MyClass = function() {}")[:name].should == "foo.MyClass"
+      expect(detect("/** */ foo.MyClass = function() {}")[:name]).to eq("foo.MyClass")
     end
 
     it "var initialization with function" do
-      detect("/** */ var MyClass = function() {}")[:name].should == "MyClass"
+      expect(detect("/** */ var MyClass = function() {}")[:name]).to eq("MyClass")
     end
 
     it "Ext.extend() assignment" do
-      detect("/** */ MyClass = Ext.extend(Your.Class, {  });")[:name].should == "MyClass"
+      expect(detect("/** */ MyClass = Ext.extend(Your.Class, {  });")[:name]).to eq("MyClass")
     end
 
     it "var initialized with Ext.extend()" do
-      detect("/** */ var MyClass = Ext.extend(Your.Class, {  });")[:name].should == "MyClass"
+      expect(detect("/** */ var MyClass = Ext.extend(Your.Class, {  });")[:name]).to eq("MyClass")
     end
 
     it "Ext.define() with object literal" do
-      detect(<<-EOS)[:name].should == "MyClass"
+      expect(detect(<<-EOS)[:name]).to eq("MyClass")
         /** */
         Ext.define('MyClass', {
         });
@@ -41,7 +41,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with function" do
-      detect(<<-EOS)[:name].should == "MyClass"
+      expect(detect(<<-EOS)[:name]).to eq("MyClass")
         /** */
         Ext.define('MyClass', function() {});
       EOS
@@ -50,15 +50,15 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "extends in" do
     it "Ext.extend() assignment" do
-      detect("/** */ MyClass = Ext.extend(Your.Class, {  });")[:extends].should == "Your.Class"
+      expect(detect("/** */ MyClass = Ext.extend(Your.Class, {  });")[:extends]).to eq("Your.Class")
     end
 
     it "var initialized with Ext.extend()" do
-      detect("/** */ var MyClass = Ext.extend(Your.Class, {  });")[:extends].should == "Your.Class"
+      expect(detect("/** */ var MyClass = Ext.extend(Your.Class, {  });")[:extends]).to eq("Your.Class")
     end
 
     it "Ext.define() with extend:" do
-      detect(<<-EOS)[:extends].should == "Your.Class"
+      expect(detect(<<-EOS)[:extends]).to eq("Your.Class")
         /** */
         Ext.define('MyClass', {
             extend: "Your.Class"
@@ -67,7 +67,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with extend: as second object property" do
-      detect(<<-EOS)[:extends].should == "Your.Class"
+      expect(detect(<<-EOS)[:extends]).to eq("Your.Class")
         /** */
         Ext.define('MyClass', {
             foo: 5,
@@ -77,7 +77,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with function argument" do
-      detect(<<-EOS)[:extends].should == "Ext.Base"
+      expect(detect(<<-EOS)[:extends]).to eq("Ext.Base")
         /** */
         Ext.define('MyClass', function() {
         });
@@ -85,7 +85,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with function returning object" do
-      detect(<<-EOS)[:extends].should == "Your.Class"
+      expect(detect(<<-EOS)[:extends]).to eq("Your.Class")
         /** */
         Ext.define('MyClass', function() {
             return {extend: "Your.Class"};
@@ -96,7 +96,7 @@ describe "JsDuck::Js::Ast detects class with" do
     # TODO: Doesn't work at the moment
     #
     # it "Ext.define() with function returning two possible objects" do
-    #   detect(<<-EOS)[:extends].should == "Ext.Base"
+    #   expect(detect(<<-EOS)[:extends]).to eq("Ext.Base")
     #     /** */
     #     Ext.define('MyClass', function() {
     #         if (someCondition) {
@@ -108,7 +108,7 @@ describe "JsDuck::Js::Ast detects class with" do
     # end
 
     it "Ext.define() with no extend: in config object" do
-      detect(<<-EOS)[:extends].should == "Ext.Base"
+      expect(detect(<<-EOS)[:extends]).to eq("Ext.Base")
         /** */
         Ext.define('MyClass', {
             foo: 5,
@@ -120,7 +120,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "no extends in" do
     it "plain variable assignment" do
-      detect(<<-EOS)[:extends].should == nil
+      expect(detect(<<-EOS)[:extends]).to eq(nil)
         /** */
         MyClass = {
             extend: 5
@@ -131,7 +131,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "requires in" do
     it "Ext.define() with requires as string" do
-      detect(<<-EOS)[:requires].should == ["Other.Class"]
+      expect(detect(<<-EOS)[:requires]).to eq(["Other.Class"])
         /** */
         Ext.define('MyClass', {
             requires: "Other.Class"
@@ -140,7 +140,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with requires as array of strings" do
-      detect(<<-EOS)[:requires].should == ["Some.Class", "Other.Class"]
+      expect(detect(<<-EOS)[:requires]).to eq(["Some.Class", "Other.Class"])
         /** */
         Ext.define('MyClass', {
             requires: ["Some.Class", "Other.Class"]
@@ -151,7 +151,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "no requires in" do
     it "Ext.define() without requires" do
-      detect(<<-EOS)[:requires].should == []
+      expect(detect(<<-EOS)[:requires]).to eq([])
         /** */
         Ext.define('MyClass', {
         });
@@ -159,7 +159,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with requires as array of functions and strings" do
-      detect(<<-EOS)[:requires].should == []
+      expect(detect(<<-EOS)[:requires]).to eq([])
         /** */
         Ext.define('MyClass', {
             requires: [function(){}, "Foo"]
@@ -168,7 +168,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with requires as nested array" do
-      detect(<<-EOS)[:requires].should == []
+      expect(detect(<<-EOS)[:requires]).to eq([])
         /** */
         Ext.define('MyClass', {
             requires: ["Foo", ["Bar"]]
@@ -180,7 +180,7 @@ describe "JsDuck::Js::Ast detects class with" do
   describe "uses in" do
     # Just a smoke-test here, as it's sharing the implementation of :requires
     it "Ext.define() with uses as array" do
-      detect(<<-EOS)[:uses].should == ["Other.Class"]
+      expect(detect(<<-EOS)[:uses]).to eq(["Other.Class"])
         /** */
         Ext.define('MyClass', {
             uses: ["Other.Class"]
@@ -192,7 +192,7 @@ describe "JsDuck::Js::Ast detects class with" do
   describe "alternateClassNames in" do
     # Just a smoke-test here, as it's sharing the implementation of :requires
     it "Ext.define() with alternateClassName as string" do
-      detect(<<-EOS)[:alternateClassNames].should == ["Other.Class"]
+      expect(detect(<<-EOS)[:alternateClassNames]).to eq(["Other.Class"])
         /** */
         Ext.define('MyClass', {
             alternateClassName: "Other.Class"
@@ -203,7 +203,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "mixins in" do
     it "Ext.define() with mixins as string" do
-      Set.new(detect(<<-EOS)[:mixins]).should == Set.new(["Some.Class", "Other.Class"])
+      expect(Set.new(detect(<<-EOS)[:mixins])).to eq(Set.new(["Some.Class", "Other.Class"]))
         /** */
         Ext.define('MyClass', {
             mixins: ["Some.Class", "Other.Class"]
@@ -212,7 +212,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with mixins as array of strings" do
-      Set.new(detect(<<-EOS)[:mixins]).should == Set.new(["Other.Class"])
+      expect(Set.new(detect(<<-EOS)[:mixins])).to eq(Set.new(["Other.Class"]))
         /** */
         Ext.define('MyClass', {
             mixins: "Other.Class"
@@ -221,7 +221,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with mixins as object" do
-      Set.new(detect(<<-EOS)[:mixins]).should == Set.new(["Some.Class", "Other.Class"])
+      expect(Set.new(detect(<<-EOS)[:mixins])).to eq(Set.new(["Some.Class", "Other.Class"]))
         /** */
         Ext.define('MyClass', {
             mixins: {
@@ -235,7 +235,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "no mixins in" do
     it "Ext.define() without mixins" do
-      detect(<<-EOS)[:mixins].should == []
+      expect(detect(<<-EOS)[:mixins]).to eq([])
         /** */
         Ext.define('MyClass', {
         });
@@ -243,7 +243,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with mixins as nested object" do
-      detect(<<-EOS)[:mixins].should == []
+      expect(detect(<<-EOS)[:mixins]).to eq([])
         /** */
         Ext.define('MyClass', {
             mixins: {foo: {bar: "foo"}}
@@ -252,7 +252,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with mixins as identifier" do
-      detect(<<-EOS)[:mixins].should == []
+      expect(detect(<<-EOS)[:mixins]).to eq([])
         /** */
         Ext.define('MyClass', {
             mixins: someVar
@@ -263,7 +263,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "singleton in" do
     it "Ext.define() with singleton:true" do
-      detect(<<-EOS)[:singleton].should == true
+      expect(detect(<<-EOS)[:singleton]).to eq(true)
         /** */
         Ext.define('MyClass', {
             singleton: true
@@ -293,7 +293,7 @@ describe "JsDuck::Js::Ast detects class with" do
 
   describe "aliases in" do
     it "Ext.define() single string alias" do
-      detect(<<-EOS)[:aliases].should == ["widget.foo"]
+      expect(detect(<<-EOS)[:aliases]).to eq(["widget.foo"])
         /** */
         Ext.define('MyClass', {
             alias: "widget.foo"
@@ -302,7 +302,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with alias as array" do
-      detect(<<-EOS)[:aliases].should == ["widget.foo", "widget.fooeditor"]
+      expect(detect(<<-EOS)[:aliases]).to eq(["widget.foo", "widget.fooeditor"])
         /** */
         Ext.define('MyClass', {
             alias: ["widget.foo", "widget.fooeditor"]
@@ -311,7 +311,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with xtype" do
-      detect(<<-EOS)[:aliases].should == ["widget.foo"]
+      expect(detect(<<-EOS)[:aliases]).to eq(["widget.foo"])
         /** */
         Ext.define('MyClass', {
             xtype: "foo"
@@ -320,7 +320,7 @@ describe "JsDuck::Js::Ast detects class with" do
     end
 
     it "Ext.define() with alias and xtype" do
-      detect(<<-EOS)[:aliases].should == ["widget.foo", "widget.fooeditor"]
+      expect(detect(<<-EOS)[:aliases]).to eq(["widget.foo", "widget.fooeditor"])
         /** */
         Ext.define('MyClass', {
             alias: "widget.foo",

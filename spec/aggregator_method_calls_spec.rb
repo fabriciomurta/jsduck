@@ -21,7 +21,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects these method calls" do
-      calls.should == ["bar", "foo"]
+      expect(calls).to eq(["bar", "foo"])
     end
   end
 

@@ -7,19 +7,19 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "constructor" do
     it "has one method" do
-      methods.length.should == 1
+      expect(methods.length).to eq(1)
     end
 
     it "has method with name 'constructor'" do
-      methods[0][:name].should == "constructor"
+      expect(methods[0][:name]).to eq("constructor")
     end
 
     it "has method with constructor docs" do
-      methods[0][:doc].should == "This constructs the class"
+      expect(methods[0][:doc]).to eq("This constructs the class")
     end
 
     it "has method with needed parameters" do
-      methods[0][:params].length.should == 1
+      expect(methods[0][:params].length).to eq(1)
     end
   end
 
@@ -96,7 +96,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects just one constructor" do
-      methods.length.should == 1
+      expect(methods.length).to eq(1)
     end
   end
 
@@ -118,7 +118,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects the constructor method" do
-      methods[0][:name].should == "constructor"
+      expect(methods[0][:name]).to eq("constructor")
     end
 
     it "doesn't detect the constructor as private" do

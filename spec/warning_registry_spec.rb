@@ -13,12 +13,12 @@ describe JsDuck::Warning::Registry do
   describe "by default" do
     it "has the usual warnings disabled" do
       usual_warnings.each do |type|
-        warnings.enabled?(type, "").should == false
+        expect(warnings.enabled?(type, "")).to eq(false)
       end
     end
 
     it "has the nodoc warning disabled" do
-      warnings.enabled?(:nodoc, "", [:class, :public]).should == false
+      expect(warnings.enabled?(:nodoc, "", [:class, :public])).to eq(false)
     end
   end
 
@@ -29,26 +29,26 @@ describe JsDuck::Warning::Registry do
 
     it "has the usual warnings enabled" do
       usual_warnings.each do |type|
-        warnings.enabled?(type, "").should == true
+        expect(warnings.enabled?(type, "")).to eq(true)
       end
     end
 
     it "has the nodoc warning enabled" do
-      warnings.enabled?(:nodoc, "", [:class, :public]).should == true
+      expect(warnings.enabled?(:nodoc, "", [:class, :public])).to eq(true)
     end
   end
 
   shared_examples_for "limited to a path" do
     it "has the :tag warning disabled for /other/path/file.js" do
-      warnings.enabled?(:tag, "/other/path/file.js").should == false
+      expect(warnings.enabled?(:tag, "/other/path/file.js")).to eq(false)
     end
 
     it "has the :tag warning enabled for /some/path/file.js" do
-      warnings.enabled?(:tag, "/some/path/file.js").should == true
+      expect(warnings.enabled?(:tag, "/some/path/file.js")).to eq(true)
     end
 
     it "has the :tag warning enabled for /within/some/path/file.js" do
-      warnings.enabled?(:tag, "/within/some/path/file.js").should == true
+      expect(warnings.enabled?(:tag, "/within/some/path/file.js")).to eq(true)
     end
   end
 
@@ -73,11 +73,11 @@ describe JsDuck::Warning::Registry do
       end
 
       it "has the :tag warning enabled for /some/path/file.js" do
-        warnings.enabled?(:tag, "/some/path/file.js").should == true
+        expect(warnings.enabled?(:tag, "/some/path/file.js")).to eq(true)
       end
 
       it "has the :tag warning enabled for /other/path/file.js" do
-        warnings.enabled?(:tag, "/other/path/file.js").should == true
+        expect(warnings.enabled?(:tag, "/other/path/file.js")).to eq(true)
       end
     end
 
@@ -87,11 +87,11 @@ describe JsDuck::Warning::Registry do
       end
 
       it "has the :tag warning enabled for /some/path/file.js" do
-        warnings.enabled?(:tag, "/some/path/file.js").should == true
+        expect(warnings.enabled?(:tag, "/some/path/file.js")).to eq(true)
       end
 
       it "has the :tag warning disabled for /some/path/sub/path/file.js" do
-        warnings.enabled?(:tag, "/some/path/sub/path/file.js").should == false
+        expect(warnings.enabled?(:tag, "/some/path/sub/path/file.js")).to eq(false)
       end
     end
   end
@@ -102,7 +102,7 @@ describe JsDuck::Warning::Registry do
     end
 
     it "has the :tag warning enabled for a @footag" do
-      warnings.enabled?(:tag, "foo.js", [:footag]).should == true
+      expect(warnings.enabled?(:tag, "foo.js", [:footag])).to eq(true)
     end
 
     describe "and disabling it for @footag and @bartag" do
@@ -111,15 +111,15 @@ describe JsDuck::Warning::Registry do
       end
 
       it "has the :tag warning disabled for a @footag" do
-        warnings.enabled?(:tag, "bar.js", [:footag]).should == false
+        expect(warnings.enabled?(:tag, "bar.js", [:footag])).to eq(false)
       end
 
       it "has the :tag warning disabled for a @bartag" do
-        warnings.enabled?(:tag, "bar.js", [:bartag]).should == false
+        expect(warnings.enabled?(:tag, "bar.js", [:bartag])).to eq(false)
       end
 
       it "has the :tag warning still enabled for a @mytag" do
-        warnings.enabled?(:tag, "bar.js", [:mytag]).should == true
+        expect(warnings.enabled?(:tag, "bar.js", [:mytag])).to eq(true)
       end
 
       describe "and enabling it for files in /foo/" do
@@ -128,11 +128,11 @@ describe JsDuck::Warning::Registry do
         end
 
         it "has the :tag warning enabled for a @footag in /foo/" do
-          warnings.enabled?(:tag, "/foo/bar.js", [:footag]).should == true
+          expect(warnings.enabled?(:tag, "/foo/bar.js", [:footag])).to eq(true)
         end
 
         it "still has the :tag warning disabled for a @footag outside of /foo/" do
-          warnings.enabled?(:tag, "bar.js", [:footag]).should == false
+          expect(warnings.enabled?(:tag, "bar.js", [:footag])).to eq(false)
         end
       end
     end
@@ -144,11 +144,11 @@ describe JsDuck::Warning::Registry do
     end
 
     it "has the :nodoc warning enabled for a public class" do
-      warnings.enabled?(:nodoc, "foo.js", [:class, :public]).should == true
+      expect(warnings.enabled?(:nodoc, "foo.js", [:class, :public])).to eq(true)
     end
 
     it "has the :nodoc warning enabled for a private member" do
-      warnings.enabled?(:nodoc, "bar.js", [:member, :private]).should == true
+      expect(warnings.enabled?(:nodoc, "bar.js", [:member, :private])).to eq(true)
     end
 
     describe "and disabling it for private members" do
@@ -157,11 +157,11 @@ describe JsDuck::Warning::Registry do
       end
 
       it "has the :nodoc warning disabled for a private member" do
-        warnings.enabled?(:nodoc, "bar.js", [:member, :private]).should == false
+        expect(warnings.enabled?(:nodoc, "bar.js", [:member, :private])).to eq(false)
       end
 
       it "still has the :nodoc warning enabled for public members" do
-        warnings.enabled?(:nodoc, "bar.js", [:member, :public]).should == true
+        expect(warnings.enabled?(:nodoc, "bar.js", [:member, :public])).to eq(true)
       end
 
       describe "and enabling it for files in /foo/" do
@@ -170,11 +170,11 @@ describe JsDuck::Warning::Registry do
         end
 
         it "has the :nodoc warning enabled for a private member in /foo/bar.js" do
-          warnings.enabled?(:nodoc, "/foo/bar.js", [:member, :private]).should == true
+          expect(warnings.enabled?(:nodoc, "/foo/bar.js", [:member, :private])).to eq(true)
         end
 
         it "still has the :nodoc warning disabled in private member of /blah/foo.js" do
-          warnings.enabled?(:nodoc, "/blah/foo.js", [:member, :private]).should == false
+          expect(warnings.enabled?(:nodoc, "/blah/foo.js", [:member, :private])).to eq(false)
         end
       end
     end
@@ -187,7 +187,7 @@ describe JsDuck::Warning::Registry do
     end
 
     it "has the :nodoc warning disabled for a public class in blah/" do
-      warnings.enabled?(:nodoc, "blah/foo.js", [:class, :public]).should == false
+      expect(warnings.enabled?(:nodoc, "blah/foo.js", [:class, :public])).to eq(false)
     end
   end
 
@@ -203,10 +203,10 @@ describe JsDuck::Warning::Registry do
       end
 
       it "enables :nodoc warnings for public classes" do
-        warnings.enabled?(:nodoc, "", [:class, :public]).should == true
-        warnings.enabled?(:nodoc, "", [:class, :private]).should == false
-        warnings.enabled?(:nodoc, "", [:member, :public]).should == false
-        warnings.enabled?(:nodoc, "", [:param, :public]).should == false
+        expect(warnings.enabled?(:nodoc, "", [:class, :public])).to eq(true)
+        expect(warnings.enabled?(:nodoc, "", [:class, :private])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:member, :public])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:param, :public])).to eq(false)
       end
     end
 
@@ -220,10 +220,10 @@ describe JsDuck::Warning::Registry do
       end
 
       it "enables :nodoc warnings for public members" do
-        warnings.enabled?(:nodoc, "", [:member, :public]).should == true
-        warnings.enabled?(:nodoc, "", [:member, :private]).should == false
-        warnings.enabled?(:nodoc, "", [:class, :public]).should == false
-        warnings.enabled?(:nodoc, "", [:param, :public]).should == false
+        expect(warnings.enabled?(:nodoc, "", [:member, :public])).to eq(true)
+        expect(warnings.enabled?(:nodoc, "", [:member, :private])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:class, :public])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:param, :public])).to eq(false)
       end
     end
 
@@ -237,10 +237,10 @@ describe JsDuck::Warning::Registry do
       end
 
       it "enables :nodoc warnings public params" do
-        warnings.enabled?(:nodoc, "", [:param, :public]).should == true
-        warnings.enabled?(:nodoc, "", [:param, :private]).should == false
-        warnings.enabled?(:nodoc, "", [:member, :public]).should == false
-        warnings.enabled?(:nodoc, "", [:class, :public]).should == false
+        expect(warnings.enabled?(:nodoc, "", [:param, :public])).to eq(true)
+        expect(warnings.enabled?(:nodoc, "", [:param, :private])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:member, :public])).to eq(false)
+        expect(warnings.enabled?(:nodoc, "", [:class, :public])).to eq(false)
       end
     end
   end

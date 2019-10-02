@@ -29,17 +29,17 @@ describe JsDuck::Exporter::Full do
     end
 
     it "places all members inside :members field" do
-      result[:members].length.should == 9
+      expect(result[:members].length).to eq(9)
     end
 
     it "sorts configs alphabetically" do
       configs = result[:members].find_all {|m| m[:tagname] == :cfg }
-      configs.map {|m| m[:name] }.should == ["bar", "baz", "foo", "zap"]
+      expect(configs.map {|m| m[:name] }).to eq(["bar", "baz", "foo", "zap"])
     end
 
     it "sorts constructor first when sorting methods and static methods last" do
       methods = result[:members].find_all {|m| m[:tagname] == :method }
-      methods.map {|m| m[:name] }.should == ["constructor", "addBaz", "addFoo", "statGet"]
+      expect(methods.map {|m| m[:name] }).to eq(["constructor", "addBaz", "addFoo", "statGet"])
     end
 
   end

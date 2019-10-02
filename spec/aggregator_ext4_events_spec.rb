@@ -22,15 +22,15 @@ describe JsDuck::Aggregator do
     end
 
     it "added to end" do
-      event[:params].length.should == 3
+      expect(event[:params].length).to eq(3)
     end
 
     it "named eOpts" do
-      event[:params][2][:name].should == "eOpts"
+      expect(event[:params][2][:name]).to eq("eOpts")
     end
 
     it "of type Object" do
-      event[:params][2][:type].should == "Object"
+      expect(event[:params][2][:type]).to eq("Object")
     end
 
     it "with standard description" do
@@ -38,7 +38,7 @@ describe JsDuck::Aggregator do
     end
 
     it "with special :ext4event flag" do
-      event[:params][2][:ext4_auto_param].should == true
+      expect(event[:params][2][:ext4_auto_param]).to eq(true)
     end
   end
 
@@ -62,8 +62,8 @@ describe JsDuck::Aggregator do
     end
 
     it "events get extra parameter" do
-      events[0][:params].length.should == 2
-      events[1][:params].length.should == 1
+      expect(events[0][:params].length).to eq(2)
+      expect(events[1][:params].length).to eq(1)
     end
   end
 
@@ -82,8 +82,8 @@ describe JsDuck::Aggregator do
     end
 
     it "no extra param gets added" do
-      events[0][:params].length.should == 1
-      events[1][:params].length.should == 0
+      expect(events[0][:params].length).to eq(1)
+      expect(events[1][:params].length).to eq(0)
     end
   end
 

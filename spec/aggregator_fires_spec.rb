@@ -21,11 +21,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects one fired event" do
-      @fires.length.should == 1
+      expect(@fires.length).to eq(1)
     end
 
     it "detects event name that's fired" do
-      @fires[0].should == "click"
+      expect(@fires[0]).to eq("click")
     end
   end
 
@@ -40,12 +40,12 @@ describe JsDuck::Aggregator do
     end
 
     it "detects two events" do
-      @fires.length.should == 2
+      expect(@fires.length).to eq(2)
     end
 
     it "detects event names" do
-      @fires[0].should == "click"
-      @fires[1].should == "dblclick"
+      expect(@fires[0]).to eq("click")
+      expect(@fires[1]).to eq("dblclick")
     end
   end
 
@@ -61,12 +61,12 @@ describe JsDuck::Aggregator do
     end
 
     it "detects two events" do
-      @fires.length.should == 2
+      expect(@fires.length).to eq(2)
     end
 
     it "detects event names" do
-      @fires[0].should == "click"
-      @fires[1].should == "dblclick"
+      expect(@fires[0]).to eq("click")
+      expect(@fires[1]).to eq("dblclick")
     end
   end
 
@@ -81,7 +81,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects event from code" do
-      @fires[0].should == "click"
+      expect(@fires[0]).to eq("click")
     end
   end
 
@@ -104,7 +104,7 @@ describe JsDuck::Aggregator do
     end
 
     it "lists events fired by both methods" do
-      fires.should == ["click", "dblclick"]
+      expect(fires).to eq(["click", "dblclick"])
     end
   end
 
@@ -122,7 +122,7 @@ describe JsDuck::Aggregator do
     end
 
     it "lists just the event fired by himself" do
-      fires.should == ["click"]
+      expect(fires).to eq(["click"])
     end
   end
 
@@ -151,7 +151,7 @@ describe JsDuck::Aggregator do
     end
 
     it "lists events fired by all the methods" do
-      fires.should == ["click", "dblclick", "exit"]
+      expect(fires).to eq(["click", "dblclick", "exit"])
     end
   end
 
@@ -174,7 +174,7 @@ describe JsDuck::Aggregator do
     end
 
     it "blocks lookup of events fired by called methods" do
-      fires.should == ["huh"]
+      expect(fires).to eq(["huh"])
     end
   end
 

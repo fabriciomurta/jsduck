@@ -22,19 +22,19 @@ describe JsDuck::Aggregator do
     end
 
     it "detects one throws tag" do
-      @doc[:throws].length.should == 1
+      expect(@doc[:throws].length).to eq(1)
     end
 
     it "detects type of exception" do
-      @doc[:throws][0][:type].should == "Error"
+      expect(@doc[:throws][0][:type]).to eq("Error")
     end
 
     it "detects description" do
-      @doc[:throws][0][:doc].should == "Some text\non multiple lines."
+      expect(@doc[:throws][0][:doc]).to eq("Some text\non multiple lines.")
     end
 
     it "leaves documentation after @throws out of the main documentation" do
-      @doc[:doc].should == "Some function"
+      expect(@doc[:doc]).to eq("Some function")
     end
   end
 
@@ -49,11 +49,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects type as Object" do
-      @doc[:throws][0][:type].should == "Object"
+      expect(@doc[:throws][0][:type]).to eq("Object")
     end
 
     it "detects description" do
-      @doc[:throws][0][:doc].should == "Some description"
+      expect(@doc[:throws][0][:doc]).to eq("Some description")
     end
   end
 
@@ -69,7 +69,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects two throws tags" do
-      @doc[:throws].length.should == 2
+      expect(@doc[:throws].length).to eq(2)
     end
   end
 

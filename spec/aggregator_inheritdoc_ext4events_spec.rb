@@ -33,11 +33,11 @@ describe JsDuck::Aggregator do
     end
 
     it "generates 3rd param to original event" do
-      @orig[:params].length.should == 3
+      expect(@orig[:params].length).to eq(3)
     end
 
     it "inherits all three parameters" do
-      @inh1[:params].length.should == 3
+      expect(@inh1[:params].length).to eq(3)
     end
 
   end

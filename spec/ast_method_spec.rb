@@ -9,35 +9,35 @@ describe "JsDuck::Js::Ast detects method with" do
 
   describe "name in" do
     it "function declaration" do
-      detect("/** */ function foo() {}")[:name].should == "foo"
+      expect(detect("/** */ function foo() {}")[:name]).to eq("foo")
     end
 
     it "function assignment" do
-      detect("/** */ foo = function() {}")[:name].should == "foo"
+      expect(detect("/** */ foo = function() {}")[:name]).to eq("foo")
     end
 
     it "function assignment to object property" do
-      detect("/** */ some.item.foo = Ext.emptyFn")[:name].should == "some.item.foo"
+      expect(detect("/** */ some.item.foo = Ext.emptyFn")[:name]).to eq("some.item.foo")
     end
 
     it "Ext.emptyFn assignment" do
-      detect("/** */ foo = Ext.emptyFn")[:name].should == "foo"
+      expect(detect("/** */ foo = Ext.emptyFn")[:name]).to eq("foo")
     end
 
     it "var initialized with function" do
-      detect("/** */ var foo = function() {}")[:name].should == "foo"
+      expect(detect("/** */ var foo = function() {}")[:name]).to eq("foo")
     end
 
     it "var initialized with Ext.emptyFn" do
-      detect("/** */ var foo = Ext.emptyFn")[:name].should == "foo"
+      expect(detect("/** */ var foo = Ext.emptyFn")[:name]).to eq("foo")
     end
 
     it "function expression with name" do
-      detect("/** */ (function foo(){})")[:name].should == "foo"
+      expect(detect("/** */ (function foo(){})")[:name]).to eq("foo")
     end
 
     it "object property initialized with function" do
-      detect(<<-EOS)[:name].should == "foo"
+      expect(detect(<<-EOS)[:name]).to eq("foo")
         Foo = {
             /** */
             foo: function(){}
@@ -46,7 +46,7 @@ describe "JsDuck::Js::Ast detects method with" do
     end
 
     it "object property initialized with Ext.emptyFn" do
-      detect(<<-EOS)[:name].should == "foo"
+      expect(detect(<<-EOS)[:name]).to eq("foo")
         Foo = {
             /** */
             foo: Ext.emptyFn
@@ -55,7 +55,7 @@ describe "JsDuck::Js::Ast detects method with" do
     end
 
     it "object property with string key initialized with function" do
-      detect(<<-EOS)[:name].should == "foo"
+      expect(detect(<<-EOS)[:name]).to eq("foo")
         Foo = {
             /** */
             "foo": function(){}
@@ -66,32 +66,32 @@ describe "JsDuck::Js::Ast detects method with" do
 
   describe "no params in" do
     it "function declaration without params" do
-      detect("/** */ function foo() {}")[:params].should == nil
+      expect(detect("/** */ function foo() {}")[:params]).to eq(nil)
     end
 
     it "Ext.emptyFn assignment" do
-      detect("/** */ foo = Ext.emptyFn")[:params].should == nil
+      expect(detect("/** */ foo = Ext.emptyFn")[:params]).to eq(nil)
     end
   end
 
   describe "one param in" do
     it "function declaration with one param" do
-      detect("/** */ function foo(x) {}")[:params].length.should == 1
+      expect(detect("/** */ function foo(x) {}")[:params].length).to eq(1)
     end
   end
 
   describe "two params in" do
     it "function assignment with two params" do
-      detect("/** */ foo = function(a,b){}")[:params].length.should == 2
+      expect(detect("/** */ foo = function(a,b){}")[:params].length).to eq(2)
     end
   end
 
   describe "param names" do
     it "function assignment with three params" do
       params = detect("/** */ foo = function(a, b, c){}")[:params]
-      params[0].should == {:name => "a"}
-      params[1].should == {:name => "b"}
-      params[2].should == {:name => "c"}
+      expect(params[0]).to eq({:name => "a"})
+      expect(params[1]).to eq({:name => "b"})
+      expect(params[2]).to eq({:name => "c"})
     end
   end
 

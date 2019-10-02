@@ -9,11 +9,11 @@ describe "JsDuck::Js::Returns#detect" do
 
   describe "returns [:this] when function body" do
     it "has single RETURN THIS statement in body" do
-      returns("/** */ function foo() {return this;}").should == [:this]
+      expect(returns("/** */ function foo() {return this;}")).to eq([:this])
     end
 
     it "has RETURN THIS after a few expression statements" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           doSomething();
@@ -25,7 +25,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after a few declarations" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           var x = 10;
@@ -37,7 +37,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after an IF without RETURNs" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           if (condition) {
@@ -51,7 +51,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after SWITCH without returns" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           switch (x) {
@@ -65,7 +65,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after loops without returns" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           for (i=0; i<10; i++) {
@@ -84,7 +84,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after TRY CATCH without returns" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           try {
@@ -100,7 +100,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after WITH & BLOCK without returns" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           with (x) {
@@ -115,7 +115,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has RETURN THIS after statements also containing a RETURN THIS" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           while (x) {
@@ -130,7 +130,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has both branches of IF finishing with RETURN THIS" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           if (foo) {
@@ -149,7 +149,7 @@ describe "JsDuck::Js::Returns#detect" do
     end
 
     it "has DO WHILE containing RETURN THIS" do
-      returns(<<-EOJS).should == [:this]
+      expect(returns(<<-EOJS)).to eq([:this])
       /** */
       function foo() {
           do {
@@ -211,105 +211,105 @@ describe "JsDuck::Js::Returns#detect" do
 
   describe "returns ['undefined'] when function body" do
     it "is empty" do
-      returns("/** */ function foo() {}").should == ["undefined"]
+      expect(returns("/** */ function foo() {}")).to eq(["undefined"])
     end
 
     it "has no return statement" do
-      returns("/** */ function foo() { bar(); baz(); }").should == ["undefined"]
+      expect(returns("/** */ function foo() { bar(); baz(); }")).to eq(["undefined"])
     end
 
     it "has empty return statement" do
-      returns("/** */ function foo() { return; }").should == ["undefined"]
+      expect(returns("/** */ function foo() { return; }")).to eq(["undefined"])
     end
 
     it "has RETURN UNDEFINED statement" do
-      returns("/** */ function foo() { return undefined; }").should == ["undefined"]
+      expect(returns("/** */ function foo() { return undefined; }")).to eq(["undefined"])
     end
 
     it "has RETURN VOID statement" do
-      returns("/** */ function foo() { return void(blah); }").should == ["undefined"]
+      expect(returns("/** */ function foo() { return void(blah); }")).to eq(["undefined"])
     end
   end
 
   describe "returns ['Boolean'] when function body" do
     it "returns true" do
-      returns("/** */ function foo() { return true; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return true; }")).to eq(["Boolean"])
     end
 
     it "returns false" do
-      returns("/** */ function foo() { return false; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return false; }")).to eq(["Boolean"])
     end
 
     it "returns negation" do
-      returns("/** */ function foo() { return !foo; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return !foo; }")).to eq(["Boolean"])
     end
 
     it "returns > comparison" do
-      returns("/** */ function foo() { return x > y; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x > y; }")).to eq(["Boolean"])
     end
 
     it "returns <= comparison" do
-      returns("/** */ function foo() { return x <= y; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x <= y; }")).to eq(["Boolean"])
     end
 
     it "returns == comparison" do
-      returns("/** */ function foo() { return x == y; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x == y; }")).to eq(["Boolean"])
     end
 
     it "returns 'in' expression" do
-      returns("/** */ function foo() { return key in object; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return key in object; }")).to eq(["Boolean"])
     end
 
     it "returns 'instanceof' expression" do
-      returns("/** */ function foo() { return obj instanceof cls; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return obj instanceof cls; }")).to eq(["Boolean"])
     end
 
     it "returns 'delete' expression" do
-      returns("/** */ function foo() { return delete foo[bar]; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return delete foo[bar]; }")).to eq(["Boolean"])
     end
 
     it "returns conjunction of boolean expressions" do
-      returns("/** */ function foo() { return x > y && y > z; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x > y && y > z; }")).to eq(["Boolean"])
     end
 
     it "returns disjunction of boolean expressions" do
-      returns("/** */ function foo() { return x == y || y == z; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x == y || y == z; }")).to eq(["Boolean"])
     end
 
     it "returns conditional expression evaluating to boolean" do
-      returns("/** */ function foo() { return x ? true : a > b; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x ? true : a > b; }")).to eq(["Boolean"])
     end
 
     it "returns assignment of boolean" do
-      returns("/** */ function foo() { return x = true; }").should == ["Boolean"]
+      expect(returns("/** */ function foo() { return x = true; }")).to eq(["Boolean"])
     end
   end
 
   describe "returns ['String'] when function body" do
     it "returns a string literal" do
-      returns("/** */ function foo() { return 'foo'; }").should == ["String"]
+      expect(returns("/** */ function foo() { return 'foo'; }")).to eq(["String"])
     end
 
     it "returns a string concatenation" do
-      returns("/** */ function foo() { return 'foo' + 'bar'; }").should == ["String"]
+      expect(returns("/** */ function foo() { return 'foo' + 'bar'; }")).to eq(["String"])
     end
 
     it "returns a string concatenated with number" do
-      returns("/** */ function foo() { return 'foo' + 7; }").should == ["String"]
+      expect(returns("/** */ function foo() { return 'foo' + 7; }")).to eq(["String"])
     end
 
     it "returns a number concatenated with string" do
-      returns("/** */ function foo() { return 8 + 'foo'; }").should == ["String"]
+      expect(returns("/** */ function foo() { return 8 + 'foo'; }")).to eq(["String"])
     end
 
     it "returns a typeof expression" do
-      returns("/** */ function foo() { return typeof 8; }").should == ["String"]
+      expect(returns("/** */ function foo() { return typeof 8; }")).to eq(["String"])
     end
   end
 
   describe "returns ['RegExp'] when function body" do
     it "returns a regex literal" do
-      returns("/** */ function foo() { return /.*/; }").should == ["RegExp"]
+      expect(returns("/** */ function foo() { return /.*/; }")).to eq(["RegExp"])
     end
   end
 

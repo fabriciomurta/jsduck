@@ -20,7 +20,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "defaults return field to nil" do
-      @doc[:return].should == nil
+      expect(@doc[:return]).to eq(nil)
     end
   end
 
@@ -35,19 +35,19 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "defaults return type to Object" do
-      @doc[:return][:type].should == "Object"
+      expect(@doc[:return][:type]).to eq("Object")
     end
     it "recognizes documentation of return value" do
-      @doc[:return][:doc].should == "Some value."
+      expect(@doc[:return][:doc]).to eq("Some value.")
     end
   end
 
   shared_examples_for "has return" do
     it "detects return type" do
-      @doc[:return][:type].should == "String"
+      expect(@doc[:return][:type]).to eq("String")
     end
     it "detects return value comment" do
-      @doc[:return][:doc].should == "return value"
+      expect(@doc[:return][:doc]).to eq("return value")
     end
   end
 

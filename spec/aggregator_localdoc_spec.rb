@@ -25,11 +25,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits :doc" do
-      cls[:doc].should == "Parent docs."
+      expect(cls[:doc]).to eq("Parent docs.")
     end
 
     it "doesn't inherit @localdoc" do
-      cls[:localdoc].should == nil
+      expect(cls[:localdoc]).to eq(nil)
     end
   end
 
@@ -54,11 +54,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits :doc" do
-      cls[:doc].should == "Parent docs."
+      expect(cls[:doc]).to eq("Parent docs.")
     end
 
     it "keeps local @localdoc" do
-      cls[:localdoc].should == "Child-specific docs."
+      expect(cls[:localdoc]).to eq("Child-specific docs.")
     end
   end
 

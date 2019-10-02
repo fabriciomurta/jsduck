@@ -17,7 +17,7 @@ describe JsDuck::Options::Parser do
 
   describe :input_files do
     it "defaults to empty array" do
-      parse("-o", "foo/").input_files.should == []
+      expect(parse("-o", "foo/").input_files).to eq([])
     end
 
     it "treats empty input files list as invalid" do
@@ -25,7 +25,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "contains all non-option arguments" do
-      parse("foo.js", "bar.js").input_files.should == ["foo.js", "bar.js"]
+      expect(parse("foo.js", "bar.js").input_files).to eq(["foo.js", "bar.js"])
     end
 
     it "is populated by --builtin-classes" do
@@ -33,21 +33,21 @@ describe JsDuck::Options::Parser do
     end
 
     it "is valid when populated by --builtin-classes" do
-      parse("--builtin-classes").validate!(:input_files).should == nil
+      expect(parse("--builtin-classes").validate!(:input_files)).to eq(nil)
     end
   end
 
   describe :export do
     it "accepts --export=full" do
       opts = parse("--export", "full")
-      opts.validate!(:export).should == nil
-      opts.export.should == :full
+      expect(opts.validate!(:export)).to eq(nil)
+      expect(opts.export).to eq(:full)
     end
 
     it "accepts --export=examples" do
       opts = parse("--export", "examples")
-      opts.validate!(:export).should == nil
-      opts.export.should == :examples
+      expect(opts.validate!(:export)).to eq(nil)
+      expect(opts.export).to eq(:examples)
     end
 
     it "doesn't accept --export=foo" do
@@ -57,22 +57,22 @@ describe JsDuck::Options::Parser do
 
     it "is valid when no export option specified" do
       opts = parse()
-      opts.validate!(:export).should == nil
+      expect(opts.validate!(:export)).to eq(nil)
     end
   end
 
   describe :guides_toc_level do
     it "defaults to 2" do
-      parse().guides_toc_level.should == 2
+      expect(parse().guides_toc_level).to eq(2)
     end
 
     it "gets converted to integer" do
-      parse("--guides-toc-level", "6").guides_toc_level.should == 6
+      expect(parse("--guides-toc-level", "6").guides_toc_level).to eq(6)
     end
 
     it "is valid when between 1..6" do
       opts = parse("--guides-toc-level", "1")
-      opts.validate!(:guides_toc_level).should == nil
+      expect(opts.validate!(:guides_toc_level)).to eq(nil)
     end
 
     it "is invalid when not a number" do
@@ -89,20 +89,20 @@ describe JsDuck::Options::Parser do
   describe :processes do
     it "defaults to nil" do
       opts = parse()
-      opts.validate!(:processes).should == nil
-      opts.processes.should == nil
+      expect(opts.validate!(:processes)).to eq(nil)
+      expect(opts.processes).to eq(nil)
     end
 
     it "can be set to 0" do
       opts = parse("--processes", "0")
-      opts.validate!(:processes).should == nil
-      opts.processes.should == 0
+      expect(opts.validate!(:processes)).to eq(nil)
+      expect(opts.processes).to eq(0)
     end
 
     it "can be set to any positive number" do
       opts = parse("--processes", "4")
-      opts.validate!(:processes).should == nil
-      opts.processes.should == 4
+      expect(opts.validate!(:processes)).to eq(nil)
+      expect(opts.processes).to eq(4)
     end
 
     it "can not be set to a negative number" do
@@ -113,40 +113,40 @@ describe JsDuck::Options::Parser do
 
   describe :import do
     it "defaults to empty array" do
-      parse().import.should == []
+      expect(parse().import).to eq([])
     end
 
     it "expands into version and path components" do
-      parse("--import", "1.0:/vers/1", "--import", "2.0:/vers/2").import.should == [
+      expect(parse("--import", "1.0:/vers/1", "--import", "2.0:/vers/2").import).to eq([
         {:version => "1.0", :path => "/vers/1"},
         {:version => "2.0", :path => "/vers/2"},
-      ]
+      ])
     end
 
     it "expands pathless version number into just :version" do
-      parse("--import", "3.0").import.should == [
+      expect(parse("--import", "3.0").import).to eq([
         {:version => "3.0"},
-      ]
+      ])
     end
   end
 
   describe :ext_namespaces do
     it "defaults to nil" do
-      parse().ext_namespaces.should == nil
+      expect(parse().ext_namespaces).to eq(nil)
     end
 
     it "can be used with comma-separated list" do
-      parse("--ext-namespaces", "Foo,Bar").ext_namespaces.should == ["Foo", "Bar"]
+      expect(parse("--ext-namespaces", "Foo,Bar").ext_namespaces).to eq(["Foo", "Bar"])
     end
 
     it "can not be used multiple times" do
-      parse("--ext-namespaces", "Foo", "--ext-namespaces", "Bar").ext_namespaces.should == ["Bar"]
+      expect(parse("--ext-namespaces", "Foo", "--ext-namespaces", "Bar").ext_namespaces).to eq(["Bar"])
     end
   end
 
   describe :ignore_html do
     it "defaults to empty hash" do
-      parse().ignore_html.should == {}
+      expect(parse().ignore_html).to eq({})
     end
 
     it "can be used with comma-separated list" do
@@ -165,43 +165,43 @@ describe JsDuck::Options::Parser do
   describe "--debug" do
     it "is equivalent of --template=template --template-links" do
       opts = parse("--debug")
-      opts.template.should == "template"
-      opts.template_links.should == true
+      expect(opts.template).to eq("template")
+      expect(opts.template_links).to eq(true)
     end
 
     it "has a shorthand -d" do
       opts = parse("-d")
-      opts.template.should == "template"
-      opts.template_links.should == true
+      expect(opts.template).to eq("template")
+      expect(opts.template_links).to eq(true)
     end
   end
 
   describe :warnings do
     it "default to empty array" do
-      parse().warnings.should == []
+      expect(parse().warnings).to eq([])
     end
 
     it "are parsed with Warnings::Parser" do
       ws = parse("--warnings", "+foo,-bar").warnings
-      ws.length.should == 2
-      ws[0][:type].should == :foo
-      ws[0][:enabled].should == true
-      ws[1][:type].should == :bar
-      ws[1][:enabled].should == false
+      expect(ws.length).to eq(2)
+      expect(ws[0][:type]).to eq(:foo)
+      expect(ws[0][:enabled]).to eq(true)
+      expect(ws[1][:type]).to eq(:bar)
+      expect(ws[1][:enabled]).to eq(false)
     end
   end
 
   describe :verbose do
     it "defaults to false" do
-      parse().verbose.should == false
+      expect(parse().verbose).to eq(false)
     end
 
     it "set to true when --verbose used" do
-      parse("--verbose").verbose.should == true
+      expect(parse("--verbose").verbose).to eq(true)
     end
 
     it "set to true when -v used" do
-      parse("-v").verbose.should == true
+      expect(parse("-v").verbose).to eq(true)
     end
   end
 
@@ -259,15 +259,15 @@ describe JsDuck::Options::Parser do
   }.each do |attr, default|
     describe attr do
       it "defaults to #{default.inspect}" do
-        parse().send(attr).should == default
+        expect(parse().send(attr)).to eq(default)
       end
 
       it "set to true when --#{attr} used" do
-        parse(opt(attr)).send(attr).should == true
+        expect(parse(opt(attr)).send(attr)).to eq(true)
       end
 
       it "set to false when --no-#{attr} used" do
-        parse(opt(attr, true)).send(attr).should == false
+        expect(parse(opt(attr, true)).send(attr)).to eq(false)
       end
     end
   end
@@ -295,10 +295,10 @@ describe JsDuck::Options::Parser do
   }.each do |attr, default|
     describe attr do
       it "defaults to #{default.inspect}" do
-        parse().send(attr).should == default
+        expect(parse().send(attr)).to eq(default)
       end
       it "is set to given string value" do
-        parse(opt(attr), "some string").send(attr).should == "some string"
+        expect(parse(opt(attr), "some string").send(attr)).to eq("some string")
       end
     end
   end
@@ -312,11 +312,11 @@ describe JsDuck::Options::Parser do
   ].each do |attr|
     describe attr do
       it "defaults to empty string" do
-        parse().send(attr).should == ""
+        expect(parse().send(attr)).to eq("")
       end
 
       it "can be used multiple times" do
-        parse(opt(attr), "Some ", opt(attr), "text").send(attr).should == "Some text"
+        expect(parse(opt(attr), "Some ", opt(attr), "text").send(attr)).to eq("Some text")
       end
     end
   end
@@ -329,15 +329,15 @@ describe JsDuck::Options::Parser do
   ].each do |attr|
     describe attr do
       it "defaults to empty array" do
-        parse().send(attr).should == []
+        expect(parse().send(attr)).to eq([])
       end
 
       it "can be used multiple times" do
-        parse(opt(attr), "foo", opt(attr), "bar").send(attr).should == ["foo", "bar"]
+        expect(parse(opt(attr), "foo", opt(attr), "bar").send(attr)).to eq(["foo", "bar"])
       end
 
       it "can be used with comma-separated list" do
-        parse(opt(attr), "foo,bar").send(attr).should == ["foo", "bar"]
+        expect(parse(opt(attr), "foo,bar").send(attr)).to eq(["foo", "bar"])
       end
     end
   end

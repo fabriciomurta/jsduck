@@ -25,16 +25,16 @@ describe "JsDuck::Js::Ast detecting" do
     end
 
     it "finds two cfgs" do
-      members[0][:tagname].should == :cfg
-      members[1][:tagname].should == :cfg
+      expect(members[0][:tagname]).to eq(:cfg)
+      expect(members[1][:tagname]).to eq(:cfg)
     end
 
     it "finds cfg foo" do
-      members[0][:name].should == "foo"
+      expect(members[0][:name]).to eq("foo")
     end
 
     it "finds cfg bar" do
-      members[1][:name].should == "bar"
+      expect(members[1][:name]).to eq("bar")
     end
   end
 

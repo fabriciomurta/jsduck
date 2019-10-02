@@ -11,7 +11,7 @@ describe "JsDuck::Js::Fires" do
 
   describe "detects fired events when function body" do
     it "has single this.fireEvent() statement" do
-      fires(<<-EOJS).should == ["click"]
+      expect(fires(<<-EOJS)).to eq(["click"])
         /** */
         function f() {
             this.fireEvent('click');
@@ -20,7 +20,7 @@ describe "JsDuck::Js::Fires" do
     end
 
     it "has multiple this.fireEvent() statements" do
-      fires(<<-EOJS).should == ["click", "dblclick"]
+      expect(fires(<<-EOJS)).to eq(["click", "dblclick"])
         /** */
         function f() {
             this.fireEvent('click');
@@ -31,7 +31,7 @@ describe "JsDuck::Js::Fires" do
     end
 
     it "has this.fireEvent() inside control structures" do
-      fires(<<-EOJS).should == ["click", "dblclick"]
+      expect(fires(<<-EOJS)).to eq(["click", "dblclick"])
         /** */
         function f() {
             if (true) {
@@ -47,7 +47,7 @@ describe "JsDuck::Js::Fires" do
     end
 
     it "has this.fireEvent() inside IF condition" do
-      fires(<<-EOJS).should == ["click"]
+      expect(fires(<<-EOJS)).to eq(["click"])
         /** */
         function f() {
             if (this.fireEvent('click') === false) {
@@ -58,7 +58,7 @@ describe "JsDuck::Js::Fires" do
     end
 
     it "has this.fireEvent() inside inner function" do
-      fires(<<-EOJS).should == ["click"]
+      expect(fires(<<-EOJS)).to eq(["click"])
         /** */
         function f() {
             return (function () {
@@ -69,7 +69,7 @@ describe "JsDuck::Js::Fires" do
     end
 
     it "has var me=this and me.fireEvent()" do
-      fires(<<-EOJS).should == ["click"]
+      expect(fires(<<-EOJS)).to eq(["click"])
         /** */
         function f() {
             var me = this;
@@ -81,7 +81,7 @@ describe "JsDuck::Js::Fires" do
 
   describe "detects only unique events when function body" do
     it "has the same event fired multiple times" do
-      fires(<<-EOJS).should == ["blah", "click"]
+      expect(fires(<<-EOJS)).to eq(["blah", "click"])
         /** */
         function f() {
             this.fireEvent('click');
@@ -96,7 +96,7 @@ describe "JsDuck::Js::Fires" do
 
   describe "detects no events being fired when function body" do
     it "is empty" do
-      fires("/** */ function foo() { }").should == []
+      expect(fires("/** */ function foo() { }")).to eq([])
     end
   end
 

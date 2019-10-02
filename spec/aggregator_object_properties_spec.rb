@@ -12,19 +12,19 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "object with properties" do
     it "has name" do
-      @obj[:name].should == @name
+      expect(@obj[:name]).to eq(@name)
     end
 
     it "has type" do
-      @obj[:type].should == "Object"
+      expect(@obj[:type]).to eq("Object")
     end
 
     it "has doc" do
-      @obj[:doc].should == "Geographical coordinates"
+      expect(@obj[:doc]).to eq("Geographical coordinates")
     end
 
     it "contains 2 properties" do
-      @obj[:properties].length.should == 2
+      expect(@obj[:properties].length).to eq(2)
     end
 
     describe "first property" do
@@ -33,30 +33,30 @@ describe JsDuck::Aggregator do
       end
 
       it "has name without namespace" do
-        @prop[:name].should == "lat"
+        expect(@prop[:name]).to eq("lat")
       end
 
       it "has type" do
-        @prop[:type].should == "Object"
+        expect(@prop[:type]).to eq("Object")
       end
 
       it "has doc" do
-        @prop[:doc].should == "Latitude"
+        expect(@prop[:doc]).to eq("Latitude")
       end
 
       it "contains 2 subproperties" do
-        @prop[:properties].length.should == 2
+        expect(@prop[:properties].length).to eq(2)
       end
 
       describe "first subproperty" do
         it "has name without namespace" do
-          @prop[:properties][0][:name].should == "numerator"
+          expect(@prop[:properties][0][:name]).to eq("numerator")
         end
       end
 
       describe "second subproperty" do
         it "has name without namespace" do
-          @prop[:properties][1][:name].should == "denominator"
+          expect(@prop[:properties][1][:name]).to eq("denominator")
         end
       end
     end
@@ -67,15 +67,15 @@ describe JsDuck::Aggregator do
       end
 
       it "has name without namespace" do
-        @prop[:name].should == "lng"
+        expect(@prop[:name]).to eq("lng")
       end
 
       it "has type" do
-        @prop[:type].should == "Number"
+        expect(@prop[:type]).to eq("Number")
       end
 
       it "has doc" do
-        @prop[:doc].should == "Longitude"
+        expect(@prop[:doc]).to eq("Longitude")
       end
     end
   end
@@ -96,7 +96,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is interpreted as single parameter" do
-      @doc[:params].length.should == 1
+      expect(@doc[:params].length).to eq(1)
     end
 
     describe "single param" do
@@ -126,7 +126,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is interpreted as single parameter" do
-      @doc[:params].length.should == 1
+      expect(@doc[:params].length).to eq(1)
     end
 
     describe "single param" do
@@ -153,7 +153,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is interpreted as single config" do
-      @doc["global"][:members].length.should == 1
+      expect(@doc["global"][:members].length).to eq(1)
     end
 
     describe "the config" do
@@ -180,7 +180,7 @@ describe JsDuck::Aggregator do
     end
 
     it "is interpreted as single property" do
-      @doc["global"][:members].length.should == 1
+      expect(@doc["global"][:members].length).to eq(1)
     end
 
     describe "the property" do
@@ -242,7 +242,7 @@ describe JsDuck::Aggregator do
     end
 
     it "interpreted as just one config" do
-      @doc[:name].should == "coord"
+      expect(@doc[:name]).to eq("coord")
     end
   end
 
@@ -256,11 +256,11 @@ describe JsDuck::Aggregator do
     end
 
     it "has no dot in name" do
-      @doc[:name].should == "coord"
+      expect(@doc[:name]).to eq("coord")
     end
 
     it "has dot in doc" do
-      @doc[:doc].should == ". Coordinate"
+      expect(@doc[:doc]).to eq(". Coordinate")
     end
   end
 
@@ -274,11 +274,11 @@ describe JsDuck::Aggregator do
     end
 
     it "has empty name" do
-      @doc[:name].should == ""
+      expect(@doc[:name]).to eq("")
     end
 
     it "has dot in doc" do
-      @doc[:doc].should == ".coord Coordinate"
+      expect(@doc[:doc]).to eq(".coord Coordinate")
     end
   end
 

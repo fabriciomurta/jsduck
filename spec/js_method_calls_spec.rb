@@ -11,7 +11,7 @@ describe "JsDuck::Js::MethodCalls" do
 
   describe "detects called methods when function body" do
     it "has method calls inside control structures" do
-      calls(<<-EOJS).should == ["alfa", "beta", "chico", "delta", "eeta"]
+      expect(calls(<<-EOJS)).to eq(["alfa", "beta", "chico", "delta", "eeta"])
         /** */
         function f() {
             if (this.alfa()) {
@@ -29,7 +29,7 @@ describe "JsDuck::Js::MethodCalls" do
     end
 
     it "has var me=this and me.someMethod()" do
-      calls(<<-EOJS).should == ["someMethod"]
+      expect(calls(<<-EOJS)).to eq(["someMethod"])
         /** */
         function f() {
             var me = this;
@@ -41,7 +41,7 @@ describe "JsDuck::Js::MethodCalls" do
 
   describe "detects only unique methods when function body" do
     it "has the same method called multiple times" do
-      calls(<<-EOJS).should == ["blah", "click"]
+      expect(calls(<<-EOJS)).to eq(["blah", "click"])
         /** */
         function f() {
             this.click("a");
@@ -56,7 +56,7 @@ describe "JsDuck::Js::MethodCalls" do
 
   describe "detects no methods when function body" do
     it "is empty" do
-      calls("/** */ function foo() { }").should == []
+      expect(calls("/** */ function foo() { }")).to eq([])
     end
   end
 

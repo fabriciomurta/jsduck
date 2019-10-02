@@ -11,15 +11,15 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "Returns empty hash when no options specified" do
-    parse("Whatever...", {}).should == {}
+    expect(parse("Whatever...", {})).to eq({})
   end
 
   it "adds :tagname to returned data" do
-    parse("Whatever...", {:tagname => "blah"}).should == {:tagname => "blah"}
+    expect(parse("Whatever...", {:tagname => "blah"})).to eq({:tagname => "blah"})
   end
 
   it "parses :type" do
-    parse("{Foo}", {:type => true}).should == {:type => "Foo"}
+    expect(parse("{Foo}", {:type => true})).to eq({:type => "Foo"})
   end
 
   it "parses :type and :optional" do
@@ -33,7 +33,7 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "parses :name" do
-    parse("some_ident", {:name => true}).should == {:name => "some_ident"}
+    expect(parse("some_ident", {:name => true})).to eq({:name => "some_ident"})
   end
 
   it "parses :name and :optional" do
@@ -42,7 +42,7 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "fails to parse :name when name in brackets but no :optional specified" do
-    parse("[ident]", {:name => true}).should == {}
+    expect(parse("[ident]", {:name => true})).to eq({})
   end
 
   it "parses :name, :default and :optional" do

@@ -7,19 +7,19 @@ describe "JsDuck::ClassName#short" do
   end
 
   it "returns only the last part of full name in normal case" do
-    short("My.package.Cls").should == "Cls"
+    expect(short("My.package.Cls")).to eq("Cls")
   end
 
   it "returns the whole name when it has no parts" do
-    short("Foo").should == "Foo"
+    expect(short("Foo")).to eq("Foo")
   end
 
   it "returns the second part when full_name has two uppercase parts" do
-    short("Foo.Bar").should == "Bar"
+    expect(short("Foo.Bar")).to eq("Bar")
   end
 
   it "returns two last parts when full name has three uppercase parts" do
-    short("My.Package.Cls").should == "Package.Cls"
+    expect(short("My.Package.Cls")).to eq("Package.Cls")
   end
 
 end

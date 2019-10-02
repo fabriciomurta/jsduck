@@ -10,15 +10,15 @@ describe JsDuck::InlineExamples do
   end
 
   it "finds no examples from empty string" do
-    extract("").should == []
+    expect(extract("")).to eq([])
   end
 
   it "finds no examples from simple text" do
-    extract("bla bla bla").should == []
+    expect(extract("bla bla bla")).to eq([])
   end
 
   it "finds no examples from code blocks without @example tag" do
-    extract(<<-EOS).should == []
+    expect(extract(<<-EOS)).to eq([])
 Here's some code:
 
     My code
@@ -27,14 +27,14 @@ Here's some code:
   end
 
   it "finds one single-line example" do
-    extract(<<-EOS).should == ["My code\n"]
+    expect(extract(<<-EOS)).to eq(["My code\n"])
     @example
     My code
     EOS
   end
 
   it "finds one multi-line example" do
-    extract(<<-EOS).should == ["My code\n\nMore code\n"]
+    expect(extract(<<-EOS)).to eq(["My code\n\nMore code\n"])
     @example
     My code
 
@@ -43,7 +43,7 @@ Here's some code:
   end
 
   it "finds two examples" do
-    extract(<<-EOS).should == ["My code 1\n", "My code 2\n"]
+    expect(extract(<<-EOS)).to eq(["My code 1\n", "My code 2\n"])
 First example:
 
     @example
@@ -59,14 +59,14 @@ And another...
   # Escaping
 
   it "preserves HTML inside example" do
-    extract(<<-EOS).should == ["document.write('<b>Hello</b>');\n"]
+    expect(extract(<<-EOS)).to eq(["document.write('<b>Hello</b>');\n"])
     @example
     document.write('<b>Hello</b>');
     EOS
   end
 
   it "ignores links inside examples" do
-    extract(<<-EOS, :html).should == ["Ext.define();\n"]
+    expect(extract(<<-EOS, :html)).to eq(["Ext.define();\n"])
 <pre class='inline-example '><code><a href="#!/api/Ext">Ext</a>.define();
 </code></pre>
 EOS
@@ -75,14 +75,14 @@ EOS
   # Options
 
   it "detects options after @example tag" do
-    extract(<<-EOS, :raw).should == [{:code => "foo();\n", :options => {"raw" => true, "blah" => true}}]
+    expect(extract(<<-EOS, :raw)).to eq([{:code => "foo();\n", :options => {"raw" => true, "blah" => true}}])
     @example raw blah
     foo();
     EOS
   end
 
   it "detects no options when none of them after @example tag" do
-    extract(<<-EOS, :raw).should == [{:code => "foo();\n", :options => {}}]
+    expect(extract(<<-EOS, :raw)).to eq([{:code => "foo();\n", :options => {}}])
     @example
     foo();
     EOS

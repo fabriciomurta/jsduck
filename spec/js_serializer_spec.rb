@@ -10,7 +10,7 @@ describe JsDuck::Js::Serializer do
   end
 
   def test(string)
-    to_s(string).should == string
+    expect(to_s(string)).to eq(string)
   end
 
   describe "serializes" do

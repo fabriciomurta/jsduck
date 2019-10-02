@@ -15,7 +15,7 @@ describe JsDuck::Aggregator do
        * @event foo
        */
     EOF
-    id.should == "event-foo"
+    expect(id).to eq("event-foo")
   end
 
   it "config foo gets id cfg-foo" do
@@ -24,7 +24,7 @@ describe JsDuck::Aggregator do
        * @cfg {String} foo
        */
     EOF
-    id.should == "cfg-foo"
+    expect(id).to eq("cfg-foo")
   end
 
   it "static property foo gets id static-property-foo" do
@@ -34,7 +34,7 @@ describe JsDuck::Aggregator do
        * @static
        */
     EOF
-    id.should == "static-property-foo"
+    expect(id).to eq("static-property-foo")
   end
 
   it "static method foo gets id static-method-foo" do
@@ -44,7 +44,7 @@ describe JsDuck::Aggregator do
        * @static
        */
     EOF
-    id.should == "static-method-foo"
+    expect(id).to eq("static-method-foo")
   end
 
 end

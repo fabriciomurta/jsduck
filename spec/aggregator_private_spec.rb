@@ -16,7 +16,7 @@ describe JsDuck::Aggregator do
     end
 
     it "marks item as private" do
-      @doc[:private].should == true
+      expect(@doc[:private]).to eq(true)
     end
   end
 
@@ -30,7 +30,7 @@ describe JsDuck::Aggregator do
     end
 
     it "marks item as :hide" do
-      @doc[:hide].should == true
+      expect(@doc[:hide]).to eq(true)
     end
   end
 

@@ -22,11 +22,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects method as chainable" do
-      cls[:members][0][:chainable].should == true
+      expect(cls[:members][0][:chainable]).to eq(true)
     end
 
     it "keeps the original @return docs" do
-      cls[:members][0][:return][:doc].should == "this The instance itself."
+      expect(cls[:members][0][:return][:doc]).to eq("this The instance itself.")
     end
   end
 
@@ -46,12 +46,12 @@ describe JsDuck::Aggregator do
     end
 
     it "detects method as chainable" do
-      cls[:members][0][:chainable].should == true
+      expect(cls[:members][0][:chainable]).to eq(true)
     end
 
     it "adds @return {MyClass} this" do
-      cls[:members][0][:return][:type].should == "MyClass"
-      cls[:members][0][:return][:doc].should == "this"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
+      expect(cls[:members][0][:return][:doc]).to eq("this")
     end
   end
 
@@ -71,12 +71,12 @@ describe JsDuck::Aggregator do
     end
 
     it "detects @return {MyClass} this" do
-      cls[:members][0][:return][:type].should == "MyClass"
-      cls[:members][0][:return][:doc].should == "this"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
+      expect(cls[:members][0][:return][:doc]).to eq("this")
     end
 
     it "adds @chainable tag" do
-      cls[:members][0][:chainable].should == true
+      expect(cls[:members][0][:chainable]).to eq(true)
     end
   end
 
@@ -96,12 +96,12 @@ describe JsDuck::Aggregator do
     end
 
     it "detects @return {MyClass} this" do
-      cls[:members][0][:return][:type].should == "MyClass"
-      cls[:members][0][:return][:doc].should == "this and some more..."
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
+      expect(cls[:members][0][:return][:doc]).to eq("this and some more...")
     end
 
     it "adds @chainable tag" do
-      cls[:members][0][:chainable].should == true
+      expect(cls[:members][0][:chainable]).to eq(true)
     end
   end
 
@@ -214,16 +214,16 @@ describe JsDuck::Aggregator do
     end
 
     it "adds @chainable tag" do
-      cls[:members][0][:chainable].should == true
+      expect(cls[:members][0][:chainable]).to eq(true)
     end
 
     it "marks :chainable field as autodetected" do
-      cls[:members][0][:autodetected][:chainable].should == true
+      expect(cls[:members][0][:autodetected][:chainable]).to eq(true)
     end
 
     it "adds @return {MyClass} this" do
-      cls[:members][0][:return][:type].should == "MyClass"
-      cls[:members][0][:return][:doc].should == "this"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
+      expect(cls[:members][0][:return][:doc]).to eq("this")
     end
   end
 
@@ -241,7 +241,7 @@ describe JsDuck::Aggregator do
     end
 
     it "sets return type to owner class" do
-      cls[:members][0][:return][:type].should == "MyClass"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
     end
   end
 
@@ -261,7 +261,7 @@ describe JsDuck::Aggregator do
     end
 
     it "sets return type to owner class" do
-      cls[:members][0][:return][:type].should == "MyClass"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
     end
   end
 
@@ -281,7 +281,7 @@ describe JsDuck::Aggregator do
     end
 
     it "sets return type to owner class" do
-      cls[:members][0][:return][:type].should == "MyClass"
+      expect(cls[:members][0][:return][:type]).to eq("MyClass")
     end
   end
 
@@ -317,7 +317,7 @@ describe JsDuck::Aggregator do
     end
 
     it "keeps the explicit return type" do
-      cls[:members][0][:return][:type].should == "OtherClass"
+      expect(cls[:members][0][:return][:type]).to eq("OtherClass")
     end
   end
 

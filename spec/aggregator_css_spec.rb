@@ -20,16 +20,16 @@ describe JsDuck::Aggregator do
     end
 
     it "detects variable" do
-      @doc[:tagname].should == :css_var
+      expect(@doc[:tagname]).to eq(:css_var)
     end
     it "detects variable name" do
-      @doc[:name].should == "$button-height"
+      expect(@doc[:name]).to eq("$button-height")
     end
     it "detects variable type" do
-      @doc[:type].should == "number"
+      expect(@doc[:type]).to eq("number")
     end
     it "detects variable description" do
-      @doc[:doc].should == "Default height for buttons."
+      expect(@doc[:doc]).to eq("Default height for buttons.")
     end
   end
 
@@ -44,7 +44,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects owner" do
-      @doc[:owner].should == "Ext.Button"
+      expect(@doc[:owner]).to eq("Ext.Button")
     end
   end
 
@@ -58,7 +58,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects default value" do
-      @doc[:default].should == "25px"
+      expect(@doc[:default]).to eq("25px")
     end
   end
 
@@ -73,16 +73,16 @@ describe JsDuck::Aggregator do
     end
 
     it "detects variable" do
-      @doc[:tagname].should == :css_var
+      expect(@doc[:tagname]).to eq(:css_var)
     end
     it "detects variable name" do
-      @doc[:name].should == "$button-height"
+      expect(@doc[:name]).to eq("$button-height")
     end
     it "detects variable type" do
-      @doc[:type].should == "number"
+      expect(@doc[:type]).to eq("number")
     end
     it "detects variable default value" do
-      @doc[:default].should == "25px"
+      expect(@doc[:default]).to eq("25px")
     end
   end
 
@@ -101,25 +101,25 @@ describe JsDuck::Aggregator do
     end
 
     it "detects mixin" do
-      @doc[:tagname].should == :css_mixin
+      expect(@doc[:tagname]).to eq(:css_mixin)
     end
     it "detects mixin name" do
-      @doc[:name].should == "my-button"
+      expect(@doc[:name]).to eq("my-button")
     end
     it "detects mixin description" do
-      @doc[:doc].should == "Creates an awesome button."
+      expect(@doc[:doc]).to eq("Creates an awesome button.")
     end
     it "detects mixin parameters" do
-      @doc[:params].length.should == 2
+      expect(@doc[:params].length).to eq(2)
     end
     it "detects mixin param name" do
-      @doc[:params][0][:name].should == "$ui-label"
+      expect(@doc[:params][0][:name]).to eq("$ui-label")
     end
     it "detects mixin param type" do
-      @doc[:params][0][:type].should == "string"
+      expect(@doc[:params][0][:type]).to eq("string")
     end
     it "detects mixin param description" do
-      @doc[:params][0][:doc].should == "The name of the UI being created."
+      expect(@doc[:params][0][:doc]).to eq("The name of the UI being created.")
     end
   end
 
@@ -135,19 +135,19 @@ describe JsDuck::Aggregator do
     end
 
     it "detects parameters" do
-      @doc[:params].length.should == 2
+      expect(@doc[:params].length).to eq(2)
     end
     it "detects first param name" do
-      @doc[:params][0][:name].should == "$foo"
+      expect(@doc[:params][0][:name]).to eq("$foo")
     end
     it "detects second param name" do
-      @doc[:params][1][:name].should == "$bar"
+      expect(@doc[:params][1][:name]).to eq("$bar")
     end
     it "detects second param type" do
-      @doc[:params][1][:type].should == "number"
+      expect(@doc[:params][1][:type]).to eq("number")
     end
     it "detects second param default value" do
-      @doc[:params][1][:default].should == "2px"
+      expect(@doc[:params][1][:default]).to eq("2px")
     end
   end
 

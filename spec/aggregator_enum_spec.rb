@@ -7,45 +7,45 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "enum" do
     it "creates class" do
-      doc[:tagname].should == :class
+      expect(doc[:tagname]).to eq(:class)
     end
     it "sets :enum field" do
       doc[:enum].should_not == nil
     end
     it "detects name" do
-      doc[:name].should == "My.enumeration.Type"
+      expect(doc[:name]).to eq("My.enumeration.Type")
     end
     it "detects type" do
-      doc[:enum][:type].should == "String"
+      expect(doc[:enum][:type]).to eq("String")
     end
     it "detects no extends" do
-      doc[:extends].should == nil
+      expect(doc[:extends]).to eq(nil)
     end
     it "detects docs" do
-      doc[:doc].should == "Some documentation."
+      expect(doc[:doc]).to eq("Some documentation.")
     end
 
     it "detects two members" do
-      doc[:members].length.should == 2
+      expect(doc[:members].length).to eq(2)
     end
 
     describe "in first member" do
       let(:prop) { doc[:members][0] }
       it "detects name" do
-        prop[:name].should == 'foo'
+        expect(prop[:name]).to eq('foo')
       end
       it "detects type" do
-        prop[:type].should == 'String'
+        expect(prop[:type]).to eq('String')
       end
       it "detects default value" do
-        prop[:default].should == "'a'"
+        expect(prop[:default]).to eq("'a'")
       end
     end
   end
 
   shared_examples_for "doc_enum" do
     it "detects enum as only for documentation purposes" do
-      doc[:enum][:doc_only].should == true
+      expect(doc[:enum][:doc_only]).to eq(true)
     end
   end
 
@@ -123,7 +123,7 @@ describe JsDuck::Aggregator do
     end
 
     it "infers type from code" do
-      doc[:enum][:type].should == 'String'
+      expect(doc[:enum][:type]).to eq('String')
     end
   end
 
@@ -139,7 +139,7 @@ describe JsDuck::Aggregator do
     end
 
     it "defaults to Object type" do
-      doc[:enum][:type].should == 'Object'
+      expect(doc[:enum][:type]).to eq('Object')
     end
   end
 
@@ -159,7 +159,7 @@ describe JsDuck::Aggregator do
     end
 
     it "defaults to auto-generated type union" do
-      doc[:enum][:type].should == 'Number/String'
+      expect(doc[:enum][:type]).to eq('Number/String')
     end
   end
 
@@ -176,7 +176,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets stripped from :inheritdoc tag in auto-detected member" do
-      doc[:members][0][:inheritdoc].should == nil
+      expect(doc[:members][0][:inheritdoc]).to eq(nil)
     end
 
     it "keeps the explicit :inheritdoc tag in doc-commented member" do
@@ -200,23 +200,23 @@ describe JsDuck::Aggregator do
     it_should_behave_like "doc_enum"
 
     it "detects all members" do
-      members.length.should == 2
+      expect(members.length).to eq(2)
     end
 
     it "detects as property" do
-      members[0][:tagname].should == :property
+      expect(members[0][:tagname]).to eq(:property)
     end
 
     it "gets name" do
-      members[0][:name].should == 'foo'
+      expect(members[0][:name]).to eq('foo')
     end
 
     it "gets default value" do
-      members[0][:default].should == '"foo"'
+      expect(members[0][:default]).to eq('"foo"')
     end
 
     it "gets type" do
-      members[0][:type].should == 'String'
+      expect(members[0][:type]).to eq('String')
     end
   end
 
@@ -238,11 +238,11 @@ describe JsDuck::Aggregator do
     it_should_behave_like "doc_enum"
 
     it "detects docs of first member" do
-      members[0][:doc].should == 'A wise choice.'
+      expect(members[0][:doc]).to eq('A wise choice.')
     end
 
     it "detects docs of second member" do
-      members[1][:doc].should == 'A foolish decision.'
+      expect(members[1][:doc]).to eq('A foolish decision.')
     end
   end
 
@@ -257,7 +257,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects enum type as String" do
-      doc[:enum][:type].should == "String"
+      expect(doc[:enum][:type]).to eq("String")
     end
 
     it_should_behave_like "doc_enum"
@@ -265,27 +265,27 @@ describe JsDuck::Aggregator do
     let(:members) { doc[:members] }
 
     it "gathers all 3 widget.* aliases" do
-      members.length.should == 3
+      expect(members.length).to eq(3)
     end
 
     it "lists all widget.* names" do
-      Set.new(members.map {|p| p[:name] }).should == Set.new(["form", "button", "textarea"])
+      expect(Set.new(members.map {|p| p[:name] })).to eq(Set.new(["form", "button", "textarea"]))
     end
 
     it "auto-generates property default values" do
-      Set.new(members.map {|p| p[:default] }).should == Set.new(["'form'", "'button'", "'textarea'"])
+      expect(Set.new(members.map {|p| p[:default] })).to eq(Set.new(["'form'", "'button'", "'textarea'"]))
     end
 
     it "sets property type to String" do
-      members[0][:type].should == "String"
+      expect(members[0][:type]).to eq("String")
     end
 
     it "sets enum value from private class as private" do
-      members.find_all {|p| p[:private] }.map {|p| p[:name] }.should == ["textarea"]
+      expect(members.find_all {|p| p[:private] }.map {|p| p[:name] }).to eq(["textarea"])
     end
 
     it "lists class name in enum property docs" do
-      members.find_all {|p| p[:name] == 'form' }[0][:doc].should == "Alias for {@link Form}."
+      expect(members.find_all {|p| p[:name] == 'form' }[0][:doc]).to eq("Alias for {@link Form}.")
     end
   end
 
@@ -302,7 +302,7 @@ describe JsDuck::Aggregator do
     end
 
     it "throws away all events, keeping only properties" do
-      doc[:members].length.should == 1
+      expect(doc[:members].length).to eq(1)
     end
   end
 

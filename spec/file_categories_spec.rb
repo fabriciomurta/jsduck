@@ -14,19 +14,19 @@ describe JsDuck::Categories::File do
     end
 
     it "expands class without * in name into the same class" do
-      @categories.expand("Foo.Ahem").should == ["Foo.Ahem"]
+      expect(@categories.expand("Foo.Ahem")).to eq(["Foo.Ahem"])
     end
 
     it "expands Foo.* into all classes in Foo namespace" do
-      @categories.expand("Foo.*").should == ["Foo.Ahem", "Foo.Ahum", "Foo.Blah"]
+      expect(@categories.expand("Foo.*")).to eq(["Foo.Ahem", "Foo.Ahum", "Foo.Blah"])
     end
 
     it "expands Foo.A* into all classes in Foo namespace beginning with A" do
-      @categories.expand("Foo.A*").should == ["Foo.Ahem", "Foo.Ahum"]
+      expect(@categories.expand("Foo.A*")).to eq(["Foo.Ahem", "Foo.Ahum"])
     end
 
     it "expands to empty array if no classes match the pattern" do
-      @categories.expand("Bazz*").should == []
+      expect(@categories.expand("Bazz*")).to eq([])
     end
   end
 

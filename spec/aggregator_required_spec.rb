@@ -31,7 +31,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "has required flag set to true" do
-      @doc[:required].should == true
+      expect(@doc[:required]).to eq(true)
     end
   end
 
@@ -48,7 +48,7 @@ describe JsDuck::Aggregator do
       @doc[:required].should_not == true
     end
     it "contains required config" do
-      @doc[:members][0][:required].should == true
+      expect(@doc[:members][0][:required]).to eq(true)
     end
   end
 
@@ -71,7 +71,7 @@ describe JsDuck::Aggregator do
     end
 
     it "contains the (required) inside subproperty description" do
-      @doc[:properties][0][:doc].should == "(required) Subproperty"
+      expect(@doc[:properties][0][:doc]).to eq("(required) Subproperty")
     end
   end
 

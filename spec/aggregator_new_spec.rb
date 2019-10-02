@@ -21,7 +21,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets the :new flag set" do
-      doc[:new].should == true
+      expect(doc[:new]).to eq(true)
     end
   end
 

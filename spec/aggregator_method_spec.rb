@@ -12,15 +12,15 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "method" do
     it "creates method" do
-      @doc[:tagname].should == :method
+      expect(@doc[:tagname]).to eq(:method)
     end
 
     it "takes documentation from doc-comment" do
-      @doc[:doc].should == "Some function"
+      expect(@doc[:doc]).to eq("Some function")
     end
 
     it "detects method name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
   end
 
@@ -176,25 +176,25 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "remains undocumented" do
-      @docs.length.should == 0
+      expect(@docs.length).to eq(0)
     end
   end
 
   shared_examples_for "auto detected method" do
     it "detects a method" do
-      method[:tagname].should == :method
+      expect(method[:tagname]).to eq(:method)
     end
 
     it "detects method name" do
-      method[:name].should == 'foo'
+      expect(method[:name]).to eq('foo')
     end
 
     it "flags method with :inheritdoc" do
-      method[:inheritdoc].should == {}
+      expect(method[:inheritdoc]).to eq({})
     end
 
     it "flags method as :autodetected" do
-      method[:autodetected][:tagname].should == :method
+      expect(method[:autodetected][:tagname]).to eq(:method)
     end
   end
 
@@ -229,7 +229,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected method"
 
     it "detects method documentation" do
-      method[:doc].should == 'My docs'
+      expect(method[:doc]).to eq('My docs')
     end
   end
 
@@ -246,7 +246,7 @@ describe JsDuck::Aggregator do
     end
 
     it "detects a method" do
-      method[:tagname].should == :method
+      expect(method[:tagname]).to eq(:method)
     end
   end
 
@@ -277,7 +277,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected method"
 
     it "detects method documentation" do
-      method[:doc].should == 'My docs'
+      expect(method[:doc]).to eq('My docs')
     end
   end
 
@@ -308,7 +308,7 @@ describe JsDuck::Aggregator do
     it_should_behave_like "auto detected method"
 
     it "detects method documentation" do
-      method[:doc].should == 'My docs'
+      expect(method[:doc]).to eq('My docs')
     end
   end
 

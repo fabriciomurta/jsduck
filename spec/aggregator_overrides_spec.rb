@@ -15,11 +15,11 @@ describe JsDuck::Aggregator do
     end
 
     it "lists parent method in :override property" do
-      @method[:overrides][0][:owner].should == "Parent"
+      expect(@method[:overrides][0][:owner]).to eq("Parent")
     end
 
     it "lists name of the method in :override property" do
-      @method[:overrides][0][:name].should == "foo"
+      expect(@method[:overrides][0][:name]).to eq("foo")
     end
   end
 
@@ -76,7 +76,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets :override property listing multiple methods" do
-      @method[:overrides].length.should == 2
+      expect(@method[:overrides].length).to eq(2)
     end
   end
 
@@ -121,28 +121,28 @@ describe JsDuck::Aggregator do
 
 
     it "lists just one override in Child class" do
-      get_overrides("Child").length.should == 1
+      expect(get_overrides("Child").length).to eq(1)
     end
 
     it "lists just one override in GrandChild class" do
-      get_overrides("GrandChild").length.should == 1
+      expect(get_overrides("GrandChild").length).to eq(1)
     end
 
     it "lists just one override in GrandGrandChild class" do
-      get_overrides("GrandGrandChild").length.should == 1
+      expect(get_overrides("GrandGrandChild").length).to eq(1)
     end
 
 
     it "lists Base as overridden in Child class" do
-      get_overrides("Child")[0][:owner].should == "Base"
+      expect(get_overrides("Child")[0][:owner]).to eq("Base")
     end
 
     it "lists Child as overridden in GrandChild class" do
-      get_overrides("GrandChild")[0][:owner].should == "Child"
+      expect(get_overrides("GrandChild")[0][:owner]).to eq("Child")
     end
 
     it "lists GrandChild as overridden in GrandGrandChild class" do
-      get_overrides("GrandGrandChild")[0][:owner].should == "GrandChild"
+      expect(get_overrides("GrandGrandChild")[0][:owner]).to eq("GrandChild")
     end
 
   end

@@ -8,17 +8,17 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "class of orphans" do
     it "results in one class" do
-      @classes.length.should == 1
+      expect(@classes.length).to eq(1)
     end
 
     it "combines members into itself" do
-      @classes[@classname][:members].length.should == 2
+      expect(@classes[@classname][:members].length).to eq(2)
     end
 
     it "preserves the order of members" do
       ms = @classes[@classname][:members]
-      ms[0][:name].should == "foo"
-      ms[1][:name].should == "bar"
+      expect(ms[0][:name]).to eq("foo")
+      expect(ms[1][:name]).to eq("bar")
     end
   end
 
@@ -54,7 +54,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results in global class" do
-      @classes["global"][:name].should == "global"
+      expect(@classes["global"][:name]).to eq("global")
     end
 
     it_should_behave_like "class of orphans"

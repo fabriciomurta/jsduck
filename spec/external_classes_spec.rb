@@ -7,11 +7,11 @@ describe JsDuck::ExternalClasses do
   end
 
   it "matches simple classname" do
-    @external.is?("Foo").should == true
+    expect(@external.is?("Foo")).to eq(true)
   end
 
   it "matches namespaced classname" do
-    @external.is?("Ns.bar.Baz").should == true
+    expect(@external.is?("Ns.bar.Baz")).to eq(true)
   end
 
   it "doesn't match completely different classname" do
@@ -23,15 +23,15 @@ describe JsDuck::ExternalClasses do
   end
 
   it "matches external classname defined with a wildcard" do
-    @external.is?("Bla.Bla").should == true
+    expect(@external.is?("Bla.Bla")).to eq(true)
   end
 
   it "escapes '.' correctly in external pattern and doesn't match a classname missing the dot" do
-    @external.is?("Bla_Bla").should == false
+    expect(@external.is?("Bla_Bla")).to eq(false)
   end
 
   it "doesn't match HTMLElement by default" do
-    @external.is?("HTMLElement").should == false
+    expect(@external.is?("HTMLElement")).to eq(false)
   end
 
   describe "with '@browser' in list of patterns" do
@@ -40,7 +40,7 @@ describe JsDuck::ExternalClasses do
     end
 
     it "doesn't match the special '@browser' pattern itself" do
-      @external.is?("@browser").should == false
+      expect(@external.is?("@browser")).to eq(false)
     end
 
     # These classes were originally in the set of default externals.
@@ -55,7 +55,7 @@ describe JsDuck::ExternalClasses do
       Event
     ).each do |name|
       it "matches #{name}" do
-        @external.is?(name).should == true
+        expect(@external.is?(name)).to eq(true)
       end
     end
 

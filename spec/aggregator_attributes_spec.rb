@@ -15,7 +15,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets protected attribute" do
-      @doc[:protected].should == true
+      expect(@doc[:protected]).to eq(true)
     end
   end
 
@@ -25,7 +25,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets abstract attribute" do
-      @doc[:abstract].should == true
+      expect(@doc[:abstract]).to eq(true)
     end
   end
 
@@ -35,7 +35,7 @@ describe JsDuck::Aggregator do
     end
 
     it "gets static attribute" do
-      @doc[:static].should == true
+      expect(@doc[:static]).to eq(true)
     end
   end
 
@@ -50,7 +50,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "gets template attribute" do
-      @doc[:template].should == true
+      expect(@doc[:template]).to eq(true)
     end
   end
 
@@ -65,10 +65,10 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "gets preventable attribute" do
-      @doc[:preventable].should == true
+      expect(@doc[:preventable]).to eq(true)
     end
     it "ignores text right after @preventable" do
-      @doc[:doc].should == "Some event"
+      expect(@doc[:doc]).to eq("Some event")
     end
   end
 
@@ -86,11 +86,11 @@ describe JsDuck::Aggregator do
     end
 
     it "detects deprecation description" do
-      @deprecated[:text].should == "Use escapeRegex instead."
+      expect(@deprecated[:text]).to eq("Use escapeRegex instead.")
     end
 
     it "detects version of deprecation" do
-      @deprecated[:version].should == "4.0"
+      expect(@deprecated[:version]).to eq("4.0")
     end
   end
 
@@ -104,11 +104,11 @@ describe JsDuck::Aggregator do
     end
 
     it "doesn't detect version number" do
-      @deprecated[:version].should == nil
+      expect(@deprecated[:version]).to eq(nil)
     end
 
     it "still detects description" do
-      @deprecated[:text].should == "Use escapeRegex instead."
+      expect(@deprecated[:text]).to eq("Use escapeRegex instead.")
     end
   end
 
@@ -124,7 +124,7 @@ describe JsDuck::Aggregator do
     end
 
     it "does not show @markdown tag in docs" do
-      @doc[:doc].should == "Comment here."
+      expect(@doc[:doc]).to eq("Comment here.")
     end
   end
 

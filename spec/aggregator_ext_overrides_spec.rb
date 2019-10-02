@@ -52,19 +52,19 @@ describe JsDuck::Aggregator do
     end
 
     it "throws away the override" do
-      classes["FooOverride"].should == nil
+      expect(classes["FooOverride"]).to eq(nil)
     end
 
     it "places the override into ignored classes list" do
-      classes.ignore?("FooOverride").should == true
+      expect(classes.ignore?("FooOverride")).to eq(true)
     end
 
     it "combines class doc with doc from override" do
-      classes["Foo"][:doc].should == "Foo comment.\n\n**From override FooOverride:** FooOverride comment."
+      expect(classes["Foo"][:doc]).to eq("Foo comment.\n\n**From override FooOverride:** FooOverride comment.")
     end
 
     it "adds override to list of source files" do
-      classes["Foo"][:files].length.should == 2
+      expect(classes["Foo"][:files].length).to eq(2)
     end
 
     it "keeps its original foo method" do
@@ -76,11 +76,11 @@ describe JsDuck::Aggregator do
     end
 
     it "adds special override comment to bar method" do
-      methods["bar"][:doc].should == "Bar comment.\n\n**Defined in override FooOverride.**"
+      expect(methods["bar"][:doc]).to eq("Bar comment.\n\n**Defined in override FooOverride.**")
     end
 
     it "changes owner of bar method to target class" do
-      methods["bar"][:owner].should == "Foo"
+      expect(methods["bar"][:owner]).to eq("Foo")
     end
 
     it "keeps the foobar method that's in both original and override" do
@@ -88,15 +88,15 @@ describe JsDuck::Aggregator do
     end
 
     it "combines docs of original and override" do
-      methods["foobar"][:doc].should == "Original comment.\n\n**From override FooOverride:** Override comment."
+      expect(methods["foobar"][:doc]).to eq("Original comment.\n\n**From override FooOverride:** Override comment.")
     end
 
     it "adds override source to list of files to overridden member" do
-      methods["foobar"][:files].length.should == 2
+      expect(methods["foobar"][:files].length).to eq(2)
     end
 
     it "keeps owner of foobar method to be the original class" do
-      methods["foobar"][:owner].should == "Foo"
+      expect(methods["foobar"][:owner]).to eq("Foo")
     end
   end
 
@@ -125,11 +125,11 @@ describe JsDuck::Aggregator do
     let(:methods) { create_members_map(classes["Foo"]) }
 
     it "adds no doc from override to the class itself" do
-      classes["Foo"][:doc].should == "Foo comment."
+      expect(classes["Foo"][:doc]).to eq("Foo comment.")
     end
 
     it "adds note about override to member" do
-      methods["foobar"][:doc].should == "Original comment.\n\n**Overridden in FooOverride.**"
+      expect(methods["foobar"][:doc]).to eq("Original comment.\n\n**Overridden in FooOverride.**")
     end
   end
 
@@ -159,7 +159,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds note to docs about member being overridden" do
-      methods["foobar"][:doc].should == "**Overridden in FooOverride.**"
+      expect(methods["foobar"][:doc]).to eq("**Overridden in FooOverride.**")
     end
   end
 
@@ -190,7 +190,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds note to docs about member being overridden" do
-      methods["foobar"][:doc].should == "**Overridden in blah.js.**"
+      expect(methods["foobar"][:doc]).to eq("**Overridden in blah.js.**")
     end
   end
 
@@ -219,7 +219,7 @@ describe JsDuck::Aggregator do
     end
 
     it "adds note to docs about member being overridden" do
-      methods["foobar"][:doc].should == "**Overridden in blah.js.**"
+      expect(methods["foobar"][:doc]).to eq("**Overridden in blah.js.**")
     end
   end
 

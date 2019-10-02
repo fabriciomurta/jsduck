@@ -15,7 +15,7 @@ describe JsDuck::Aggregator do
          * @member Bar
          */
       EOS
-      classes["Bar"][:members][0][:owner].should == "Bar"
+      expect(classes["Bar"][:members][0][:owner]).to eq("Bar")
     end
 
     it "when used after the corresponding @class" do
@@ -31,8 +31,8 @@ describe JsDuck::Aggregator do
          * @member Bar
          */
       EOS
-      classes["Bar"][:members].length.should == 1
-      classes["Baz"][:members].length.should == 0
+      expect(classes["Bar"][:members].length).to eq(1)
+      expect(classes["Baz"][:members].length).to eq(0)
     end
 
     it "when used before the corresponding @class" do
@@ -45,7 +45,7 @@ describe JsDuck::Aggregator do
          * @class Bar
          */
       EOS
-      classes["Bar"][:members].length.should == 1
+      expect(classes["Bar"][:members].length).to eq(1)
     end
   end
 
@@ -61,8 +61,8 @@ describe JsDuck::Aggregator do
        */
     EOS
 
-    classes["FooCls"][:members].length.should == 1
-    classes["BarCls"][:members].length.should == 1
+    expect(classes["FooCls"][:members].length).to eq(1)
+    expect(classes["BarCls"][:members].length).to eq(1)
   end
 
 end

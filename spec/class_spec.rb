@@ -45,63 +45,63 @@ describe JsDuck::Class do
     end
 
     it "finds all members when called without arguments" do
-      cls.find_members().length.should == 6
+      expect(cls.find_members().length).to eq(6)
     end
 
     it "finds all properties by specifying tagname" do
-      cls.find_members(:tagname => :property).length.should == 4
+      expect(cls.find_members(:tagname => :property).length).to eq(4)
     end
 
     it "finds all methods by specifying tagname" do
-      cls.find_members(:tagname => :method).length.should == 1
+      expect(cls.find_members(:tagname => :method).length).to eq(1)
     end
 
     it "finds no members when specifying non-existing tagname" do
-      cls.find_members(:tagname => :cfg).length.should == 0
+      expect(cls.find_members(:tagname => :cfg).length).to eq(0)
     end
 
     it "finds no members when :static => true specified" do
-      cls.find_members(:static => true).length.should == 0
+      expect(cls.find_members(:static => true).length).to eq(0)
     end
 
     it "finds all members when :static => false specified" do
-      cls.find_members(:static => false).length.should == 6
+      expect(cls.find_members(:static => false).length).to eq(6)
     end
 
     it "finds member in itself" do
-      cls.find_members(:name => "inChild").length.should == 1
+      expect(cls.find_members(:name => "inChild").length).to eq(1)
     end
 
     it "finds member in parent" do
-      cls.find_members(:name => "inParent").length.should == 1
+      expect(cls.find_members(:name => "inParent").length).to eq(1)
     end
 
     it "finds member in mixin" do
-      cls.find_members(:name => "inMixin").length.should == 1
+      expect(cls.find_members(:name => "inMixin").length).to eq(1)
     end
 
     it "finds overridden parent member" do
-      cls.find_members(:name => "alsoInParent")[0][:owner].should == "ChildClass"
+      expect(cls.find_members(:name => "alsoInParent")[0][:owner]).to eq("ChildClass")
     end
 
     it "finds overridden mixin member" do
-      cls.find_members(:name => "alsoInMixin")[0][:owner].should == "ChildClass"
+      expect(cls.find_members(:name => "alsoInMixin")[0][:owner]).to eq("ChildClass")
     end
 
     it "finds just local members with :local=>true" do
-      cls.find_members(:local => true).length.should == 4
+      expect(cls.find_members(:local => true).length).to eq(4)
     end
 
     it "finds a local member if :local=>true" do
-      cls.find_members(:name => "inChild", :local => true).length.should == 1
+      expect(cls.find_members(:name => "inChild", :local => true).length).to eq(1)
     end
 
     it "doesn't find parent member if :local=>true" do
-      cls.find_members(:name => "inParent", :local => true).length.should == 0
+      expect(cls.find_members(:name => "inParent", :local => true).length).to eq(0)
     end
 
     it "doesn't find mixin member if :local=>true" do
-      cls.find_members(:name => "inMixin", :local => true).length.should == 0
+      expect(cls.find_members(:name => "inMixin", :local => true).length).to eq(0)
     end
   end
 
@@ -145,35 +145,35 @@ describe JsDuck::Class do
     end
 
     it "finds the static member in child" do
-      cls.find_members(:name => "inChild", :static => true).length.should == 1
+      expect(cls.find_members(:name => "inChild", :static => true).length).to eq(1)
     end
 
     it "finds the static inheritable member in child" do
-      cls.find_members(:name => "inChildInheritable", :static => true).length.should == 1
+      expect(cls.find_members(:name => "inChildInheritable", :static => true).length).to eq(1)
     end
 
     it "doesn't find the normal parent static member" do
-      cls.find_members(:name => "inParent", :static => true).length.should == 0
+      expect(cls.find_members(:name => "inParent", :static => true).length).to eq(0)
     end
 
     it "finds the inheritable parent static member" do
-      cls.find_members(:name => "inParentInheritable", :static => true).length.should == 1
+      expect(cls.find_members(:name => "inParentInheritable", :static => true).length).to eq(1)
     end
 
     it "doesn't find the normal parent mixin member" do
-      cls.find_members(:name => "inMixin", :static => true).length.should == 0
+      expect(cls.find_members(:name => "inMixin", :static => true).length).to eq(0)
     end
 
     it "finds the inheritable mixin static member" do
-      cls.find_members(:name => "inMixinInheritable", :static => true).length.should == 1
+      expect(cls.find_members(:name => "inMixinInheritable", :static => true).length).to eq(1)
     end
 
     it "finds all static members" do
-      cls.find_members(:static => true).length.should == 4
+      expect(cls.find_members(:static => true).length).to eq(4)
     end
 
     it "finds no static members when :static=>false specified" do
-      cls.find_members(:static => false).length.should == 0
+      expect(cls.find_members(:static => false).length).to eq(0)
     end
   end
 
@@ -217,7 +217,7 @@ describe JsDuck::Class do
       end
 
       it "the new member can't be found" do
-        child.find_members(:name => "changedName").length.should == 0
+        expect(child.find_members(:name => "changedName").length).to eq(0)
       end
 
       describe "and after calling #refresh_member_ids! on both" do
@@ -227,7 +227,7 @@ describe JsDuck::Class do
         end
 
         it "the new member is now findable" do
-          child.find_members(:name => "changedName").length.should == 1
+          expect(child.find_members(:name => "changedName").length).to eq(1)
         end
       end
     end
@@ -238,7 +238,7 @@ describe JsDuck::Class do
       end
 
       it "the new member can't be found" do
-        child.find_members(:tagname => :method).length.should == 0
+        expect(child.find_members(:tagname => :method).length).to eq(0)
       end
 
       describe "and after calling #refresh_member_ids! on both" do
@@ -248,7 +248,7 @@ describe JsDuck::Class do
         end
 
         it "the new member is now findable" do
-          child.find_members(:tagname => :method).length.should == 1
+          expect(child.find_members(:tagname => :method).length).to eq(1)
         end
       end
     end
@@ -280,19 +280,19 @@ describe JsDuck::Class do
     end
 
     it "true when asked about itself" do
-      @parent.inherits_from?("Parent").should == true
+      expect(@parent.inherits_from?("Parent")).to eq(true)
     end
 
     it "false when asked about class it's not inheriting from" do
-      @parent.inherits_from?("Child").should == false
+      expect(@parent.inherits_from?("Child")).to eq(false)
     end
 
     it "true when asked about direct parent" do
-      @child.inherits_from?("Parent").should == true
+      expect(@child.inherits_from?("Parent")).to eq(true)
     end
 
     it "true when asked about grandparent" do
-      @grandchild.inherits_from?("Parent").should == true
+      expect(@grandchild.inherits_from?("Parent")).to eq(true)
     end
   end
 

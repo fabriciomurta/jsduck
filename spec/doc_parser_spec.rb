@@ -17,7 +17,7 @@ describe JsDuck::Doc::Parser do
     end
 
     it "produces 3 @tags" do
-      @doc.length.should == 4
+      expect(@doc.length).to eq(4)
     end
 
     describe "special :doc tag" do
@@ -25,10 +25,10 @@ describe JsDuck::Doc::Parser do
         @tag = @doc[0]
       end
       it "gets special :doc tagname" do
-        @tag[:tagname].should == :doc
+        expect(@tag[:tagname]).to eq(:doc)
       end
       it "detects doc" do
-        @tag[:doc].should == "Some docs."
+        expect(@tag[:doc]).to eq("Some docs.")
       end
     end
 
@@ -37,13 +37,13 @@ describe JsDuck::Doc::Parser do
         @tag = @doc[1]
       end
       it "detects tagname" do
-        @tag[:tagname].should == :method
+        expect(@tag[:tagname]).to eq(:method)
       end
       it "detects name" do
-        @tag[:name].should == "foo"
+        expect(@tag[:name]).to eq("foo")
       end
       it "doesn't detects doc" do
-        @tag[:doc].should == nil
+        expect(@tag[:doc]).to eq(nil)
       end
     end
 
@@ -52,16 +52,16 @@ describe JsDuck::Doc::Parser do
         @tag = @doc[2]
       end
       it "detects tagname" do
-        @tag[:tagname].should == :params
+        expect(@tag[:tagname]).to eq(:params)
       end
       it "detects name" do
-        @tag[:name].should == "x"
+        expect(@tag[:name]).to eq("x")
       end
       it "detects type" do
-        @tag[:type].should == "Number"
+        expect(@tag[:type]).to eq("Number")
       end
       it "detects doc" do
-        @tag[:doc].should == "doc for x"
+        expect(@tag[:doc]).to eq("doc for x")
       end
     end
 
@@ -70,13 +70,13 @@ describe JsDuck::Doc::Parser do
         @tag = @doc[3]
       end
       it "detects tagname" do
-        @tag[:tagname].should == :return
+        expect(@tag[:tagname]).to eq(:return)
       end
       it "detects type" do
-        @tag[:type].should == "String"
+        expect(@tag[:type]).to eq("String")
       end
       it "detects doc" do
-        @tag[:doc].should == "resulting value"
+        expect(@tag[:doc]).to eq("resulting value")
       end
     end
   end
@@ -88,10 +88,10 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "detects tagname" do
-      @tag[:tagname].should == :type
+      expect(@tag[:tagname]).to eq(:type)
     end
     it "detects tagname" do
-      @tag[:type].should == "Boolean|String"
+      expect(@tag[:type]).to eq("Boolean|String")
     end
   end
 
@@ -100,10 +100,10 @@ describe JsDuck::Doc::Parser do
       @tag = parse_single("@event blah")[1]
     end
     it "detects tagname" do
-      @tag[:tagname].should == :event
+      expect(@tag[:tagname]).to eq(:event)
     end
     it "detects name" do
-      @tag[:name].should == "blah"
+      expect(@tag[:name]).to eq("blah")
     end
   end
 
@@ -118,10 +118,10 @@ describe JsDuck::Doc::Parser do
         ")
     end
     it "detects the @event tag" do
-      @tags[1][:tagname].should == :event
+      expect(@tags[1][:tagname]).to eq(:event)
     end
     it "trims whitespace at beginning of lines up to first line" do
-      @tags[0][:doc].should == "Some comment.\nMore text.\n\n    code sample"
+      expect(@tags[0][:doc]).to eq("Some comment.\nMore text.\n\n    code sample")
     end
   end
 
@@ -132,7 +132,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is parsed ensuring balanced braces" do
-      @tag[:type].should == "{foo:{bar:Number}}"
+      expect(@tag[:type]).to eq("{foo:{bar:Number}}")
     end
   end
 
@@ -143,7 +143,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is treated as plain text" do
-      @tag[:doc].should == "john@method.com"
+      expect(@tag[:doc]).to eq("john@method.com")
     end
   end
 
@@ -154,7 +154,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is treated as plain text, to be processed later" do
-      @tag[:doc].should == "{@inline Some#method}"
+      expect(@tag[:doc]).to eq("{@inline Some#method}")
     end
   end
 
@@ -167,7 +167,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is treated as plain text, to be processed later" do
-      @tag[:doc].should == "Code:\n\n    @example blah"
+      expect(@tag[:doc]).to eq("Code:\n\n    @example blah")
     end
   end
 
@@ -180,7 +180,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is treated as plain text within code example" do
-      @tag[:doc].should == "Code example:\n\n    @method"
+      expect(@tag[:doc]).to eq("Code example:\n\n    @method")
     end
   end
 
@@ -193,7 +193,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is treated as plain text within code example" do
-      @tag[:doc].should == "Code example:\n\n    if @method then"
+      expect(@tag[:doc]).to eq("Code example:\n\n    if @method then")
     end
   end
 
@@ -204,7 +204,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "is parsed as normal tag" do
-      @tag[:tagname].should == :method
+      expect(@tag[:tagname]).to eq(:method)
     end
   end
 
@@ -218,7 +218,7 @@ describe JsDuck::Doc::Parser do
       EOS
     end
     it "doesn't cause the tag to be skipped" do
-      @params.length.should == 2
+      expect(@params.length).to eq(2)
     end
   end
 

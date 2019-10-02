@@ -21,30 +21,30 @@ describe "JsDuck::Js::Ast detecting" do
     end
 
     it "finds two members" do
-      members.length.should == 2
+      expect(members.length).to eq(2)
     end
 
     describe "finds property" do
       it "with :property tagname" do
-        members[0][:tagname].should == :property
+        expect(members[0][:tagname]).to eq(:property)
       end
       it "with name" do
-        members[0][:name].should == "foo"
+        expect(members[0][:name]).to eq("foo")
       end
       it "with :static flag" do
-        members[0][:static].should == true
+        expect(members[0][:static]).to eq(true)
       end
     end
 
     describe "finds method" do
       it "with :property tagname" do
-        members[1][:tagname].should == :method
+        expect(members[1][:tagname]).to eq(:method)
       end
       it "with name" do
-        members[1][:name].should == "bar"
+        expect(members[1][:name]).to eq("bar")
       end
       it "with :static flag" do
-        members[1][:static].should == true
+        expect(members[1][:static]).to eq(true)
       end
     end
 

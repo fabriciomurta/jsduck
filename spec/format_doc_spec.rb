@@ -451,7 +451,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "contains the code" do
-        @html.include?("if (condition) {\n    doSomething();\n}").should == true
+        expect(@html.include?("if (condition) {\n    doSomething();\n}")).to eq(true)
       end
 
       it "does not create nested <pre> segments" do
@@ -501,7 +501,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "is correctly escaped" do
-        @html.should == "<p>Some <code>&lt;pre&gt;</code> in here.</p>\n"
+        expect(@html).to eq("<p>Some <code>&lt;pre&gt;</code> in here.</p>\n")
       end
     end
 
@@ -511,7 +511,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "is correctly escaped" do
-        @html.should == "<p>Some <code>&lt;pre&gt;&lt;code&gt;</code> in here.</p>\n"
+        expect(@html).to eq("<p>Some <code>&lt;pre&gt;&lt;code&gt;</code> in here.</p>\n")
       end
     end
 

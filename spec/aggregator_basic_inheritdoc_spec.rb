@@ -27,7 +27,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from the referenced member" do
-      @bar[:doc].should == "Comment for class Foo."
+      expect(@bar[:doc]).to eq("Comment for class Foo.")
     end
   end
 

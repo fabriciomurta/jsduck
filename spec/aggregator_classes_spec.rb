@@ -7,10 +7,10 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "class" do
     it "creates class" do
-      @doc[:tagname].should == :class
+      expect(@doc[:tagname]).to eq(:class)
     end
     it "detects name" do
-      @doc[:name].should == "MyClass"
+      expect(@doc[:name]).to eq("MyClass")
     end
   end
 
@@ -45,19 +45,19 @@ describe JsDuck::Aggregator do
 
     it_should_behave_like "class"
     it "detects extends" do
-      @doc[:extends].should == "Your.Class"
+      expect(@doc[:extends]).to eq("Your.Class")
     end
     it "detects mixins" do
-      Set.new(@doc[:mixins]).should == Set.new(["Foo.Mixin", "Bar.Mixin"])
+      expect(Set.new(@doc[:mixins])).to eq(Set.new(["Foo.Mixin", "Bar.Mixin"]))
     end
     it "detects alternate class names" do
-      @doc[:alternateClassNames].should == ["AltClass"]
+      expect(@doc[:alternateClassNames]).to eq(["AltClass"])
     end
     it "takes documentation from doc-comment" do
-      @doc[:doc].should == "Some documentation."
+      expect(@doc[:doc]).to eq("Some documentation.")
     end
     it "detects singleton" do
-      @doc[:singleton].should == true
+      expect(@doc[:singleton]).to eq(true)
     end
   end
 
@@ -86,13 +86,13 @@ describe JsDuck::Aggregator do
 
     it_should_behave_like "class"
     it "@extend treated as alias for @extends" do
-      @doc[:extends].should == "Your.Class"
+      expect(@doc[:extends]).to eq("Your.Class")
     end
     it "@mixin treated as alias for @mixins" do
-      @doc[:mixins].should == ["My.Mixin"]
+      expect(@doc[:mixins]).to eq(["My.Mixin"])
     end
     it "@alternateClassName treated as alias for @alternateClassNames" do
-      @doc[:alternateClassNames].should == ["AltClass"]
+      expect(@doc[:alternateClassNames]).to eq(["AltClass"])
     end
   end
 
@@ -125,7 +125,7 @@ describe JsDuck::Aggregator do
 
     it_should_behave_like "class"
     it "collects all mixins together" do
-      Set.new(@doc[:mixins]).should == Set.new(["My.Mixin", "Your.Mixin", "Other.Mixin"])
+      expect(Set.new(@doc[:mixins])).to eq(Set.new(["My.Mixin", "Your.Mixin", "Other.Mixin"]))
     end
   end
 
@@ -143,7 +143,7 @@ describe JsDuck::Aggregator do
 
     it_should_behave_like "class"
     it "collects all alternateClassNames together" do
-      @doc[:alternateClassNames].should == ["AltClass1", "AltClass2"]
+      expect(@doc[:alternateClassNames]).to eq(["AltClass1", "AltClass2"])
     end
   end
 
@@ -173,7 +173,7 @@ describe JsDuck::Aggregator do
       @doc = parse("/** */ function _Foo() {}")
     end
     it "does not imply class" do
-      @doc["_Foo"].should == nil
+      expect(@doc["_Foo"]).to eq(nil)
     end
   end
 
@@ -182,7 +182,7 @@ describe JsDuck::Aggregator do
       @doc = parse("/** */ function foo() {}")
     end
     it "does not imply class" do
-      @doc["foo"].should == nil
+      expect(@doc["foo"]).to eq(nil)
     end
   end
 
@@ -192,29 +192,29 @@ describe JsDuck::Aggregator do
     end
     it_should_behave_like "class"
     it "detects implied extends" do
-      @doc[:extends].should == "Your.Class"
+      expect(@doc[:extends]).to eq("Your.Class")
     end
   end
 
   shared_examples_for "Ext.define" do
     it_should_behave_like "class"
     it "detects implied extends" do
-      @doc[:extends].should == "Your.Class"
+      expect(@doc[:extends]).to eq("Your.Class")
     end
     it "detects implied mixins" do
-      Set.new(@doc[:mixins]).should == Set.new(["Ext.util.Observable", "Foo.Bar"])
+      expect(Set.new(@doc[:mixins])).to eq(Set.new(["Ext.util.Observable", "Foo.Bar"]))
     end
     it "detects implied alternateClassNames" do
-      @doc[:alternateClassNames].should == ["JustClass"]
+      expect(@doc[:alternateClassNames]).to eq(["JustClass"])
     end
     it "detects implied singleton" do
-      @doc[:singleton].should == true
+      expect(@doc[:singleton]).to eq(true)
     end
     it "detects required classes" do
-      @doc[:requires].should == ["ClassA", "ClassB"]
+      expect(@doc[:requires]).to eq(["ClassA", "ClassB"])
     end
     it "detects used classes" do
-      @doc[:uses].should == ["ClassC"]
+      expect(@doc[:uses]).to eq(["ClassC"])
     end
   end
 
@@ -324,7 +324,7 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "automatically extends from Ext.Base" do
-      @doc[:extends].should == "Ext.Base"
+      expect(@doc[:extends]).to eq("Ext.Base")
     end
   end
 
@@ -360,24 +360,24 @@ describe JsDuck::Aggregator do
       @doc = @classes["MyClass"]
     end
     it "results in only one item" do
-      @classes.length.should == 2 # account the pseudo Ext.Panel class
+      expect(@classes.length).to eq(2) # account the pseudo Ext.Panel class
     end
     it_should_behave_like "class"
 
     it "should have 4 members" do
-      @doc[:members].length.should == 4
+      expect(@doc[:members].length).to eq(4)
     end
     it "should have a config" do
-      @doc[:members][0][:tagname].should == :cfg
+      expect(@doc[:members][0][:tagname]).to eq(:cfg)
     end
     it "should have propertiesy" do
-      @doc[:members][1][:tagname].should == :property
+      expect(@doc[:members][1][:tagname]).to eq(:property)
     end
     it "should have method" do
-      @doc[:members][2][:tagname].should == :method
+      expect(@doc[:members][2][:tagname]).to eq(:method)
     end
     it "should have event" do
-      @doc[:members][3][:tagname].should == :event
+      expect(@doc[:members][3][:tagname]).to eq(:event)
     end
   end
 
@@ -396,7 +396,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results in multiple classes" do
-      @classes.length.should == 2
+      expect(@classes.length).to eq(2)
     end
 
     it "both are class tags" do
@@ -451,35 +451,35 @@ describe JsDuck::Aggregator do
     end
 
     it "results in only one class" do
-      @classes.length.should == 4 # account the three pseudo-classes
+      expect(@classes.length).to eq(4) # account the three pseudo-classes
     end
 
     it "takes class doc from first doc-block that has one" do
-      @classes["Foo"][:doc].should == "Second description."
+      expect(@classes["Foo"][:doc]).to eq("Second description.")
     end
 
     it "takes @extends from first doc-block that has one" do
-      @classes["Foo"][:extends].should == "Bar"
+      expect(@classes["Foo"][:extends]).to eq("Bar")
     end
 
     it "is singleton when one doc-block is singleton" do
-      @classes["Foo"][:singleton].should == true
+      expect(@classes["Foo"][:singleton]).to eq(true)
     end
 
     it "is private when one doc-block is private" do
-      @classes["Foo"][:private].should == true
+      expect(@classes["Foo"][:private]).to eq(true)
     end
 
     it "combines all mixins" do
-      @classes["Foo"][:mixins].length.should == 2
+      expect(@classes["Foo"][:mixins].length).to eq(2)
     end
 
     it "combines all alternateClassNames" do
-      @classes["Foo"][:alternateClassNames].length.should == 1
+      expect(@classes["Foo"][:alternateClassNames].length).to eq(1)
     end
 
     it "combines all members" do
-      @classes["Foo"][:members].length.should == 3 * 4
+      expect(@classes["Foo"][:members].length).to eq(3 * 4)
     end
   end
 
@@ -497,7 +497,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results in only one class" do
-      @classes.length.should == 1
+      expect(@classes.length).to eq(1)
     end
   end
 
@@ -515,7 +515,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results in only one class" do
-      @classes.length.should == 1
+      expect(@classes.length).to eq(1)
     end
   end
 
@@ -530,7 +530,7 @@ describe JsDuck::Aggregator do
     end
 
     it "results still in one class" do
-      @classes.length.should == 1
+      expect(@classes.length).to eq(1)
     end
   end
 
@@ -547,14 +547,14 @@ describe JsDuck::Aggregator do
       EOS
     end
     it "detectes the name of the extended class" do
-      @doc[:extends].should == "Bar.Baz"
+      expect(@doc[:extends]).to eq("Bar.Baz")
     end
   end
 
 
   shared_examples_for "extending Object" do
     it "has extends == nil" do
-      @doc[:extends].should == nil
+      expect(@doc[:extends]).to eq(nil)
     end
   end
 
@@ -610,15 +610,15 @@ describe JsDuck::Aggregator do
     end
 
     it "detects class name" do
-      @doc[:name].should == "foo"
+      expect(@doc[:name]).to eq("foo")
     end
 
     it "doesn't detect parameters" do
-      @doc[:params].should == nil
+      expect(@doc[:params]).to eq(nil)
     end
 
     it "doesn't detect chainable" do
-      @doc[:chainable].should == nil
+      expect(@doc[:chainable]).to eq(nil)
     end
   end
 end

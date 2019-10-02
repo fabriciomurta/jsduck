@@ -7,11 +7,11 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "docs inheritance" do
     it "inherits docs" do
-      @inh1[:doc].should == "Original comment."
+      expect(@inh1[:doc]).to eq("Original comment.")
     end
 
     it "doesn't inherit docs when it has docs of its own" do
-      @inh2[:doc].should == "Some docs of its own."
+      expect(@inh2[:doc]).to eq("Some docs of its own.")
     end
   end
 
@@ -85,31 +85,31 @@ describe JsDuck::Aggregator do
     it_should_behave_like "docs inheritance"
 
     it "inherits parameters" do
-      @inh1[:params].length.should == 2
+      expect(@inh1[:params].length).to eq(2)
     end
 
     it "inherits return value" do
-      @inh1[:return][:type].should == "String"
+      expect(@inh1[:return][:type]).to eq("String")
     end
 
     it "inherits throws" do
-      @inh1[:throws][0][:type].should == "Exception"
+      expect(@inh1[:throws][0][:type]).to eq("Exception")
     end
 
     it "doesn't inherit params when @param tag present" do
-      @inh2[:params].length.should == 1
+      expect(@inh2[:params].length).to eq(1)
     end
 
     it "doesn't inherit return when @return tag present" do
-      @inh2[:return][:type].should == "Number"
+      expect(@inh2[:return][:type]).to eq("Number")
     end
 
     it "doesn't inherit throws when @throws tag present" do
-      @inh2[:throws][0][:type].should == "String"
+      expect(@inh2[:throws][0][:type]).to eq("String")
     end
 
     it "inherits parameters when auto-detected parameters present" do
-      @inh3[:params].length.should == 2
+      expect(@inh3[:params].length).to eq(2)
     end
   end
 
@@ -152,15 +152,15 @@ describe JsDuck::Aggregator do
     it_should_behave_like "docs inheritance"
 
     it "inherits type" do
-      @inh1[:type].should == "String"
+      expect(@inh1[:type]).to eq("String")
     end
 
     it "doesn't inherit type when type specified in cfg itself" do
-      @inh2[:type].should == "Number"
+      expect(@inh2[:type]).to eq("Number")
     end
 
     it "inherits type when auto-detected type present" do
-      @inh3[:type].should == "String"
+      expect(@inh3[:type]).to eq("String")
     end
   end
 
@@ -184,7 +184,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits subproperties" do
-      @inh1[:properties].length.should == 2
+      expect(@inh1[:properties].length).to eq(2)
     end
   end
 
@@ -223,11 +223,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits from the type of member specified" do
-      @inh1[:doc].should == "Method comment."
+      expect(@inh1[:doc]).to eq("Method comment.")
     end
 
     it "inherits from the static member when static- specified in reference" do
-      @inh2[:doc].should == "Static method comment."
+      expect(@inh2[:doc]).to eq("Static method comment.")
     end
   end
 
@@ -267,11 +267,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits from the same type of member as itself" do
-      @inh1[:doc].should == "Method comment."
+      expect(@inh1[:doc]).to eq("Method comment.")
     end
 
     it "inherits from the static member when it is static itself" do
-      @inh2[:doc].should == "Static method comment."
+      expect(@inh2[:doc]).to eq("Static method comment.")
     end
   end
 
@@ -295,7 +295,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits from the static member" do
-      @inh1[:doc].should == "Static method comment."
+      expect(@inh1[:doc]).to eq("Static method comment.")
     end
   end
 
@@ -331,11 +331,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from grandparent when parent has no docs" do
-      @inh1[:doc].should == "Grandparent docs."
+      expect(@inh1[:doc]).to eq("Grandparent docs.")
     end
 
     it "inherits docs from parent when parent has docs of its own" do
-      @inh2[:doc].should == "Parent docs."
+      expect(@inh2[:doc]).to eq("Parent docs.")
     end
   end
 
@@ -358,7 +358,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits from the member within current class" do
-      @inheritdoc[:doc].should == "Original comment."
+      expect(@inheritdoc[:doc]).to eq("Original comment.")
     end
   end
 
@@ -389,11 +389,11 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from parent class" do
-      @class[:doc].should == "Parent class comment."
+      expect(@class[:doc]).to eq("Parent class comment.")
     end
 
     it "inherits docs from parent class method" do
-      @method[:doc].should == "Parent method comment."
+      expect(@method[:doc]).to eq("Parent method comment.")
     end
   end
 
@@ -412,7 +412,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits nothing" do
-      @method[:doc].should == ""
+      expect(@method[:doc]).to eq("")
     end
   end
 
@@ -435,7 +435,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits nothing" do
-      @method[:doc].should == ""
+      expect(@method[:doc]).to eq("")
     end
   end
 
@@ -462,7 +462,7 @@ describe JsDuck::Aggregator do
     end
 
     it "inherits docs from mixin" do
-      @method[:doc].should == "Docs in mixin."
+      expect(@method[:doc]).to eq("Docs in mixin.")
     end
   end
 
@@ -503,7 +503,7 @@ describe JsDuck::Aggregator do
     end
 
     it "returns correctly just one member when calling #find_members on child" do
-      @view.find_members({:name => "itemSelector"}).length.should == 1
+      expect(@view.find_members({:name => "itemSelector"}).length).to eq(1)
     end
   end
 

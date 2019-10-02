@@ -12,25 +12,25 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "no parameters" do
     it "detects no params" do
-      @doc.length.should == 0
+      expect(@doc.length).to eq(0)
     end
   end
 
   shared_examples_for "two parameters" do
     it "detects parameter count" do
-      @doc.length.should == 2
+      expect(@doc.length).to eq(2)
     end
 
     it "detects parameter names" do
-      @doc[0][:name].should == "x"
-      @doc[1][:name].should == "y"
+      expect(@doc[0][:name]).to eq("x")
+      expect(@doc[1][:name]).to eq("y")
     end
   end
 
   shared_examples_for "parameter types" do
     it "detects parameter types" do
-      @doc[0][:type].should == "String"
-      @doc[1][:type].should == "Number"
+      expect(@doc[0][:type]).to eq("String")
+      expect(@doc[1][:type]).to eq("Number")
     end
   end
 
@@ -59,8 +59,8 @@ describe JsDuck::Aggregator do
     end
     it_should_behave_like "two parameters"
     it "parameter types default to Object" do
-      @doc[0][:type].should == "Object"
-      @doc[1][:type].should == "Object"
+      expect(@doc[0][:type]).to eq("Object")
+      expect(@doc[1][:type]).to eq("Object")
     end
   end
 
@@ -137,8 +137,8 @@ describe JsDuck::Aggregator do
     it_should_behave_like "parameter types"
 
     it "detects no parameter names" do
-      @doc[0][:name].should == nil
-      @doc[1][:name].should == nil
+      expect(@doc[0][:name]).to eq(nil)
+      expect(@doc[1][:name]).to eq(nil)
     end
   end
 end

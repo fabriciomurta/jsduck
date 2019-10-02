@@ -12,15 +12,15 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "event" do
     it "creates event" do
-      @doc[:tagname].should == :event
+      expect(@doc[:tagname]).to eq(:event)
     end
 
     it "takes documentation from doc-comment" do
-      @doc[:doc].should == "Fires when needed."
+      expect(@doc[:doc]).to eq("Fires when needed.")
     end
 
     it "detects event name" do
-      @doc[:name].should == "mousedown"
+      expect(@doc[:name]).to eq("mousedown")
     end
   end
 
@@ -99,11 +99,11 @@ describe JsDuck::Aggregator do
     end
 
     it "creates event" do
-      @doc[:tagname].should == :event
+      expect(@doc[:tagname]).to eq(:event)
     end
 
     it "leaves the name of event empty" do
-      @doc[:name].should == ""
+      expect(@doc[:name]).to eq("")
     end
   end
 

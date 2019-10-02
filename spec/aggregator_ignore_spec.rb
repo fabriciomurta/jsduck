@@ -20,7 +20,7 @@ describe JsDuck::Aggregator do
     end
 
     it "ignores the member completely" do
-      @docs[:members].length.should == 0
+      expect(@docs[:members].length).to eq(0)
     end
   end
 
@@ -41,7 +41,7 @@ describe JsDuck::Aggregator do
     end
 
     it "ignores the class and all it's members" do
-      @docs.length.should == 0
+      expect(@docs.length).to eq(0)
     end
   end
 
@@ -64,11 +64,11 @@ describe JsDuck::Aggregator do
     end
 
     it "ignores one member" do
-      @doc[:members].length.should == 1
+      expect(@doc[:members].length).to eq(1)
     end
 
     it "lets the other member stay" do
-      @doc[:members][0][:doc].should == "First method docs"
+      expect(@doc[:members][0][:doc]).to eq("First method docs")
     end
   end
 

@@ -23,18 +23,18 @@ describe JsDuck::ClassDocExpander do
     end
 
     it "has needed number of members" do
-      cls[:members].length.should == 2
+      expect(cls[:members].length).to eq(2)
     end
     it "detects members as configs" do
-      cls[:members][0][:tagname].should == :cfg
-      cls[:members][1][:tagname].should == :cfg
+      expect(cls[:members][0][:tagname]).to eq(:cfg)
+      expect(cls[:members][1][:tagname]).to eq(:cfg)
     end
     it "picks up names of all configs" do
-      cls[:members][0][:name].should == "foo"
-      cls[:members][1][:name].should == "bar"
+      expect(cls[:members][0][:name]).to eq("foo")
+      expect(cls[:members][1][:name]).to eq("bar")
     end
     it "marks first @cfg as private" do
-      cls[:members][0][:private].should == true
+      expect(cls[:members][0][:private]).to eq(true)
     end
   end
 
@@ -54,7 +54,7 @@ describe JsDuck::ClassDocExpander do
     end
 
     it "detects the configs taking account the subproperties" do
-      cls[:members].length.should == 2
+      expect(cls[:members].length).to eq(2)
     end
   end
 
@@ -70,7 +70,7 @@ describe JsDuck::ClassDocExpander do
     end
 
     it "detects the one bogus config" do
-      cls[:members].length.should == 1
+      expect(cls[:members].length).to eq(1)
     end
   end
 
@@ -87,7 +87,7 @@ describe JsDuck::ClassDocExpander do
     end
 
     it "is detected as class" do
-      cls[:tagname].should == :class
+      expect(cls[:tagname]).to eq(:class)
     end
   end
 
@@ -104,7 +104,7 @@ describe JsDuck::ClassDocExpander do
     end
 
     it "get all combined into one members list" do
-      cls[:members].length.should == 3
+      expect(cls[:members].length).to eq(3)
     end
   end
 

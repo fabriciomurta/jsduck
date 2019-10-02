@@ -17,15 +17,15 @@ describe "--ext-namespaces=Ext,MyNs,MyNs.Foo.Bar" do
   end
 
   it "allows detecting Ext.define()" do
-    parse("/** */ Ext.define('MyClass', {});")[0][:code][:tagname].should == :class
+    expect(parse("/** */ Ext.define('MyClass', {});")[0][:code][:tagname]).to eq(:class)
   end
 
   it "allows detecting MyNs.define()" do
-    parse("/** */ MyNs.define('MyClass', {});")[0][:code][:tagname].should == :class
+    expect(parse("/** */ MyNs.define('MyClass', {});")[0][:code][:tagname]).to eq(:class)
   end
 
   it "allows detecting MyNs.Foo.Bar.define()" do
-    parse("/** */ MyNs.Foo.Bar.define('MyClass', {});")[0][:code][:tagname].should == :class
+    expect(parse("/** */ MyNs.Foo.Bar.define('MyClass', {});")[0][:code][:tagname]).to eq(:class)
   end
 
 end
