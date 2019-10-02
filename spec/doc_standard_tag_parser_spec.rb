@@ -23,13 +23,15 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "parses :type and :optional" do
-    parse("{Foo=}", {:type => true, :optional => true}).should ==
+    expect(parse("{Foo=}", {:type => true, :optional => true})).to eq(
       {:type => "Foo", :optional => true}
+    )
   end
 
   it "ignores optionality in :type when no :optional specified" do
-    parse("{Foo=}", {:type => true}).should ==
+    expect(parse("{Foo=}", {:type => true})).to eq(
       {:type => "Foo"}
+    )
   end
 
   it "parses :name" do
@@ -37,8 +39,9 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "parses :name and :optional" do
-    parse("[ident]", {:name => true, :optional => true}).should ==
+    expect(parse("[ident]", {:name => true, :optional => true})).to eq(
       {:name => "ident", :optional => true}
+    )
   end
 
   it "fails to parse :name when name in brackets but no :optional specified" do
@@ -46,28 +49,33 @@ describe JsDuck::Doc::StandardTagParser do
   end
 
   it "parses :name, :default and :optional" do
-    parse("[ident=10]", {:name => true, :default => true, :optional => true}).should ==
+    expect(parse("[ident=10]", {:name => true, :default => true, :optional => true})).to eq(
       {:name => "ident", :default => "10", :optional => true}
+    )
   end
 
   it "parses :name and :default without optionality" do
-    parse("ident=10", {:name => true, :default => true}).should ==
+    expect(parse("ident=10", {:name => true, :default => true})).to eq(
       {:name => "ident", :default => "10"}
+    )
   end
 
   it "parses quoted :default value" do
-    parse("ident = 'Hello, world!'", {:name => true, :default => true}).should ==
+    expect(parse("ident = 'Hello, world!'", {:name => true, :default => true})).to eq(
       {:name => "ident", :default => "'Hello, world!'"}
+    )
   end
 
   it "parses array :default value" do
-    parse("ident = [1, 2, 3, 4]", {:name => true, :default => true}).should ==
+    expect(parse("ident = [1, 2, 3, 4]", {:name => true, :default => true})).to eq(
       {:name => "ident", :default => "[1, 2, 3, 4]"}
+    )
   end
 
   it "ignores stuff after :default value" do
-    parse("ident = 15.5 Blah", {:name => true, :default => true}).should ==
+    expect(parse("ident = 15.5 Blah", {:name => true, :default => true})).to eq(
       {:name => "ident", :default => "15.5"}
+    )
   end
 
 end

@@ -46,92 +46,109 @@ describe JsDuck::Format::Doc do
     # {@link ...}
 
     it "replaces {@link Ext.Msg} with link to class" do
-      @formatter.replace("Look at {@link Ext.Msg}").should ==
+      expect(@formatter.replace("Look at {@link Ext.Msg}")).to eq(
         'Look at <a href="Ext.Msg">Ext.Msg</a>'
+      )
     end
 
     it "replaces {@link Foo#bar} with link to class member" do
-      @formatter.replace("Look at {@link Foo#bar}").should ==
+      expect(@formatter.replace("Look at {@link Foo#bar}")).to eq(
         'Look at <a href="Foo#cfg-bar">Foo.bar</a>'
+      )
     end
 
     it "replaces {@link Foo#id} with link to static class member" do
-      @formatter.replace("Look at {@link Foo#id}").should ==
+      expect(@formatter.replace("Look at {@link Foo#id}")).to eq(
         'Look at <a href="Foo#static-method-id">Foo.id</a>'
+      )
     end
 
     it "replaces {@link Foo#privMeth} with link to private class member" do
-      @formatter.replace("Look at {@link Foo#privMeth}").should ==
+      expect(@formatter.replace("Look at {@link Foo#privMeth}")).to eq(
         'Look at <a href="Foo#method-privMeth">Foo.privMeth</a>'
+      )
     end
 
     it "uses context to replace {@link #bar} with link to class member" do
-      @formatter.replace("Look at {@link #bar}").should ==
+      expect(@formatter.replace("Look at {@link #bar}")).to eq(
         'Look at <a href="Context#method-bar">bar</a>'
+      )
     end
 
     it "uses context to replace {@link #id} with link to static class member" do
-      @formatter.replace("Look at {@link #id}").should ==
+      expect(@formatter.replace("Look at {@link #id}")).to eq(
         'Look at <a href="Context#static-method-id">id</a>'
+      )
     end
 
     it "allows use of custom link text" do
-      @formatter.replace("Look at {@link Foo link text}").should ==
+      expect(@formatter.replace("Look at {@link Foo link text}")).to eq(
         'Look at <a href="Foo">link text</a>'
+      )
     end
 
     it "Links alternate classname to real classname" do
-      @formatter.replace("Look at {@link FooBar}").should ==
+      expect(@formatter.replace("Look at {@link FooBar}")).to eq(
         'Look at <a href="Foo">FooBar</a>'
+      )
     end
 
     it "leaves text without {@link...} untouched" do
-      @formatter.replace("Look at {@me here} too").should ==
+      expect(@formatter.replace("Look at {@me here} too")).to eq(
         'Look at {@me here} too'
+      )
     end
 
     it "ignores unfinished {@link tag" do
-      @formatter.replace("unfinished {@link tag here").should ==
+      expect(@formatter.replace("unfinished {@link tag here")).to eq(
         'unfinished {@link tag here'
+      )
     end
 
     it "handles {@link} spanning multiple lines" do
-      @formatter.replace("Look at {@link\nExt.Msg\nsome text}").should ==
+      expect(@formatter.replace("Look at {@link\nExt.Msg\nsome text}")).to eq(
         'Look at <a href="Ext.Msg">some text</a>'
+      )
     end
 
     it "handles {@link} with label spanning multiple lines" do
-      @formatter.replace("Look at {@link Ext.Msg some\ntext}").should ==
+      expect(@formatter.replace("Look at {@link Ext.Msg some\ntext}")).to eq(
         "Look at <a href=\"Ext.Msg\">some\ntext</a>"
+      )
     end
 
     it "escapes link text" do
-      @formatter.replace('{@link Ext.Msg <bla>}').should ==
+      expect(@formatter.replace('{@link Ext.Msg <bla>}')).to eq(
         '<a href="Ext.Msg">&lt;bla&gt;</a>'
+      )
     end
 
     # {@img ...}
 
     it "replaces {@img some/image.png Alt text} with <img> element" do
-      @formatter.replace("Look at {@img some/image.png Alt text}").should ==
+      expect(@formatter.replace("Look at {@img some/image.png Alt text}")).to eq(
         'Look at <img src="some/image.png" alt="Alt text"/>'
+      )
     end
 
     it "replaces {@img some/image.png} with <img> element with empty alt tag" do
-      @formatter.replace("Look at {@img some/image.png}").should ==
+      expect(@formatter.replace("Look at {@img some/image.png}")).to eq(
         'Look at <img src="some/image.png" alt=""/>'
+      )
     end
 
     it "escapes image alt text" do
-      @formatter.replace('{@img some/image.png foo"bar}').should ==
+      expect(@formatter.replace('{@img some/image.png foo"bar}')).to eq(
         '<img src="some/image.png" alt="foo&quot;bar"/>'
+      )
     end
 
     # {@video ...}
 
     it "replaces {@video html5 some/url.mpeg Alt text} with HTML5 video element" do
-      @formatter.replace("{@video html5 some/url.mpeg Alt text}").should ==
+      expect(@formatter.replace("{@video html5 some/url.mpeg Alt text}")).to eq(
         '<video src="some/url.mpeg">Alt text</video>'
+      )
     end
 
     it "replaces {@video vimeo 123456 Alt text} with Vimeo video markup" do
@@ -194,162 +211,193 @@ describe JsDuck::Format::Doc do
     end
 
     it "doesn't recognize John as class name" do
-      @formatter.replace("John is lazy").should ==
+      expect(@formatter.replace("John is lazy")).to eq(
         "John is lazy"
+      )
     end
 
     it "doesn't recognize Bla.Bla as class name" do
-      @formatter.replace("Unknown Bla.Bla class").should ==
+      expect(@formatter.replace("Unknown Bla.Bla class")).to eq(
         "Unknown Bla.Bla class"
+      )
     end
 
     it "doesn't recognize Ext as class name" do
-      @formatter.replace("Talking about Ext JS").should ==
+      expect(@formatter.replace("Talking about Ext JS")).to eq(
         "Talking about Ext JS"
+      )
     end
 
     it "converts Foo.Bar to class link" do
-      @formatter.replace("Look at Foo.Bar").should ==
+      expect(@formatter.replace("Look at Foo.Bar")).to eq(
         'Look at <a href="Foo.Bar">Foo.Bar</a>'
+      )
     end
 
     it "converts FooBar.Blah to class link" do
-      @formatter.replace("Look at Foo.Bar.Blah").should ==
+      expect(@formatter.replace("Look at Foo.Bar.Blah")).to eq(
         'Look at <a href="Foo.Bar.Blah">Foo.Bar.Blah</a>'
+      )
     end
 
     it "converts Ext.form.Field to class link" do
-      @formatter.replace("Look at Ext.form.Field").should ==
+      expect(@formatter.replace("Look at Ext.form.Field")).to eq(
         'Look at <a href="Ext.form.Field">Ext.form.Field</a>'
+      )
     end
 
     it "converts Ext.XTemplate to class link" do
-      @formatter.replace("Look at Ext.XTemplate").should ==
+      expect(@formatter.replace("Look at Ext.XTemplate")).to eq(
         'Look at <a href="Ext.XTemplate">Ext.XTemplate</a>'
+      )
     end
 
     it "links alternate classname to canonical classname" do
-      @formatter.replace("Look at Ext.AltXTemplate").should ==
+      expect(@formatter.replace("Look at Ext.AltXTemplate")).to eq(
         'Look at <a href="Ext.XTemplate">Ext.AltXTemplate</a>'
+      )
     end
 
     it "converts downcase.ClassName to class link" do
-      @formatter.replace("Look at downcase.ClassName").should ==
+      expect(@formatter.replace("Look at downcase.ClassName")).to eq(
         'Look at <a href="downcase.ClassName">downcase.ClassName</a>'
+      )
     end
 
     it "converts classname with underscores to class link" do
-      @formatter.replace("Look at _us.In_Cls_Name").should ==
+      expect(@formatter.replace("Look at _us.In_Cls_Name")).to eq(
         'Look at <a href="_us.In_Cls_Name">_us.In_Cls_Name</a>'
+      )
     end
 
     it "converts ClassName ending with dot to class link" do
-      @formatter.replace("Look at Foo.Bar.").should ==
+      expect(@formatter.replace("Look at Foo.Bar.")).to eq(
         'Look at <a href="Foo.Bar">Foo.Bar</a>.'
+      )
     end
 
     it "converts ClassName ending with comma to class link" do
-      @formatter.replace("Look at Foo.Bar, it's great!").should ==
+      expect(@formatter.replace("Look at Foo.Bar, it's great!")).to eq(
         'Look at <a href="Foo.Bar">Foo.Bar</a>, it\'s great!'
+      )
     end
 
     it "converts two ClassNames in one line to links" do
-      @formatter.replace("See: Foo.Bar, Ext.XTemplate").should ==
+      expect(@formatter.replace("See: Foo.Bar, Ext.XTemplate")).to eq(
         'See: <a href="Foo.Bar">Foo.Bar</a>, <a href="Ext.XTemplate">Ext.XTemplate</a>'
+      )
     end
 
     # Links to #members
 
     it "converts Ext#encode to method link" do
-      @formatter.replace("Look at Ext#encode").should ==
+      expect(@formatter.replace("Look at Ext#encode")).to eq(
         'Look at <a href="Ext#method-encode">Ext.encode</a>'
+      )
     end
 
     it "converts Ext.form.Field#getValues to method link" do
-      @formatter.replace("Look at Ext.form.Field#getValues").should ==
+      expect(@formatter.replace("Look at Ext.form.Field#getValues")).to eq(
         'Look at <a href="Ext.form.Field#method-getValues">Ext.form.Field.getValues</a>'
+      )
     end
 
     it "converts downcase.ClassName#blah to method link" do
-      @formatter.replace("Look at downcase.ClassName#blah").should ==
+      expect(@formatter.replace("Look at downcase.ClassName#blah")).to eq(
         'Look at <a href="downcase.ClassName#method-blah">downcase.ClassName.blah</a>'
+      )
     end
 
     it 'converts $Class#$sss to method link' do
-      @formatter.replace('Look at $Class#$sss').should ==
+      expect(@formatter.replace('Look at $Class#$sss')).to eq(
         'Look at <a href="$Class#method-S-sss">$Class.$sss</a>'
+      )
     end
 
     it "converts Ext.encode to method link" do
-      @formatter.replace("Look at Ext.encode").should ==
+      expect(@formatter.replace("Look at Ext.encode")).to eq(
         'Look at <a href="Ext#method-encode">Ext.encode</a>'
+      )
     end
 
     it "converts #bar to link to current class method" do
-      @formatter.replace("Look at #bar method").should ==
+      expect(@formatter.replace("Look at #bar method")).to eq(
         'Look at <a href="Context#method-bar">bar</a> method'
+      )
     end
 
     it "converts #privMeth to link to private method" do
-      @formatter.replace("Look at #privMeth method").should ==
+      expect(@formatter.replace("Look at #privMeth method")).to eq(
         'Look at <a href="Context#method-privMeth">privMeth</a> method'
+      )
     end
 
     it "Doesn't convert #unknown to link" do
-      @formatter.replace("Ahh, an #unknown method").should ==
+      expect(@formatter.replace("Ahh, an #unknown method")).to eq(
         'Ahh, an #unknown method'
+      )
     end
 
     # Ensure links aren't created inside <a>...</a> or {@link} and {@img} tags.
 
     it "doesn't create links inside {@link} tag" do
-      @formatter.replace("{@link Foo.Bar a Foo.Bar link}").should ==
+      expect(@formatter.replace("{@link Foo.Bar a Foo.Bar link}")).to eq(
         '<a href="Foo.Bar">a Foo.Bar link</a>'
+      )
     end
 
     it "doesn't create links inside {@img} tag" do
-      @formatter.replace("{@img some/file.jpg a Foo.Bar image}").should ==
+      expect(@formatter.replace("{@img some/file.jpg a Foo.Bar image}")).to eq(
         '<img src="some/file.jpg" alt="a Foo.Bar image"/>'
+      )
     end
 
     it "doesn't create links inside HTML tags" do
-      @formatter.replace('<img src="pics/Foo.Bar"/>').should ==
+      expect(@formatter.replace('<img src="pics/Foo.Bar"/>')).to eq(
         '<img src="pics/Foo.Bar"/>'
+      )
     end
 
     it "doesn't create links inside multiline HTML tags" do
-      @formatter.replace('<img\nsrc="pics/Foo.Bar"/>').should ==
+      expect(@formatter.replace('<img\nsrc="pics/Foo.Bar"/>')).to eq(
         '<img\nsrc="pics/Foo.Bar"/>'
+      )
     end
 
     it "doesn't create links inside <a>...</a>" do
-      @formatter.replace('See <a href="Foo.Bar">Foo.Bar</a>').should ==
+      expect(@formatter.replace('See <a href="Foo.Bar">Foo.Bar</a>')).to eq(
         'See <a href="Foo.Bar">Foo.Bar</a>'
+      )
     end
 
     it "creates links inside <b>...</b>" do
-      @formatter.replace('See <b>Foo.Bar</b>').should ==
+      expect(@formatter.replace('See <b>Foo.Bar</b>')).to eq(
         'See <b><a href="Foo.Bar">Foo.Bar</a></b>'
+      )
     end
 
     it "doesn't create links inside <a><b>...</b></a>" do
-      @formatter.replace('See <a href="Foo.Bar"><b>Foo.Bar</b></a>').should ==
+      expect(@formatter.replace('See <a href="Foo.Bar"><b>Foo.Bar</b></a>')).to eq(
         'See <a href="Foo.Bar"><b>Foo.Bar</b></a>'
+      )
     end
 
     it "creates links after <a>...</a>" do
-      @formatter.replace('See <a href="Foo.Bar">Foo.Bar</a> and Ext.XTemplate.').should ==
+      expect(@formatter.replace('See <a href="Foo.Bar">Foo.Bar</a> and Ext.XTemplate.')).to eq(
         'See <a href="Foo.Bar">Foo.Bar</a> and <a href="Ext.XTemplate">Ext.XTemplate</a>.'
+      )
     end
 
     it "doesn't create links inside nested <a> tags" do
-      @formatter.replace('See <a href="Foo.Bar"><a>Foo.Bar</a> Ext.XTemplate</a>').should ==
+      expect(@formatter.replace('See <a href="Foo.Bar"><a>Foo.Bar</a> Ext.XTemplate</a>')).to eq(
         'See <a href="Foo.Bar"><a>Foo.Bar</a> Ext.XTemplate</a>'
+      )
     end
 
     it "handles unclosed HTML tags" do
-      @formatter.replace('Malformed <img').should ==
+      expect(@formatter.replace('Malformed <img')).to eq(
         'Malformed <img'
+      )
     end
 
   end
@@ -369,13 +417,15 @@ describe JsDuck::Format::Doc do
     end
 
     it "replaces {@link Foo#method-select} with link to method" do
-      @formatter.replace("Look at {@link Foo#method-select}").should ==
+      expect(@formatter.replace("Look at {@link Foo#method-select}")).to eq(
         'Look at <a href="Foo#method-select">Foo.select</a>'
+      )
     end
 
     it "replaces {@link Foo#event-select} with link to event" do
-      @formatter.replace("Look at {@link Foo#event-select}").should ==
+      expect(@formatter.replace("Look at {@link Foo#event-select}")).to eq(
         'Look at <a href="Foo#event-select">Foo.select</a>'
+      )
     end
   end
 
@@ -395,18 +445,21 @@ describe JsDuck::Format::Doc do
     end
 
     it "replaces {@link Foo#select} with link to instance method" do
-      @formatter.replace("Look at {@link Foo#select}").should ==
+      expect(@formatter.replace("Look at {@link Foo#select}")).to eq(
         'Look at <a href="Foo#method-select">Foo.select</a>'
+      )
     end
 
     it "replaces {@link Foo#static-select} with link to static method" do
-      @formatter.replace("Look at {@link Foo#static-select}").should ==
+      expect(@formatter.replace("Look at {@link Foo#static-select}")).to eq(
         'Look at <a href="Foo#static-method-select">Foo.select</a>'
+      )
     end
 
     it "replaces {@link Foo#static-method-select} with link to static method" do
-      @formatter.replace("Look at {@link Foo#static-method-select}").should ==
+      expect(@formatter.replace("Look at {@link Foo#static-method-select}")).to eq(
         'Look at <a href="Foo#static-method-select">Foo.select</a>'
+      )
     end
   end
 

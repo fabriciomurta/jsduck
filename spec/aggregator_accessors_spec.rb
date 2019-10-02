@@ -240,8 +240,9 @@ describe JsDuck::Aggregator do
     end
 
     it "creates documentation for foochange event" do
-      @members["foochange"][:doc].should ==
+      expect(@members["foochange"][:doc]).to eq(
         "Fires when the {@link #cfg-foo} configuration is changed by {@link #method-setFoo}."
+      )
     end
 
     it "has 3 params" do
