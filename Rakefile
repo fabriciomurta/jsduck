@@ -214,7 +214,6 @@ class JsDuckRunner
       "--footer", "Ext JS #{versn}/" + toolkit + " Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
-      "--warnings", "-all",
       "--output", "#{OUT_DIR}/ext#{versn}_" + toolkit,
       ext_build + "/" + tkpath + "/src",
     ]
@@ -226,7 +225,6 @@ class JsDuckRunner
       "--footer", "Ext.NET Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
-      "--warnings", "-all",
       "--output", "#{OUT_DIR}/extnet_" + toolkit,
       "#{EXT_NET}",
     ]
