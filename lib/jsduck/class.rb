@@ -133,7 +133,9 @@ module JsDuck
       else
         if (!@ignored_classes.any? { |name| name == classname })
           Logger.warn(:extend, "Class #{classname} not found", @doc[:files][0])
-          raise("Raising exception upon class not found occurrence.")
+          raise("Raising exception upon class not found occurrence (#{classname})." +
+            Thread.current.backtrace.join("\n")
+          )
         end
 
         # Create placeholder class
