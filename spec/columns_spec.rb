@@ -58,17 +58,17 @@ describe JsDuck::Columns do
     it "split(6 items by 3)" do
       @cols = @columns.split([5, 8, 4, 2, 1, 3], 3)
       expect(@cols.length).to eq(3)
-      sum(@cols[0]).should <= 10
-      sum(@cols[1]).should <= 10
-      sum(@cols[2]).should <= 10
+      expect(sum(@cols[0])).to be <= 10
+      expect(sum(@cols[1])).to be <= 10
+      expect(sum(@cols[2])).to be <= 10
     end
 
     it "split(8 items by 3)" do
       @cols = @columns.split([1, 3, 5, 2, 1, 4, 2, 3], 3)
       expect(@cols.length).to eq(3)
-      sum(@cols[0]).should <= 9
-      sum(@cols[1]).should <= 9
-      sum(@cols[2]).should <= 9
+      expect(sum(@cols[0])).to be <= 9
+      expect(sum(@cols[1])).to be <= 9
+      expect(sum(@cols[2])).to be <= 9
     end
   end
 
