@@ -11,7 +11,7 @@ describe JsDuck::GuideToc do
     let(:max_level) { 2 }
 
     it "adds no toc section even when many H1 headings" do
-      inject(<<-EOHTML).should_not =~ /<div class='toc'>/
+      expect(inject(<<-EOHTML)).not_to match(/<div class='toc'>/)
         <h1>Chapter A</h2>
         <h1>Chapter B</h2>
         <h1>Chapter C</h2>
@@ -23,11 +23,11 @@ describe JsDuck::GuideToc do
     let(:max_level) { 2 }
 
     it "adds no toc section when no headings" do
-      inject("blah").should_not =~ /<div class='toc'>/
+      expect(inject("blah")).not_to match(/<div class='toc'>/)
     end
 
     it "adds no toc section when less than two H2 headings" do
-      inject(<<-EOHTML).should_not =~ /<div class='toc'>/
+      expect(inject(<<-EOHTML)).not_to match(/<div class='toc'>/)
         <h2>Chapter A</h2>
       EOHTML
     end
@@ -92,7 +92,7 @@ describe JsDuck::GuideToc do
     end
 
     it "doesn't include any other headings besides H2 to TOC" do
-      inject(<<-EOHTML).should_not =~ /<a href='#!\/guide\/myguide-section-my-chapter'>/
+      expect(inject(<<-EOHTML)).not_to match(/<a href='#!\/guide\/myguide-section-my-chapter'>/)
         <h3>My Chapter</h3>
         <h5>Another Chapter</h5>
       EOHTML
@@ -124,7 +124,7 @@ describe JsDuck::GuideToc do
     end
 
     it "doesn't include any other headings besides H2 and H3 to TOC" do
-      inject(<<-EOHTML).should_not =~ /<a href='#!\/guide\/myguide-section-my-chapter'>/
+      expect(inject(<<-EOHTML)).not_to match(/<a href='#!\/guide\/myguide-section-my-chapter'>/)
         <h2>Foo</h2>
         <h3>Bar</h3>
         <h4>My Chapter</h4>

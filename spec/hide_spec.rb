@@ -52,7 +52,7 @@ describe JsDuck::Class do
   end
 
   it "doesn't have member that's tagged in child with @hide" do
-    @members.should_not have_key("zappa")
+    expect(@members).not_to have_key("zappa")
   end
 
 end

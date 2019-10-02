@@ -483,7 +483,7 @@ describe JsDuck::Format::Doc do
     end
 
     it "doesn't close unclosed <img> tags" do
-      @formatter.format("<img>").should_not =~ /<\/img>/
+      expect(@formatter.format("<img>")).not_to match(/<\/img>/)
     end
 
     it "closes unclosed <b> when closing of <a> is encountered." do
@@ -491,7 +491,7 @@ describe JsDuck::Format::Doc do
     end
 
     it "throws away excessive close tags" do
-      @formatter.format("blah</div>").should_not =~ Regexp.new("</div>")
+      expect(@formatter.format("blah</div>")).not_to match(Regexp.new("</div>"))
     end
 
     it "allows for p-s nested inside divs" do
@@ -510,7 +510,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "does not create nested <pre> segments" do
-        @html.should_not =~ /<pre>.*<pre>/m
+        expect(@html).not_to match(/<pre>.*<pre>/m)
       end
     end
 
@@ -528,7 +528,7 @@ describe JsDuck::Format::Doc do
       it_should_behave_like "code blocks"
 
       it "avoids newline after <pre>" do
-        @html.should_not =~ /<pre>\n/m
+        expect(@html).not_to match(/<pre>\n/m)
       end
     end
 
@@ -546,7 +546,7 @@ describe JsDuck::Format::Doc do
       it_should_behave_like "code blocks"
 
       it "avoids newline after <pre><code>" do
-        @html.should_not =~ /<pre><code>\n/m
+        expect(@html).not_to match(/<pre><code>\n/m)
       end
     end
 
@@ -576,7 +576,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "removes the line with @example markup" do
-        @html.should_not =~ /@example/m
+        expect(@html).not_to match(/@example/m)
       end
 
       it "completely removes the first line and whitespace after it" do
