@@ -34,7 +34,7 @@ describe JsDuck::Aggregator do
     end
 
     it "with standard description" do
-      event[:params][2][:doc].should =~ /The options object passed to.*addListener/
+      expect(event[:params][2][:doc]).to match(/The options object passed to.*addListener/)
     end
 
     it "with special :ext4event flag" do

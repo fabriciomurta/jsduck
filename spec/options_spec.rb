@@ -29,7 +29,7 @@ describe JsDuck::Options::Parser do
     end
 
     it "is populated by --builtin-classes" do
-      parse("--builtin-classes").input_files[0].should =~ /js-classes$/
+      expect(parse("--builtin-classes").input_files[0]).to match(/js-classes$/)
     end
 
     it "is valid when populated by --builtin-classes" do

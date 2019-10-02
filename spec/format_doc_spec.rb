@@ -152,8 +152,9 @@ describe JsDuck::Format::Doc do
     end
 
     it "replaces {@video vimeo 123456 Alt text} with Vimeo video markup" do
-      @formatter.replace("{@video vimeo 123456 Alt text}").should =~
+      expect(@formatter.replace("{@video vimeo 123456 Alt text}")).to match(
         /<iframe.*123456.*iframe>/
+      )
     end
   end
 
@@ -470,15 +471,15 @@ describe JsDuck::Format::Doc do
 
     # Just a sanity check that Markdown formatting works
     it "converts Markdown to HTML" do
-      @formatter.format("Hello **world**").should =~ /Hello <strong>world<\/strong>/
+      expect(@formatter.format("Hello **world**")).to match(/Hello <strong>world<\/strong>/)
     end
 
     it "closes unclosed <b> tags" do
-      @formatter.format("<b>Hello").should =~ /<b>Hello.*<\/b>/m
+      expect(@formatter.format("<b>Hello")).to match(/<b>Hello.*<\/b>/m)
     end
 
     it "closes unclosed <a> and <b> in correct order" do
-      @formatter.format("<a><b>Hello").should =~ /<\/b><\/a>/
+      expect(@formatter.format("<a><b>Hello")).to match(/<\/b><\/a>/)
     end
 
     it "doesn't close unclosed <img> tags" do
@@ -486,7 +487,7 @@ describe JsDuck::Format::Doc do
     end
 
     it "closes unclosed <b> when closing of <a> is encountered." do
-      @formatter.format("<a><b>blah</a>").should =~ Regexp.new("</b></a>")
+      expect(@formatter.format("<a><b>blah</a>")).to match(Regexp.new("</b></a>"))
     end
 
     it "throws away excessive close tags" do
@@ -494,13 +495,14 @@ describe JsDuck::Format::Doc do
     end
 
     it "allows for p-s nested inside divs" do
-      @formatter.format("<div><small><p>Blah</p><p>Fah</p></small></div>").should =~
-             Regexp.new("<div><small><p>Blah</p><p>Fah</p></small></div>")
+      expect(@formatter.format("<div><small><p>Blah</p><p>Fah</p></small></div>")).to match(
+        Regexp.new("<div><small><p>Blah</p><p>Fah</p></small></div>")
+      )
     end
 
     shared_examples_for "code blocks" do
       it "contains text before" do
-        @html.should =~ /Some code/
+        expect(@html).to match(/Some code/)
       end
 
       it "contains the code" do
@@ -570,7 +572,7 @@ describe JsDuck::Format::Doc do
 
     shared_examples_for "example" do
       it "creates <pre> with inline-example class" do
-        @html.should =~ /<pre class='inline-example *'>/m
+        expect(@html).to match(/<pre class='inline-example *'>/m)
       end
 
       it "removes the line with @example markup" do
@@ -578,7 +580,7 @@ describe JsDuck::Format::Doc do
       end
 
       it "completely removes the first line and whitespace after it" do
-        @html.should =~ /code>if/m
+        expect(@html).to match(/code>if/m)
       end
     end
 
@@ -609,7 +611,7 @@ describe JsDuck::Format::Doc do
         EOS
       end
       it "creates <pre> with inline-example and extra class" do
-        @html.should =~ /<pre class='inline-example landscape'>/m
+        expect(@html).to match(/<pre class='inline-example landscape'>/m)
       end
     end
 

@@ -86,7 +86,7 @@ describe JsDuck::Options::Parser do
 
   describe :template do
     it "defaults to /template-min" do
-      parse().template.should =~ /template-min$/
+      expect(parse().template).to match(/template-min$/)
     end
 
     it "is not validated when --export set" do
