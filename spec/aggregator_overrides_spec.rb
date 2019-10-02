@@ -11,7 +11,7 @@ describe JsDuck::Aggregator do
 
   shared_examples_for "override" do
     it "gets :override property" do
-      @method.should have_key(:overrides)
+      expect(@method).to have_key(:overrides)
     end
 
     it "lists parent method in :override property" do

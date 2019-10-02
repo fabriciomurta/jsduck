@@ -151,14 +151,14 @@ describe JsDuck::Options::Parser do
 
     it "can be used with comma-separated list" do
       html = parse("--ignore-html", "em,strong").ignore_html
-      html.should include("em")
-      html.should include("strong")
+      expect(html).to include("em")
+      expect(html).to include("strong")
     end
 
     it "can be used multiple times" do
       html = parse("--ignore-html", "em", "--ignore-html", "strong").ignore_html
-      html.should include("em")
-      html.should include("strong")
+      expect(html).to include("em")
+      expect(html).to include("strong")
     end
   end
 
@@ -209,32 +209,32 @@ describe JsDuck::Options::Parser do
     it "contains JavaScript builtins by default" do
       exts = parse().external
       %w(Object String Number Boolean RegExp Function Array Arguments Date).each do |name|
-        exts.should include(name)
+        expect(exts).to include(name)
       end
     end
 
     it "contains JavaScript builtin error classes by default" do
       exts = parse().external
-      exts.should include("Error")
+      expect(exts).to include("Error")
       %w(Eval Range Reference Syntax Type URI).each do |name|
-        exts.should include("#{name}Error")
+        expect(exts).to include("#{name}Error")
       end
     end
 
     it "contains the special anything-goes Mixed type" do
-      parse().external.should include("Mixed")
+      expect(parse().external).to include("Mixed")
     end
 
     it "can be used multiple times" do
       exts = parse("--external", "MyClass", "--external", "YourClass").external
-      exts.should include("MyClass")
-      exts.should include("YourClass")
+      expect(exts).to include("MyClass")
+      expect(exts).to include("YourClass")
     end
 
     it "can be used with comma-separated list" do
       exts = parse("--external", "MyClass,YourClass").external
-      exts.should include("MyClass")
-      exts.should include("YourClass")
+      expect(exts).to include("MyClass")
+      expect(exts).to include("YourClass")
     end
   end
 

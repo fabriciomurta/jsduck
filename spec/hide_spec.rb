@@ -40,15 +40,15 @@ describe JsDuck::Class do
   end
 
   it "has member that's inherited from parent" do
-    @members.should have_key("foo")
+    expect(@members).to have_key("foo")
   end
 
   it "has member that's overridden in child" do
-    @members.should have_key("bar")
+    expect(@members).to have_key("bar")
   end
 
   it "has member that's defined only in child" do
-    @members.should have_key("baz")
+    expect(@members).to have_key("baz")
   end
 
   it "doesn't have member that's tagged in child with @hide" do

@@ -29,7 +29,7 @@ describe JsDuck::Aggregator do
     end
 
     it "creates getFoo method" do
-      @members.should have_key("getFoo")
+      expect(@members).to have_key("getFoo")
     end
 
     it "sets getFoo return type to @cfg type" do
@@ -49,7 +49,7 @@ describe JsDuck::Aggregator do
     end
 
     it "creates setFoo method" do
-      @members.should have_key("setFoo")
+      expect(@members).to have_key("setFoo")
     end
 
     it "sets setFoo return type to nil" do
@@ -112,11 +112,11 @@ describe JsDuck::Aggregator do
     end
 
     it "creates getter when method not present" do
-      @members.should have_key("getBar")
+      expect(@members).to have_key("getBar")
     end
 
     it "creates setter when method not present" do
-      @members.should have_key("setFoo")
+      expect(@members).to have_key("setFoo")
     end
 
   end

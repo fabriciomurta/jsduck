@@ -21,7 +21,7 @@ describe "JsDuck::Js::Ast detecting" do
     end
 
     it "adds :members as array" do
-      members.should be_kind_of(Array)
+      expect(members).to be_kind_of(Array)
     end
 
     it "finds two cfgs" do
