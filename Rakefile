@@ -219,13 +219,13 @@ class JsDuckRunner
     ]
   end
 
-  def add_enjs()
+  def add_enjs(versn)
     @options += [
-      "--title", "Sencha Docs - Ext.NET 5 " + toolkit,
+      "--title", "Sencha Docs - Ext.NET #{versn} ",
       "--footer", "Ext.NET Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
-      "--output", "#{OUT_DIR}/extnet_" + toolkit,
+      "--output", "#{OUT_DIR}/extnet#{versn}",
       "#{EXT_NET}",
     ]
   end
@@ -441,12 +441,9 @@ task :extnet do
   puts "Building docs for Ext.NET 5 "
   runner = JsDuckRunner.new
   versn = 5
-  runner.add_ext("charts", versn)
-  runner.add_ext("ux", versn)
-  runner.add_ext("classic", versn)
+  runner.add_enjs(versn)
 
-  runner.add_ejsdebug(toolkit)
-  #puts runner.get_options().join(' ')
+  runner.add_ejsdebug("classic")
   runner.run
 
   #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
