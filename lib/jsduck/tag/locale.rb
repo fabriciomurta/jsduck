@@ -5,7 +5,7 @@ module JsDuck::Tag
   # example: Ext.data.validator.AbstractDate.message (config)
   class Locale < BooleanTag
     def initialize
-      @pattern = "locale"
+      @pattern = [ "locale", "Locale" ]
       super
     end
   end

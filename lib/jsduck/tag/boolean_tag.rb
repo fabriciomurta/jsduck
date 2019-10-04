@@ -7,7 +7,11 @@ module JsDuck::Tag
   class BooleanTag < Tag
     def initialize
       if @pattern
-        @tagname = @pattern.to_sym
+        if @pattern.kind_of?(Array)
+          @tagname = @pattern[0].to_sym
+        else
+          @tagname = @pattern.to_sym
+        end
       end
     end
 
