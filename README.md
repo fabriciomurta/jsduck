@@ -95,6 +95,23 @@ Hacking it
 See [Hacking guide](https://github.com/senchalabs/jsduck/wiki/Hacking) in wiki.
 
 
+Bundling in a Windows executable
+--------------------------------
+
+For that, use the 'ocra' package (`gem install ocra`).
+
+Windows is required (no cross-building is supported, from ocra at least). Cygwin environment is also not supported. To have a working exe-building environment:
+
+- install with [rubyinstaller](https://rubyinstaller.org/)
+  - RubyInstaller's with DevKit (+~900MB required) should not be required (not tested)
+- Gems needs to be re-installed
+- Rkelly gem has bugs with latest version (2.6.4+) and needs changes
+  - last known compatible ruby version with Rkelly was 2.3.0 (not tested further releases)
+- run ocra as suggested in the wiki page above:
+```
+ocra --gem-full c:\Ruby26-x64\lib\ruby\gems\2.6.0\gems\jsduck-<version>\bin\jsduck
+```
+
 Who's using JSDuck?
 -------------------
 
