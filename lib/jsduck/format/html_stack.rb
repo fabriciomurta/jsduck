@@ -19,19 +19,24 @@ module JsDuck
         @open_tags = []
 
         if @ignore_html.length == 0
-          @ignore_html = {"if" => "if", "debug" => "debug"}
+          @ignore_html = {
+            "if" => "if",
+            "debug" => "debug",
+            "editor-fold" => "editor-fold",
+            "object" => "object"
+          }
         end
       end
 
       # Scans an opening tag in HTML using the passed in StringScanner.
       def open(s)
-        s.scan(/</) + push_tag(s.scan(/\w+/)) + s.scan_until(/>|\Z/)
+        s.scan(/</) + push_tag(s.scan(/(\w|-)+/)) + s.scan_until(/>|\Z/)
       end
 
       # Scans a closing tag in HTML using the passed in StringScanner.
       def close(s)
         s.scan(/<\//)
-        tag = s.scan(/\w+/)
+        tag = s.scan(/(\w|-)+/)
         s.scan(/>/)
 
         pop_tags(tag).map {|t| "</#{t}>" }.join
@@ -75,12 +80,12 @@ module JsDuck
 
       def warn_unopened(*tags)
         warn("Unopened HTML tag", tags)
-        raise("Raising exeception on closing non-opened HTML tag.")
+        #raise("Raising exception on closing non-opened HTML tag.")
       end
 
       def warn_unclosed(*tags)
         warn("Unclosed HTML tag", tags)
-        raise("Raising exeception on not closing HTML tag.")
+        #raise("Raising exception on not closing HTML tag.")
       end
 
       def warn(msg, tags)
