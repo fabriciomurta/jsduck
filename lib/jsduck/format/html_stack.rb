@@ -17,6 +17,10 @@ module JsDuck
         @ignore_html = ignore_html
         @doc_context = doc_context
         @open_tags = []
+
+        if @ignore_html.length == 0
+          @ignore_html = {"if" => "if", "debug" => "debug"}
+        end
       end
 
       # Scans an opening tag in HTML using the passed in StringScanner.
@@ -71,10 +75,12 @@ module JsDuck
 
       def warn_unopened(*tags)
         warn("Unopened HTML tag", tags)
+        raise("Raising exeception on closing non-opened HTML tag.")
       end
 
       def warn_unclosed(*tags)
         warn("Unclosed HTML tag", tags)
+        raise("Raising exeception on not closing HTML tag.")
       end
 
       def warn(msg, tags)
