@@ -40,22 +40,43 @@ module JsDuck
       # - On success returns HTML-version of the type definition.
       # - On failure logs error and returns the type string with only HTML escaped.
       #
-      def format_type(type)
+      def format_type(types)
         # Skip the formatting entirely when type-parsing is turned off.
-        return Util::HTML.escape(type) if @skip_type_parsing
+        return Util::HTML.escape(types) if @skip_type_parsing
 
         tp = TypeParser.new(@formatter)
-        if tp.parse(type)
-          tp.out
-        else
-          context = @formatter.doc_context
-          if tp.error == :syntax
-            Logger.warn(:type_syntax, "Incorrect type syntax #{type}", context)
-          else
-            Logger.warn(:type_name, "Unknown type #{type}", context)
-          end
-          Util::HTML.escape(type)
+
+        typelist = types.split("/")
+
+        result = ""
+        for type in typelist[0]
+         if tp.parse(type)
+           tp.out
+         else
+           context = @formatter.doc_context
+           if tp.error == :syntax
+             if typelist.length > 1
+               Logger.warn(:type_syntax, "Incorrect type syntax #{type} (in [#{types.join("/")}])", context)
+             else
+               Logger.warn(:type_syntax, "Incorrect type syntax #{type}", context)
+            end
+           else
+            if typelist.length > 1
+              Logger.warn(:type_name, "Unknown type #{type} (in [#{types.join("/")}])", context)
+              raise("Raising exception upon type not found occurrence (#{type} in [#{types.join("/")}])." +
+                Thread.current.backtrace.join("\n")
+              )
+            else
+              Logger.warn(:type_name, "Unknown type #{type}", context)
+              raise("Raising exception upon type not found occurrence (#{type})." +
+                Thread.current.backtrace.join("\n")
+             )
+            end
+           end
+           result += Util::HTML.escape(type)
+         end
         end
+        result
       end
 
     end
