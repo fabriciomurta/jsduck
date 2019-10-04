@@ -198,12 +198,6 @@ class JsDuckRunner
   end
 
   def add_ext(toolkit, versn)
-    if toolkit != "modern" && toolkit != "classic"
-      tkpath = "packages/" + toolkit
-    else
-      tkpath = toolkit + "/" + toolkit
-    end
-
     ext_build = EXT_6
     if versn == 7
       ext_build = EXT_7
@@ -214,9 +208,36 @@ class JsDuckRunner
       "--footer", "Ext JS #{versn}/" + toolkit + " Docs - Generated with <a href='https://github.com/fabriciomurta/jsduck'>JSDuck</a> {VERSION}." +
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
-      "--output", "#{OUT_DIR}/ext#{versn}_" + toolkit,
-      ext_build + "/" + tkpath + "/src",
+      "--output", "#{OUT_DIR}/ext#{versn}_" + toolkit
     ]
+
+    found_dir=false
+    for pk in ["core", "charts", "legacy", "soap", "ux"]
+      for subpk in ["src", "overrides"]
+        folders = [
+          ext_build + "/packages/" + pk + "/" + subpk,
+          ext_build + "/packages/" + pk + "/" + toolkit + "/" + subpk
+        ]
+        for folder in folders
+          if File.directory?(folder)
+            puts "Adding: " + folder
+            @options += [ folder ]
+            found_dir=true
+          end
+        end
+      end
+    end
+
+    folder = ext_build + "/" + toolkit + "/" + toolkit + "/src"
+    if File.directory?(folder)
+      puts "Adding: " + folder
+      @options += [ folder ]
+      found_dir=true
+    end
+
+    if !found_dir
+      raise("No valid subdirectory found in Ext JS package root at '" + ext_build + "'. Aborting.")
+    end
   end
 
   def add_enjs(versn)
@@ -226,7 +247,10 @@ class JsDuckRunner
                   " <a href='http://www.sencha.com/legal/terms-of-use/'>Terms of Use</a>",
       "--ignore-global",
       "--output", "#{OUT_DIR}/extnet#{versn}",
-      "#{EXT_NET}",
+      "#{EXT_NET}/packages/stubs/src",
+      "#{EXT_NET}/packages/charts/src",
+      "#{EXT_NET}/packages/ux/src",
+      "#{EXT_NET}/classic/classic/src"
     ]
   end
 
@@ -420,7 +444,6 @@ def do_extjs(toolkit, versn)
 end
 
 def do_ejsver(versn)
-  do_extjs("core", versn)
   do_extjs("classic", versn)
   do_extjs("modern", versn)
   puts "All Ext JS parts built."
