@@ -447,7 +447,7 @@ task :extnet do
   runner.run
 
   #system("ln -s #{EXT_BUILD}/packages/core #{OUT_DIR}/extjs-build_" + toolkit)
-  puts "Done building docs for ExtJS #{versn} - " + toolkit
+  puts "Done building docs for Ext.NET #{versn}"
 end
 
 task :default => :spec
