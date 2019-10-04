@@ -59,9 +59,10 @@ module JsDuck
         "number" => "Number",
         "string" => "String",
         "HTMLElement" => "HTMLElement",
+        "HTMLNode" => "HTMLNode",
         "Event" => "Event",
-        "Ext.util.Position" => "Ext.util.Position", # not available in latest ExtJS docs either
         "null" => "null",
+        "object" => "object",
         "undefined" => "undefined",
         "void" => "void",
         "Window" => "Window"
