@@ -16,7 +16,7 @@ module JsDuck::Tag
     # This separate method exits to allow it to be also called from
     # @alias tag implementation.
     #
-    # Matches a member reference: <class.name> "#" <static> "-" <type> "-" <member>
+    # Matches a member reference: <class.name> "#" <kind> "!" <static> "-" <type> "-" <member>
     #
     # Returns :inheritdoc tag definition with corresponding fields.
     def parse_as_inheritdoc(p)
@@ -27,6 +27,10 @@ module JsDuck::Tag
 
       if p.look(/#\w/)
         p.match(/#/)
+        if p.look(/.+!/)
+          # just suppres the cfg/event/method.
+          p.match(/\w!/)
+        end
         if p.look(/static-/)
           tag[:static] = true
           p.match(/static-/)
