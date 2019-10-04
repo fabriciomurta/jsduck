@@ -201,7 +201,7 @@ module JsDuck
       # Returns the precedence of operator represented by given AST node
       def precedence(ast)
         p = PRECEDENCE[ast["type"]]
-        if p.is_a? Fixnum
+        if p.is_a? Integer
           p
         elsif p.is_a? Hash
           p[ast["operator"]]
