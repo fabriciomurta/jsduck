@@ -63,10 +63,10 @@ module JsDuck
            else
             if typelist.length > 1
               Logger.warn(:type_name, "Unknown type #{type} (in [#{types}])", context)
-              raise("Raising exception upon type not found occurrence (#{type} in [#{types}]).")
+              #raise("Raising exception upon type not found occurrence (#{type} in [#{types}]).")
             else
               Logger.warn(:type_name, "Unknown type #{type}", context)
-              raise("Raising exception upon type not found occurrence (#{type}).")
+              #raise("Raising exception upon type not found occurrence (#{type}).")
             end
            end
            result += Util::HTML.escape(type)
