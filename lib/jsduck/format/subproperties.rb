@@ -49,21 +49,21 @@ module JsDuck
         typelist = types.split("/")
 
         result = ""
-        for type in typelist[0]
+        for type in typelist
          if tp.parse(type)
            tp.out
          else
            context = @formatter.doc_context
            if tp.error == :syntax
              if typelist.length > 1
-               Logger.warn(:type_syntax, "Incorrect type syntax #{type} (in [#{types.join("/")}])", context)
+               Logger.warn(:type_syntax, "Incorrect type syntax #{type} (in [#{types}])", context)
              else
                Logger.warn(:type_syntax, "Incorrect type syntax #{type}", context)
             end
            else
             if typelist.length > 1
-              Logger.warn(:type_name, "Unknown type #{type} (in [#{types.join("/")}])", context)
-              raise("Raising exception upon type not found occurrence (#{type} in [#{types.join("/")}])." +
+              Logger.warn(:type_name, "Unknown type #{type} (in [#{types}])", context)
+              raise("Raising exception upon type not found occurrence (#{type} in [#{types}])." +
                 Thread.current.backtrace.join("\n")
               )
             else
