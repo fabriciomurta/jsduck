@@ -73,7 +73,13 @@ module JsDuck::Tag
     end
 
     def to_html(cfg, cls)
-      member_link(cfg) + " : " + cfg[:html_type]
+      if (member_link(cfg) == nil)
+        warn("member_link(cfg) is NULL. cfg=#{cfg}")
+      end
+      if (cfg[:html_type] == nil)
+        warn("cfg[:html_type] is NULL. cfg=#{cfg}")
+      end
+      "#{member_link(cfg)} : #{cfg[:html_type]}"
     end
   end
 end
